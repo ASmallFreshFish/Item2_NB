@@ -1,0 +1,6 @@
+diff a/NB_IOT_Pressure/Project/HARDWARE/BC95/BC95.h b/NB_IOT_Pressure/Project/HARDWARE/BC95/BC95.h	(rejected hunks)
+@@ -23,4 +23,2 @@
+ void BC95_SendCOAPdata(u8 *len,u8 *data);
+-void BC95_SendCOAPdata_try(u8 *len,u8 *data);
+-
+ 
