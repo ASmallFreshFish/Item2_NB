@@ -1,0 +1,5 @@
+---- {anonpress_ad_type}.sample_time_flag Matches (4 in 0 files) ----
+Pressure_sensor.h (hardware\pressure):	u8 sample_time_flag;
+Timer.c (hardware\timer):		press_ad.sample_time_flag ++;
+Timer.c (hardware\timer):		if(press_ad.sample_time_flag >= PRESSURE_SAMPLE_NUM )
+Timer.c (hardware\timer):			press_ad.sample_time_flag
