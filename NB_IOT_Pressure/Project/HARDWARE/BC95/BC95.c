@@ -242,6 +242,7 @@ void BC95_SendCOAPdata(u8 *len,u8 *data)
 	}
 	else//如果返回error 一般是第一次与平台握手问题或者是CDP服务器配置问题。用户可以查询下 AT+NMSTATUS? 打印到显示端进行查看
 	{
+		BC95_SendCOAPdata_try(len,data);
 		printf("AT+NMSTATUS?\r\n");//判断当前模块与平台之间的连接关系，一般未发数据之前都是INIITIALISED，如果正常发送到数据到平台之后是MO_DATA_ENABLED
 		Delay(300);
 		strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:MO_DATA_ENABLED");//查看是否返回是这个数据，
@@ -261,10 +262,34 @@ void BC95_RECCOAPData(void)
     strx=strstr((const char*)RxBuffer,(const char*)"+NNMI:");//返回+NSONMI:，表明接收到UDP服务器发回的数据
 	if(strx)
 	{
+		Uart1_SendStr("RECEIVE +NIMI OK!\r\n");
 	    Clear_Buffer();	
 	    for(i=0;i<100;i++)
 	    RxBuffer[i]=0;
+	}
+//	else
+//	{
+//		Uart1_SendStr("RECEIVE NO +NIMI!\r\n");
+//	}
+}
+
+void BC95_SendCOAPdata_try(u8 *len,u8 *data)
+{
+ 	u8 count;
+	for(count = 0;count <3;count++)
+	{
+		printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
+		Delay(1000);
+		strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
+		if(strx)//表明发送正确，平台收到数据
+		{
+			Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
+			Clear_Buffer();	
+			break;
+		}
+		Clear_Buffer();
 		
 	}
 }
+
 
