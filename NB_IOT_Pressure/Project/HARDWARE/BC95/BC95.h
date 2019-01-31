@@ -21,8 +21,6 @@ void CDP_Init(void);//COAP服务器配置初始化
 void BC95_Init(void);
 void BC95_RECCOAPData(void);
 void BC95_SendCOAPdata(u8 *len,u8 *data);
-void BC95_SendCOAPdata_try(u8 *len,u8 *data);
-
 
 #endif
 
