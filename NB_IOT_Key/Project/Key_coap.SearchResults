@@ -1,5 +1,0 @@
----- upload_change_sequence Matches (4 in 2 files) ----
-Bus.c (hardware\bus):void upload_change_sequence(void)
-Bus.c (hardware\bus)://			upload_change_sequence();
-Bus.c (hardware\bus):			upload_change_sequence();
-Bus.h (hardware\bus):void upload_change_sequence(void);
