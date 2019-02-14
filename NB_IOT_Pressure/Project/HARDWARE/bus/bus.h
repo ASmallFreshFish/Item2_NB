@@ -31,7 +31,8 @@ void upload_change_sequence(void);
 void upload_buf_press_frame(void);
 void upload_press_handle(void);
 
-u8 *  hex_to_char(u8 data_hex); 
+void hex_to_char(u8 data_hex,u8 data_ch[2]);
+
 
 #endif
 

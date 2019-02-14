@@ -4,16 +4,40 @@
 
 press_ad_type press_ad;
 
+void press_ad_debug_print(u16 data)
+{
+ 	u8 t;
+	u8 pp[2];
+	
+	t = data;
+	hex_to_char(t,pp);
+	UART1_send_byte('\n');
+	UART1_send_byte('p');
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);
+	
+	t = (data>>8);
+	hex_to_char(t,pp);
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);	
+	UART1_send_byte('\n');
+}
+
+
+
+
+
 //我们默认将开启通道0~3																	   
 void  press_sensor_adc_init(void)
 { 	
 	ADC_InitTypeDef ADC_InitStructure; 
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	RCC_APB2PeriphClockCmd(RCC_AHBPeriph_GPIOB |RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
 
 	//PB15 作为模拟通道输入引脚                         
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
 
@@ -40,18 +64,9 @@ void  press_sensor_adc_init(void)
 	memset(&press_ad,0,sizeof(press_ad));
 
 	 /* Wait until the ADC1 is ready */
-//	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
-//	{}
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
+	{}
 	
-//	ADC_ResetCalibration(ADC1);	//使能复位校准  
-//	 
-//	while(ADC_GetResetCalibrationStatus(ADC1));	//等待复位校准结束
-//	
-//	ADC_StartCalibration(ADC1);	 //开启AD校准
-// 
-//	while(ADC_GetCalibrationStatus(ADC1));	 //等待校准结束
- 
-//	ADC_SoftwareStartConvCmd(ADC1, ENABLE);		//使能指定的ADC1的软件转换启动功能
 
 }				  
 //获得ADC值
@@ -59,7 +74,7 @@ void  press_sensor_adc_init(void)
 u16 get_press_adc(u8 ch)   
 {
   	//设置指定ADC的规则组通道，一个序列，采样时间
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_4Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
   
 //	ADC_SoftwareStartConvCmd(ADC1, ENABLE);		//使能指定的ADC1的软件转换启动功能	
 
@@ -78,8 +93,8 @@ u16 get_press_adc_average(u8 ch,u8 times)
 	for(t=0;t<times;t++)
 	{
 		temp_val+=get_press_adc(ch);
-		delay_ms(1);
-//		delay_ms(5);
+//		delay_ms(1);
+		delay_ms(5);
 	}
 	return temp_val/times;
 } 	 
@@ -89,47 +104,36 @@ void press_ad_sample(void)
 //#ifdef DEBUG_MACRO
 	u8 t;
 	u8 pp[2];
+	
+	UART1_send_byte('Q');
+	UART1_send_byte('\n');
+//#endif
+	
+	press_ad.press_ad_value[0] = 0;
+	press_ad.press_ad_value[0] = get_press_adc_average(ADC_Channel_4,10);
+	press_ad.press_ad_value[0] =(press_ad.press_ad_value[0] >> 8); 
+//#ifdef DEBUG_MACRO
+	press_ad_debug_print(press_ad.press_ad_value[0]);
 //#endif
 
-	press_ad.press_ad_value = 0;
-	press_ad.press_ad_value = get_press_adc_average(ADC_Channel_21,10);
-	press_ad.press_ad_value =(press_ad.press_ad_value >> 8); 
+	press_ad.press_ad_value[1] = 0;
+	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,10);
+	press_ad.press_ad_value[1] =(press_ad.press_ad_value[1] >> 8); 
 //#ifdef DEBUG_MACRO
+	press_ad_debug_print(press_ad.press_ad_value[1]);
+//#endif
 
-	t = press_ad.press_ad_value;
-
-	if(t/16>=10)
-		pp[0]=t/16+0x37;//转成A-F的字符
-	else
-		pp[0]=t/16+0x30; 
-	if(t%16>=10)
-		pp[1]=t%16+0x37;//转成A-F的字符
-	else
-		pp[1]=t%16+0x30;
-	UART1_send_byte('\n');
-	UART1_send_byte('p');
-	UART1_send_byte(pp[0]);
-	UART1_send_byte(pp[1]);
-	
-	t = (press_ad.press_ad_value>>8);
-	if(t/16>=10)
-		pp[0]=t/16+0x37;//转成A-F的字符
-	else
-		pp[0]=t/16+0x30; 
-	if(t%16>=10)
-		pp[1]=t%16+0x37;//转成A-F的字符
-	else
-		pp[1]=t%16+0x30; 
-	UART1_send_byte(pp[0]);
-	UART1_send_byte(pp[1]);	
-	UART1_send_byte('\n');
-
+	press_ad.press_ad_value[2] = 0;
+	press_ad.press_ad_value[2] = get_press_adc_average(ADC_Channel_6,10);
+	press_ad.press_ad_value[2] =(press_ad.press_ad_value[2] >> 8); 
+//#ifdef DEBUG_MACRO
+	press_ad_debug_print(press_ad.press_ad_value[2]);
 //#endif
 
 }
 void press_ad_judge(void)
 {
-	if(press_ad.press_ad_value > PRESSURE20_LIMIT )
+	if(press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
 	{
 		press_ad.have_press_count++;
 		press_ad.no_press_count = 0;

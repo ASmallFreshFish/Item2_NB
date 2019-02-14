@@ -33,7 +33,7 @@
 
 #include "head_include.h"
 
-//u8 version[3]={0x19,0x01,0x31};
+//u8 version[3]={0x19,0x02,0x14};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 u8 sendata_press[SEND_DATA_PRESS_LEN]={'0'};
@@ -57,9 +57,11 @@ int main(void)
 	while (1)
 	{	
 		press_handle();
-		upload_buf_press_frame();
-		upload_press_handle();
-//		delay_ms(500);
+//		upload_buf_press_frame();
+//		upload_press_handle();
+
+		
+		delay_ms(1000);
 //		LED_handle();
 
 //		upload_buf_write();
@@ -83,6 +85,13 @@ void main_init(void)
     TIM4_Int_Init(4999,3199); // 500ms一次中断
     CDP_Init();//CDP服务器初始化    
     BC95_Init();
+//		delay_ms(1000);
+//		delay_ms(1000);
+//		delay_ms(1000);
+//		delay_ms(1000);
+//		delay_ms(1000);
+	
+
 	upload_init();
 	
 //	KEY_scan_start();
