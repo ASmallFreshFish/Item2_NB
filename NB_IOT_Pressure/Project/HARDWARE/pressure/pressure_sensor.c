@@ -23,11 +23,7 @@ void press_ad_debug_print(u16 data)
 	UART1_send_byte('\n');
 }
 
-
-
-
-
-//我们默认将开启通道0~3																	   
+//我们默认将开启6个通道																	   
 void  press_sensor_adc_init(void)
 { 	
 	ADC_InitTypeDef ADC_InitStructure; 
@@ -36,10 +32,14 @@ void  press_sensor_adc_init(void)
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
 
-	//PB15 作为模拟通道输入引脚                         
+	//PA4 5 6 7 作为模拟通道输入引脚                         
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
+	//PB12 13作为模拟通道输入引脚                         
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
+	GPIO_Init(GPIOB, &GPIO_InitStructure);	
 
 	ADC_DeInit(ADC1);  //复位ADC1 
 
@@ -55,31 +55,28 @@ void  press_sensor_adc_init(void)
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;	//转换由软件而不是外部触发启动
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//ADC数据右对齐
 	ADC_InitStructure.ADC_NbrOfConversion = 1;	//顺序进行规则转换的ADC通道的数目
-
 	ADC_Init(ADC1, &ADC_InitStructure);	//根据ADC_InitStruct中指定的参数初始化外设ADCx的寄存器   
   
 	ADC_Cmd(ADC1, ENABLE);	//使能指定的ADC1
 
-
 	memset(&press_ad,0,sizeof(press_ad));
 
-	 /* Wait until the ADC1 is ready */
+	/* Wait until the ADC1 is ready */
 	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
 	{}
-	
 
-}				  
+}	
+
 //获得ADC值
-//ch:通道值 0~3
+//ch:通道值  4/5/6/7/  18/19
+//对应引脚 PA4/5/6/7/PB12/13
 u16 get_press_adc(u8 ch)   
 {
   	//设置指定ADC的规则组通道，一个序列，采样时间
 	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
-  
-//	ADC_SoftwareStartConvCmd(ADC1, ENABLE);		//使能指定的ADC1的软件转换启动功能	
 
-	/* Start ADC1 Software Conversion */ 
-	 ADC_SoftwareStartConv(ADC1);
+	// Start ADC1 Software Conversion
+	ADC_SoftwareStartConv(ADC1);
 
 	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ));//等待转换结束
 
@@ -94,7 +91,9 @@ u16 get_press_adc_average(u8 ch,u8 times)
 	{
 		temp_val+=get_press_adc(ch);
 //		delay_ms(1);
-		delay_ms(5);
+//		delay_ms(5);
+		delay_us(200);
+
 	}
 	return temp_val/times;
 } 	 
@@ -102,38 +101,63 @@ u16 get_press_adc_average(u8 ch,u8 times)
 void press_ad_sample(void)
 {
 //#ifdef DEBUG_MACRO
-	u8 t;
-	u8 pp[2];
+//	u8 t;
+//	u8 pp[2];
 	
 	UART1_send_byte('Q');
 	UART1_send_byte('\n');
 //#endif
 	
 	press_ad.press_ad_value[0] = 0;
-	press_ad.press_ad_value[0] = get_press_adc_average(ADC_Channel_4,10);
+	press_ad.press_ad_value[0] = get_press_adc_average(ADC_Channel_4,5);
 	press_ad.press_ad_value[0] =(press_ad.press_ad_value[0] >> 8); 
 //#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[0]);
 //#endif
 
 	press_ad.press_ad_value[1] = 0;
-	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,10);
+	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,5);
 	press_ad.press_ad_value[1] =(press_ad.press_ad_value[1] >> 8); 
 //#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[1]);
 //#endif
 
 	press_ad.press_ad_value[2] = 0;
-	press_ad.press_ad_value[2] = get_press_adc_average(ADC_Channel_6,10);
+	press_ad.press_ad_value[2] = get_press_adc_average(ADC_Channel_6,5);
 	press_ad.press_ad_value[2] =(press_ad.press_ad_value[2] >> 8); 
 //#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[2]);
 //#endif
 
+	press_ad.press_ad_value[3] = 0;
+	press_ad.press_ad_value[3] = get_press_adc_average(ADC_Channel_18,5);
+	press_ad.press_ad_value[3] =(press_ad.press_ad_value[3] >> 8); 
+//#ifdef DEBUG_MACRO
+//	press_ad_debug_print(press_ad.press_ad_value[3]);
+//#endif
+
+	press_ad.press_ad_value[4] = 0;
+	press_ad.press_ad_value[4] = get_press_adc_average(ADC_Channel_19,5);
+	press_ad.press_ad_value[4] =(press_ad.press_ad_value[4] >> 8); 
+//#ifdef DEBUG_MACRO
+//	press_ad_debug_print(press_ad.press_ad_value[4]);
+//#endif
+
+	press_ad.press_ad_value[5] = 0;
+	press_ad.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,5);
+	press_ad.press_ad_value[5] =(press_ad.press_ad_value[5] >> 8); 
+//#ifdef DEBUG_MACRO
+//	press_ad_debug_print(press_ad.press_ad_value[5]);
+//#endif
+
+
 }
 void press_ad_judge(void)
 {
-	if(press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
+	if((press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
+		||(press_ad.press_ad_value[1] > PRESSURE20_LIMIT )
+		||(press_ad.press_ad_value[2] > PRESSURE20_LIMIT ))
+		
 	{
 		press_ad.have_press_count++;
 		press_ad.no_press_count = 0;

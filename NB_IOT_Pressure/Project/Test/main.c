@@ -33,7 +33,7 @@
 
 #include "head_include.h"
 
-//u8 version[3]={0x19,0x02,0x14};
+//u8 version[3]={0x19,0x02,0x19};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 u8 sendata_press[SEND_DATA_PRESS_LEN]={'0'};
@@ -62,6 +62,9 @@ int main(void)
 
 		
 		delay_ms(1000);
+		delay_ms(1000);
+//		delay_ms(1000);
+
 //		LED_handle();
 
 //		upload_buf_write();

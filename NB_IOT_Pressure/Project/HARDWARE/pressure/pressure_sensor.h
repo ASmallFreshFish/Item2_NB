@@ -24,7 +24,7 @@ typedef struct
 {
 	press_sta_type sta;
 	press_sta_type last_sta;
-	u16 press_ad_value[3];
+	u16 press_ad_value[6];
 	u8 have_press_count;
 	u8 no_press_count;
 	press_change_type change_flag;
