@@ -36,8 +36,8 @@ void  press_sensor_adc_init(void)
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
-	//PB12 13作为模拟通道输入引脚                         
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14;
+	//PB12 13 14 15作为模拟通道输入引脚                         
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOB, &GPIO_InitStructure);	
 
@@ -149,6 +149,14 @@ void press_ad_sample(void)
 //#ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[5]);
 //#endif
+
+	press_ad.press_ad_value[6] = 0;
+	press_ad.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,5);
+	press_ad.press_ad_value[6] =(press_ad.press_ad_value[6] >> 8); 
+//#ifdef DEBUG_MACRO
+	press_ad_debug_print(press_ad.press_ad_value[6]);
+//#endif
+
 
 
 }
