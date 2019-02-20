@@ -35,6 +35,8 @@
 #define MAIN_LOOP_RECEIVE_NUM 101
 
 void main_init(void);
+void all_init(void);
+
 
 #endif 
 

@@ -1,3 +1,4 @@
----- hex_to_char Matches (2 in 2 files) ----
-Bus.c (project\hardware\bus):u8 * hex_to_char(u8 data_hex,u8 data_ch[2])
-Bus.h (project\hardware\bus):u8 *  hex_to_char(u8 data_hex); 
+---- get_press_adc_average Matches (3 in 2 files) ----
+Pressure_sensor.c (project\hardware\pressure):u16 get_press_adc_average(u8 ch,u8 times)
+Pressure_sensor.c (project\hardware\pressure):	press_ad.press_ad_value = get_press_adc_average(ADC_Channel_21,10);
+Pressure_sensor.h (project\hardware\pressure):u16 get_press_adc_average(u8 ch,u8 times); 

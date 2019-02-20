@@ -24,7 +24,7 @@ typedef struct
 {
 	press_sta_type sta;
 	press_sta_type last_sta;
-	u16 press_ad_value[7];
+	u16 press_ad_value;
 	u8 have_press_count;
 	u8 no_press_count;
 	press_change_type change_flag;
@@ -32,13 +32,21 @@ typedef struct
 	u8 sample_flag;
 }press_ad_type;
 
-void press_ad_debug_print(u16 data);
 void press_sensor_adc_init(void);
 u16 get_press_adc(u8 ch); 
 u16 get_press_adc_average(u8 ch,u8 times); 
 void press_ad_sample(void);
 void press_ad_judge(void);
 void press_handle(void);
+
+
+
+void ADC1_Configuration(void);
+void DMA_Configuration(void);
+void filter(void);
+void start_ad_sample(void);
+void start_ad_handle(void);
+
 
 
 #endif
