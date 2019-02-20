@@ -1,6 +1,7 @@
 #include "pressure_sensor.h"
 #include "usart.h"
 #include "led.h"
+#include "bus.h"
 
 press_ad_type press_ad;
 
@@ -11,16 +12,14 @@ void press_ad_debug_print(u16 data)
 	
 	t = data;
 	hex_to_char(t,pp);
-	UART1_send_byte('\n');
-	UART1_send_byte('p');
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 	
 	t = (data>>8);
 	hex_to_char(t,pp);
 	UART1_send_byte(pp[0]);
-	UART1_send_byte(pp[1]);	
-	UART1_send_byte('\n');
+	UART1_send_byte(pp[1]);
+	UART1_send_byte('\t');
 }
 
 //我们默认将开启6个通道																	   
@@ -50,8 +49,8 @@ void  press_sensor_adc_init(void)
 
 	ADC_InitStructure.ADC_ScanConvMode = DISABLE;		//模数转换工作在单通道模式
 	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;	//模数转换工作在单次转换模式
-//	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;
+//	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;	//转换由软件而不是外部触发启动
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//ADC数据右对齐
 	ADC_InitStructure.ADC_NbrOfConversion = 1;	//顺序进行规则转换的ADC通道的数目
@@ -68,12 +67,12 @@ void  press_sensor_adc_init(void)
 }	
 
 //获得ADC值
-//ch:通道值  4/5/6/7/  18/19
-//对应引脚 PA4/5/6/7/PB12/13
+//ch:通道值  4/5/6/7/  18/19/20/21
+//对应引脚 PA4/5/6/7/PB12/13/14/15
 u16 get_press_adc(u8 ch)   
 {
   	//设置指定ADC的规则组通道，一个序列，采样时间
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_4Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
 
 	// Start ADC1 Software Conversion
 	ADC_SoftwareStartConv(ADC1);
@@ -93,69 +92,66 @@ u16 get_press_adc_average(u8 ch,u8 times)
 //		delay_ms(1);
 //		delay_ms(5);
 		delay_us(200);
-
 	}
 	return temp_val/times;
 } 	 
 
 void press_ad_sample(void)
 {
-//#ifdef DEBUG_MACRO
-//	u8 t;
-//	u8 pp[2];
-	
+#ifdef DEBUG_MACRO
 	UART1_send_byte('Q');
-	UART1_send_byte('\n');
-//#endif
+	UART1_send_byte('\t');
+#endif
 	
 	press_ad.press_ad_value[0] = 0;
 	press_ad.press_ad_value[0] = get_press_adc_average(ADC_Channel_4,5);
 	press_ad.press_ad_value[0] =(press_ad.press_ad_value[0] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[0]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[1] = 0;
 	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,5);
 	press_ad.press_ad_value[1] =(press_ad.press_ad_value[1] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[1]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[2] = 0;
 	press_ad.press_ad_value[2] = get_press_adc_average(ADC_Channel_6,5);
 	press_ad.press_ad_value[2] =(press_ad.press_ad_value[2] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 	press_ad_debug_print(press_ad.press_ad_value[2]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[3] = 0;
 	press_ad.press_ad_value[3] = get_press_adc_average(ADC_Channel_18,5);
 	press_ad.press_ad_value[3] =(press_ad.press_ad_value[3] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[3]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[4] = 0;
 	press_ad.press_ad_value[4] = get_press_adc_average(ADC_Channel_19,5);
 	press_ad.press_ad_value[4] =(press_ad.press_ad_value[4] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[4]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[5] = 0;
 	press_ad.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,5);
 	press_ad.press_ad_value[5] =(press_ad.press_ad_value[5] >> 8); 
-//#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[5]);
-//#endif
+#endif
 
 	press_ad.press_ad_value[6] = 0;
 	press_ad.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,5);
 	press_ad.press_ad_value[6] =(press_ad.press_ad_value[6] >> 8); 
-//#ifdef DEBUG_MACRO
-	press_ad_debug_print(press_ad.press_ad_value[6]);
-//#endif
+#ifdef DEBUG_MACRO
+//	press_ad_debug_print(press_ad.press_ad_value[6]);
+	UART1_send_byte('\n');
+#endif
 
 
 

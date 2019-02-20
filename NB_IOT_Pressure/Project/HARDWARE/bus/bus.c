@@ -3,15 +3,16 @@
 #ifdef DEBUG_MACRO
 u8 debug_char;
 #endif
-extern u8 sendata_press[SEND_DATA_PRESS_LEN];
-extern u8 sendata[SEND_DATA_LEN];
-extern u8 send_buf[SEND_BUF_LEN];
-extern u8 upload_buf_sequence;
-extern u8 volatile write_location;
-extern u8 volatile read_location;
-extern u8 read_data_success_flag;
-extern u8 write_data_success_flag;
-extern u8 upload_main_loop_count;
+
+u8 sendata_press[SEND_DATA_PRESS_LEN]={'0'};
+u8 sendata[SEND_DATA_LEN]={'0'};
+u8 send_buf[SEND_BUF_LEN]={'0'};
+u8 upload_buf_sequence = 1;
+u8 volatile write_location = 0;
+u8 volatile read_location = 0;
+u8 read_data_success_flag = 0;
+u8 write_data_success_flag = 0;
+u8 upload_main_loop_count = 0;
 extern press_ad_type press_ad;
 
 void upload_init(void)
