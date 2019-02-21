@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-//u8 version[3]={0x19,0x02,0x20};
+//u8 version[3]={0x19,0x02,0x21};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 
@@ -17,19 +17,8 @@ int main(void)
 	while (1)
 	{	
 		press_handle();
-//		upload_buf_press_frame();
-//		upload_press_handle();
-
-		
-		delay_ms(1000);
-		delay_ms(1000);
-//		delay_ms(1000);
-
-//		LED_handle();
-
-//		upload_buf_write();
-//		upload_handle();
-//		LED_handle();
+		upload_buf_press_frame();
+		upload_press_handle();
 	}
 }
 
@@ -45,10 +34,9 @@ void main_init(void)
     uart_init(9600);          
     uart3_init(9600);
 	TIM3_Int_Init(199,3199);   // 20ms一次中断
-    TIM4_Int_Init(4999,3199); // 500ms一次中断
+    TIM4_Int_Init(4999,3199);  // 500ms一次中断
     CDP_Init();//CDP服务器初始化    
     BC95_Init();
-
 	upload_init();
 	
 //	KEY_scan_start();

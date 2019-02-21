@@ -22,6 +22,18 @@ void press_ad_debug_print(u16 data)
 	UART1_send_byte('\t');
 }
 
+void press_ad_debug_print8(u8 data)
+{
+ 	u8 t;
+	u8 pp[2];
+	
+	t = data;
+	hex_to_char(t,pp);
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);
+}
+
+
 //我们默认将开启6个通道																	   
 void  press_sensor_adc_init(void)
 { 	
@@ -31,12 +43,12 @@ void  press_sensor_adc_init(void)
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
 
-	//PA4 5 6 7 作为模拟通道输入引脚                         
+	//PA4 5 6 作为模拟通道输入引脚                         
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
 	//PB12 13 14 15作为模拟通道输入引脚                         
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
 	GPIO_Init(GPIOB, &GPIO_InitStructure);	
 
@@ -49,8 +61,8 @@ void  press_sensor_adc_init(void)
 
 	ADC_InitStructure.ADC_ScanConvMode = DISABLE;		//模数转换工作在单通道模式
 	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;	//模数转换工作在单次转换模式
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;
-//	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
+//	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;	//转换由软件而不是外部触发启动
 	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//ADC数据右对齐
 	ADC_InitStructure.ADC_NbrOfConversion = 1;	//顺序进行规则转换的ADC通道的数目
@@ -72,7 +84,7 @@ void  press_sensor_adc_init(void)
 u16 get_press_adc(u8 ch)   
 {
   	//设置指定ADC的规则组通道，一个序列，采样时间
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_4Cycles );	//ADC1,ADC通道,采样时间为239.5周期	  			    
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为4周期	  			    
 
 	// Start ADC1 Software Conversion
 	ADC_SoftwareStartConv(ADC1);
@@ -99,10 +111,12 @@ u16 get_press_adc_average(u8 ch,u8 times)
 void press_ad_sample(void)
 {
 #ifdef DEBUG_MACRO
+	UART1_send_byte('\n');
 	UART1_send_byte('Q');
 	UART1_send_byte('\t');
 #endif
-	
+
+//PA4
 	press_ad.press_ad_value[0] = 0;
 	press_ad.press_ad_value[0] = get_press_adc_average(ADC_Channel_4,5);
 	press_ad.press_ad_value[0] =(press_ad.press_ad_value[0] >> 8); 
@@ -110,6 +124,7 @@ void press_ad_sample(void)
 	press_ad_debug_print(press_ad.press_ad_value[0]);
 #endif
 
+//PA5
 	press_ad.press_ad_value[1] = 0;
 	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,5);
 	press_ad.press_ad_value[1] =(press_ad.press_ad_value[1] >> 8); 
@@ -117,6 +132,7 @@ void press_ad_sample(void)
 	press_ad_debug_print(press_ad.press_ad_value[1]);
 #endif
 
+//PA6
 	press_ad.press_ad_value[2] = 0;
 	press_ad.press_ad_value[2] = get_press_adc_average(ADC_Channel_6,5);
 	press_ad.press_ad_value[2] =(press_ad.press_ad_value[2] >> 8); 
@@ -124,87 +140,160 @@ void press_ad_sample(void)
 	press_ad_debug_print(press_ad.press_ad_value[2]);
 #endif
 
-	press_ad.press_ad_value[3] = 0;
-	press_ad.press_ad_value[3] = get_press_adc_average(ADC_Channel_18,5);
-	press_ad.press_ad_value[3] =(press_ad.press_ad_value[3] >> 8); 
+//PB12
+//	press_ad.press_ad_value[3] = 0;
+//	press_ad.press_ad_value[3] = get_press_adc_average(ADC_Channel_18,5);
+//	press_ad.press_ad_value[3] =(press_ad.press_ad_value[3] >> 8); 
 #ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[3]);
 #endif
 
-	press_ad.press_ad_value[4] = 0;
-	press_ad.press_ad_value[4] = get_press_adc_average(ADC_Channel_19,5);
-	press_ad.press_ad_value[4] =(press_ad.press_ad_value[4] >> 8); 
+//PB13
+//	press_ad.press_ad_value[4] = 0;
+//	press_ad.press_ad_value[4] = get_press_adc_average(ADC_Channel_19,5);
+//	press_ad.press_ad_value[4] =(press_ad.press_ad_value[4] >> 8); 
 #ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[4]);
 #endif
 
-	press_ad.press_ad_value[5] = 0;
-	press_ad.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,5);
-	press_ad.press_ad_value[5] =(press_ad.press_ad_value[5] >> 8); 
+//PB14
+//	press_ad.press_ad_value[5] = 0;
+//	press_ad.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,5);
+//	press_ad.press_ad_value[5] =(press_ad.press_ad_value[5] >> 8); 
 #ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[5]);
 #endif
 
-	press_ad.press_ad_value[6] = 0;
-	press_ad.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,5);
-	press_ad.press_ad_value[6] =(press_ad.press_ad_value[6] >> 8); 
+//PB15
+//	press_ad.press_ad_value[6] = 0;
+//	press_ad.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,5);
+//	press_ad.press_ad_value[6] =(press_ad.press_ad_value[6] >> 8); 
 #ifdef DEBUG_MACRO
 //	press_ad_debug_print(press_ad.press_ad_value[6]);
-	UART1_send_byte('\n');
 #endif
 
-
-
 }
+
 void press_ad_judge(void)
 {
-	if((press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
-		||(press_ad.press_ad_value[1] > PRESSURE20_LIMIT )
-		||(press_ad.press_ad_value[2] > PRESSURE20_LIMIT ))
-		
+	u8 i;
+	u8 agg_count=0;
+	u8 light_count=0;
+	u8 stable_count =0;
+	
+	for(i=0;i<3;i++)
 	{
-		press_ad.have_press_count++;
-		press_ad.no_press_count = 0;
-		if(press_ad.have_press_count >= PRESSURE_CONFIRM_NUM)
+		if(! press_ad.press_ad_value_last[i])
 		{
-			press_ad.sta = HAVE_PRESSURE_SENEOR;
-		}
-	}
-	else
-	{
-		press_ad.have_press_count = 0;
-		press_ad.no_press_count++;
-		if(press_ad.no_press_count >= PRESSURE_CONFIRM_NUM)
+			press_ad.change_detail_flag[i] = NO_DETAIL_CHANGE;
+			press_ad.press_ad_value_last[i] = press_ad.press_ad_value[i];
+		}else if( press_ad.press_ad_value[i] > press_ad.press_ad_value_last[i]+PRESSURE_CHANGE_LIMIT)
 		{
-			press_ad.sta = NO_PRESSURE_SENSOR;
+			//变重了
+			press_ad.change_detail_flag[i] = GO_AGGRAVATE;
+			press_ad.press_ad_value_last[i] = press_ad.press_ad_value[i];
+			
+		}else if( press_ad.press_ad_value_last[i] > press_ad.press_ad_value[i]+PRESSURE_CHANGE_LIMIT )
+		{
+			//变轻了
+			press_ad.change_detail_flag[i] = GO_LIGHTEN;
+			press_ad.press_ad_value_last[i] = press_ad.press_ad_value[i];
+			
+		}else
+		{
+			press_ad.change_detail_flag[i] = NO_DETAIL_CHANGE;
+			press_ad.press_ad_value_last[i] = press_ad.press_ad_value[i];
 		}
-		
 	}
 
-	if(press_ad.last_sta != press_ad.sta)
+	for(i=0;i<3;i++)
 	{
-		press_ad.last_sta = press_ad.sta;
-		if(press_ad.sta == HAVE_PRESSURE_SENEOR)
-		{
-			press_ad.change_flag = NO_TO_HAVE_FLAG;
-			LEDTEST_OPEN;
-		}
-		else
-		{
-			press_ad.change_flag = HAVE_TO_NO_FLAG;
-			LEDTEST_CLOSE;
-		}
+		if(press_ad.change_detail_flag[i] == GO_AGGRAVATE)
+			agg_count++;
+		else if(press_ad.change_detail_flag[i] == GO_LIGHTEN)
+			light_count++;
+		else if(press_ad.change_detail_flag[i] == NO_DETAIL_CHANGE)
+			stable_count++;
+	}
+
+	if((agg_count>=2)||((agg_count == 1)&&(light_count == 0)))
+	{
+		press_ad.change_flag = NO_TO_HAVE_FLAG;
+	}
+	else if(((agg_count == 1)&&(light_count >= 1))
+			||((agg_count == 0)&&(light_count>=1)))
+	{
+		press_ad.change_flag = HAVE_TO_NO_FLAG;
 	}
 	else
 	{
 		press_ad.change_flag = NO_CHAGE;
-//		LEDTEST_CLOSE;
 	}
+	
+#ifdef DEBUG_MACRO
+	UART1_send_byte('\n');
+	UART1_send_byte('S');
+	UART1_send_byte('\t');
+	press_ad_debug_print8(agg_count);
+	UART1_send_byte('\t');
+	press_ad_debug_print8(light_count);
+	UART1_send_byte('\t');
+	press_ad_debug_print8(stable_count);
+	UART1_send_byte('\t');
+	press_ad_debug_print8(press_ad.change_flag);
+#endif	
+	
 }
+
+
+//void press_ad_judge(void)
+//{
+//	if((press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
+//		||(press_ad.press_ad_value[1] > PRESSURE20_LIMIT )
+//		||(press_ad.press_ad_value[2] > PRESSURE20_LIMIT ))
+//		
+//	{
+//		press_ad.have_press_count++;
+//		press_ad.no_press_count = 0;
+//		if(press_ad.have_press_count >= PRESSURE_CONFIRM_NUM)
+//		{
+//			press_ad.sta = HAVE_PRESSURE_SENEOR;
+//		}
+//	}
+//	else
+//	{
+//		press_ad.have_press_count = 0;
+//		press_ad.no_press_count++;
+//		if(press_ad.no_press_count >= PRESSURE_CONFIRM_NUM)
+//		{
+//			press_ad.sta = NO_PRESSURE_SENSOR;
+//		}
+//		
+//	}
+
+//	if(press_ad.last_sta != press_ad.sta)
+//	{
+//		press_ad.last_sta = press_ad.sta;
+//		if(press_ad.sta == HAVE_PRESSURE_SENEOR)
+//		{
+//			press_ad.change_flag = NO_TO_HAVE_FLAG;
+//			LEDTEST_OPEN;
+//		}
+//		else
+//		{
+//			press_ad.change_flag = HAVE_TO_NO_FLAG;
+//			LEDTEST_CLOSE;
+//		}
+//	}
+//	else
+//	{
+//		press_ad.change_flag = NO_CHAGE;
+//	}
+//}
 
 void press_handle(void)
 {
-	if(press_ad.sample_flag)
+	if(press_ad.sample_flag == 1 )
 	{
 		press_ad.sample_flag = 0; 
 		press_ad_sample();

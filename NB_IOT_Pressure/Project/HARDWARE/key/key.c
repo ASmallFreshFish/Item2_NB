@@ -5,7 +5,7 @@ extern u8 volatile write_location;
 
 void KEY_init(void)
 {
-	//hardware_init
+//	//hardware_init
  	GPIO_InitTypeDef GPIO_InitStructure;
 	
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
@@ -20,7 +20,7 @@ void KEY_init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
 
-	//software_init
+//	//software_init
 	memset(&g_key,0,sizeof(key_type));
 	g_key.key_up_flag = 1;
  
