@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-//u8 version[3]={0x19,0x01,0x31};
+//u8 version[3]={0x19,0x02,0x21};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 u8 sendata_press[SEND_DATA_PRESS_LEN]={'0'};
@@ -33,6 +33,9 @@ int main(void)
 //		upload_buf_press_frame();
 //		upload_press_handle();
 //	}
+
+
+
 
 
 	all_init();
