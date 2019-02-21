@@ -220,7 +220,7 @@ void BC95_Init(void)
 		Delay(300);
 		strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:INIITIALISED");//判断是否返回初始化状态。用户可以在此做一些相关的判断
 		if(strx)//如果是的，就点亮LED灯
-			LEDMCU_OPEN;
+//			LEDMCU_OPEN;
 		
     printf("AT+NNMI=1\r\n");//配置模块收到下行数据直接打印到串口
 	    Delay(300);
