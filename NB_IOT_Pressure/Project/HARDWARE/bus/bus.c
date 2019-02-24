@@ -268,23 +268,6 @@ void upload_handle(void)
 }
 
 
-u8 * hex_to_char(u8 data_hex)
-{
-	u8 ptr[2];
-	if(data_hex/16>=10)
-		ptr[0]=data_hex/16+0x37;//转成A-F的字符
-	else
-		ptr[0]=data_hex/16+0x30; 
-//	UART1_send_byte(ptr[0]);
-	
-	if(data_hex%16>=10)
-		ptr[1]=data_hex%16+0x37;//转成A-F的字符
-	else
-		ptr[1]=data_hex%16+0x30;
-//	UART1_send_byte(ptr[1]);
-
-	 return &ptr[0];
-}
 
 void upload_buf_press_frame(void)
 {
@@ -354,3 +337,20 @@ void upload_press_handle(void)
 	}
 }
 
+
+void hex_to_char(u8  data_hex,u8  data_ch[])
+{
+
+	if(data_hex/16>=10)
+		data_ch[0]=data_hex/16+0x37;//转成A-F的字符
+	else
+		data_ch[0]=data_hex/16+0x30; 
+//	UART1_send_byte(data_ch[0]);
+	
+	if(data_hex%16>=10)
+		data_ch[1]=data_hex%16+0x37;//转成A-F的字符
+	else
+		data_ch[1]=data_hex%16+0x30;
+//	UART1_send_byte(data_ch[1]);
+
+};

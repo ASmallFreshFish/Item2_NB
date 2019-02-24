@@ -2,13 +2,21 @@
 #include "usart.h"
 #include "led.h"
 #include "stm32l1xx.h"
+#include "bus.h"
 
 
 #define N 1 //每通道采50次
-#define M 1 //为12个通道
+#define M 2 //为12个通道
 
-u16 AD_Value[N][M]; //用来存放ADC转换结果，也是DMA的目标地址
+//u16 AD_Value[N][M]; //用来存放ADC转换结果，也是DMA的目标地址
 u16 After_filter[M]; //用来存放求平均值之后的结果
+u16 AD_Value[M]; 
+
+
+
+
+
+
 
 void GPIO_Configuration(void)
 {
@@ -25,9 +33,16 @@ void GPIO_Configuration(void)
 
 void ADC1_Configuration(void)
 {
+	GPIO_InitTypeDef GPIO_InitStructure;
 	ADC_InitTypeDef ADC_InitStructure;
 	
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE); //使能DMA时钟
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
+
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4|GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN; //模拟输入引脚
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	
 //	GPIO_Configuration();
 	ADC_DeInit(ADC1); //将外设 ADC1 的全部寄存器重设为缺省值
 
@@ -36,7 +51,7 @@ void ADC1_Configuration(void)
 	// Check that HSI oscillator is ready 
 	while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
 
-	ADC_InitStructure.ADC_ScanConvMode =DISABLE; //模数转换工作在扫描模式
+	ADC_InitStructure.ADC_ScanConvMode =ENABLE; //模数转换工作在扫描模式
 	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE; //模数转换工作在连续转换模式
 	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
 	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None; //外部触发转换关闭
@@ -57,26 +72,27 @@ void ADC1_Configuration(void)
 //	ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 9, ADC_SampleTime_239Cycles5 );
 //	ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 10, ADC_SampleTime_239Cycles5 );
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 1, ADC_SampleTime_384Cycles );
-//	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 2, ADC_SampleTime_384Cycles );
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 2, ADC_SampleTime_384Cycles );
 
 	// 开启ADC的DMA支持（要实现DMA功能，还需独立配置DMA通道等参数）
 	ADC_DMACmd(ADC1, ENABLE);
 
 	ADC_Cmd(ADC1, ENABLE); //使能指定的ADC1
 
-
-	
+	/* Wait until the ADC1 is ready */
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
+	{}
 }
 
 
 void DMA_Configuration(void)
 {
-
 	DMA_InitTypeDef DMA_InitStructure;
 	
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE); //使能DMA时钟
 	
 	DMA_DeInit(DMA1_Channel1); //将DMA的通道1寄存器重设为缺省值
+	
 	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&ADC1->DR; //DMA外设ADC基地址
 	DMA_InitStructure.DMA_MemoryBaseAddr = (u32)&AD_Value; //DMA内存基地址
 	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC; //内存作为数据传输的目的地
@@ -92,35 +108,35 @@ void DMA_Configuration(void)
 
 }
 
-void filter(void)
-{
-	int i;
-	int sum = 0;
-	u8 count;
-	for(i=0;i<M;i++)
-	{
-		for(count=0;count<N;count++)
-		{
-			sum += AD_Value[count][i];
-		}
-		After_filter[i]=sum/N;
-		sum=0;
-	}
-}
+//void filter(void)
+//{
+//	int i;
+//	int sum = 0;
+//	u8 count;
+//	for(i=0;i<M;i++)
+//	{
+//		for(count=0;count<N;count++)
+//		{
+//			sum += AD_Value[count][i];
+//		}
+//		After_filter[i]=sum/N;
+//		sum=0;
+//	}
+//}
 
 
 void start_ad_sample(void)
 {
 	ADC_SoftwareStartConv(ADC1);
-	delay_ms(5);
+//	delay_ms(5);
 //	while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ))
 //	{
 //		UART1_send_byte('A');
 //	};//等待转换结束
-	UART1_send_byte('A');
+//	UART1_send_byte('A');
 	
 //	AD_Value[0][0]=ADC_GetConversionValue(ADC1);	
-	start_ad_handle();
+//	start_ad_handle();
 	
 	DMA_Cmd(DMA1_Channel1, ENABLE); //启动DMA通道
 //	while(!DMA_GetFlagStatus(DMA1_FLAG_TC1) )
@@ -129,44 +145,73 @@ void start_ad_sample(void)
 //	};
 }
 
+
+
 void start_ad_handle(void)
 {
-	u8 t;
-	u8 pp[2];
-	int  i;
 
-	for(i=0;i<M;i++)
-	{
-		t = AD_Value[0][i];
+//	press_ad.press_ad_value[1] = 0;
+//	press_ad.press_ad_value[1] = get_press_adc_average(ADC_Channel_5,5);
+//	press_ad.press_ad_value[1] =(press_ad.press_ad_value[1] >> 8); 
+//	press_ad_debug_print(press_ad.press_ad_value[1]);
 
-		if(t/16>=10)
-			pp[0]=t/16+0x37;//转成A-F的字符
-		else
-			pp[0]=t/16+0x30; 
-		if(t%16>=10)
-			pp[1]=t%16+0x37;//转成A-F的字符
-		else
-			pp[1]=t%16+0x30;
-		UART1_send_byte('\n');
-		UART1_send_byte('p');
-		UART1_send_byte(pp[0]);
-		UART1_send_byte(pp[1]);
-		
-		t = (t>>8);
-		if(t/16>=10)
-			pp[0]=t/16+0x37;//转成A-F的字符
-		else
-			pp[0]=t/16+0x30; 
-		if(t%16>=10)
-			pp[1]=t%16+0x37;//转成A-F的字符
-		else
-			pp[1]=t%16+0x30; 
-		UART1_send_byte(pp[0]);
-		UART1_send_byte(pp[1]);	
-		UART1_send_byte('\n');
-	}
+	UART1_send_byte('Q');
+	UART1_send_byte('\n');
+	press_ad_debug_print(AD_Value[1]);
+	UART1_send_byte('\t');
+	AD_Value[1] = (AD_Value[1] >>8);
+	press_ad_debug_print(AD_Value[1]);
+	UART1_send_byte('\t');
+
+	press_ad_debug_print(AD_Value[2]);
+	UART1_send_byte('\t');
+	AD_Value[2] = (AD_Value[2] >>8);
+	press_ad_debug_print(AD_Value[2]);
+	UART1_send_byte('\t');
 	
 }
+
+
+
+
+//void start_ad_handle(void)
+//{
+//	u8 t;
+//	u8 pp[2];
+//	int  i;
+
+//	for(i=0;i<M;i++)
+//	{
+//		t = AD_Value[0][i];
+
+//		if(t/16>=10)
+//			pp[0]=t/16+0x37;//转成A-F的字符
+//		else
+//			pp[0]=t/16+0x30; 
+//		if(t%16>=10)
+//			pp[1]=t%16+0x37;//转成A-F的字符
+//		else
+//			pp[1]=t%16+0x30;
+//		UART1_send_byte('\n');
+//		UART1_send_byte('p');
+//		UART1_send_byte(pp[0]);
+//		UART1_send_byte(pp[1]);
+//		
+//		t = (t>>8);
+//		if(t/16>=10)
+//			pp[0]=t/16+0x37;//转成A-F的字符
+//		else
+//			pp[0]=t/16+0x30; 
+//		if(t%16>=10)
+//			pp[1]=t%16+0x37;//转成A-F的字符
+//		else
+//			pp[1]=t%16+0x30; 
+//		UART1_send_byte(pp[0]);
+//		UART1_send_byte(pp[1]);	
+//		UART1_send_byte('\n');
+//	}
+//	
+//}
 
 
 
@@ -345,4 +390,33 @@ void press_handle(void)
 	}
 }
 
+
+
+void press_ad_debug_print(u16 data)
+{
+ 	u8 t;
+	u8 pp[2];
+	
+	t = data;
+	hex_to_char(t,pp);
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);
+	
+	t = (data>>8);
+	hex_to_char(t,pp);
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);
+	UART1_send_byte('\t');
+}
+
+void press_ad_debug_print8(u8 data)
+{
+ 	u8 t;
+	u8 pp[2];
+	
+	t = data;
+	hex_to_char(t,pp);
+	UART1_send_byte(pp[0]);
+	UART1_send_byte(pp[1]);
+}
 

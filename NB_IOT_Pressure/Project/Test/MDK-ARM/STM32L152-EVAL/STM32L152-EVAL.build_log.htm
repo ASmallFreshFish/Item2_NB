@@ -5,11 +5,11 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.14.0.0
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Z JW, Microsoft, LIC=YA39U-S0Q0D-RA5DM-XACV9-QA6N8-PNDFL
+License Information: Zhou china, china, LIC=RC9SB-2AUG5-H8TFS-L81ZD-X8RHZ-RJFWQ
  
 Tool Versions:
 Toolchain:       MDK-ARM Standard  Version: 5.14.0.0
-Toolchain Path:  D:\ProgramFiles\MDK5\ARM\ARMCC\Bin
+Toolchain Path:  D:\ProgramFilesSecond\MDK5\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.05 update 1 (build 106)
 Assembler:       Armasm.exe V5.05 update 1 (build 106)
 Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
@@ -21,22 +21,28 @@ Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
 Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
-F:\MyGitHub\Item2_NB\NB_IOT_Pressure\Project\Test\MDK-ARM\Project.uvprojx
-Project File Date:  02/14/2019
+D:\00work\MyGitHub\Item2_NB\NB_IOT_Pressure\Project\Test\MDK-ARM\Project.uvprojx
+Project File Date:  02/21/2019
 
 <h2>Output:</h2>
 Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
-compiling pressure_sensor.c...
-..\..\HARDWARE\pressure\pressure_sensor.c(216): warning:  #223-D: function "memset" declared implicitly
-        memset(&press_ad,0,sizeof(press_ad));
-..\..\HARDWARE\pressure\pressure_sensor.c: 1 warning, 0 errors
+compiling bus.c...
+..\..\HARDWARE\bus\bus.c(168): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(send_buf);
+..\..\HARDWARE\bus\bus.c(236): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(sendata);
+..\..\HARDWARE\bus\bus.c(322): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_press);
+..\..\HARDWARE\bus\bus.c(356): warning:  #1-D: last line of file ends without a newline
+  };
+..\..\HARDWARE\bus\bus.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=5104 RO-data=276 RW-data=172 ZI-data=1356  
-".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 1 Warning(s).
+Program Size: Code=5112 RO-data=276 RW-data=176 ZI-data=1352  
+".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 4 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  F:\MyGitHub\Item2_NB\NB_IOT_Pressure\Project\Test\MDK-ARM\RTE
-  D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
+  D:\00work\MyGitHub\Item2_NB\NB_IOT_Pressure\Project\Test\MDK-ARM\RTE
+  D:\ProgramFilesSecond\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 </pre>

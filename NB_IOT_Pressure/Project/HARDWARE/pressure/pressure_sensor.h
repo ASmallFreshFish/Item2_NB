@@ -47,6 +47,9 @@ void filter(void);
 void start_ad_sample(void);
 void start_ad_handle(void);
 
+void press_ad_debug_print(u16 data);
+void press_ad_debug_print8(u8 data);
+
 
 
 #endif
