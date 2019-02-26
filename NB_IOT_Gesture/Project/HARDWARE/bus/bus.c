@@ -14,6 +14,7 @@ u8 read_data_success_flag = 0;
 u8 write_data_success_flag = 0;
 u8 upload_main_loop_count = 0;
 extern press_ad_type press_ad;
+extern gesture_struct_type g_gesture;
 
 void upload_init(void)
 {	
@@ -344,6 +345,7 @@ void upload_buf_press_frame(void)
 	}
 }
 
+
 void upload_press_handle(void)
 {
 	if(press_ad.change_flag)
@@ -354,3 +356,91 @@ void upload_press_handle(void)
 	}
 }
 
+
+//++++++++++++++++++++++++++++++++++++++++++++++++
+//gesture upload
+void upload_buf_gesture_frame(void)
+{
+	if(g_gesture.sta)
+	{
+		//message_id
+		sendata_press[0] = '0';
+		sendata_press[1] = '2';
+		//head
+		sendata_press[2] = 0x44;   //D
+		sendata_press[3] = 0x44;   
+		//id
+		sendata_press[4] =  'F';   //F
+		sendata_press[5] =  'F';
+		sendata_press[6] =  'F';   //F
+		sendata_press[7] =  'F';
+		sendata_press[8] =  'F';   //F
+		sendata_press[9] =  'F';
+		//command_type
+		sendata_press[10] =  'F';   //F
+		sendata_press[11] =  'E';
+
+		if(upload_buf_sequence/16>=10)
+			sendata_press[12]=upload_buf_sequence/16+0x37;//转成A-F的字符
+		else
+			sendata_press[12]=upload_buf_sequence/16+0x30; 
+		if(upload_buf_sequence%16>=10)
+			sendata_press[13]=upload_buf_sequence%16+0x37;//转成A-F的字符
+		else
+			sendata_press[13]=upload_buf_sequence%16+0x30; 
+
+		switch(g_gesture.sta)
+		{
+			case UP_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '1';
+				break;
+			case DOWN_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '2';
+				break;
+			case LEFT_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '3';
+				break;
+			case RIGHT_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '4';
+				break;
+			case FAR_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '5';
+				break;
+			case NEAR_GESTURE:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '6';
+				break;
+			default:
+				sendata_press[14]= '0';//转成A-F的字符
+				sendata_press[15]= '0';
+				break;
+		}
+
+		sendata_press[16] = 0;
+		upload_change_sequence();
+
+#ifdef DEBUG_MACRO
+		 UART1_send_byte('\n');
+		 Uart1_SendStr(sendata_press);
+		 delay_ms(1000);
+		 UART1_send_byte('\n');
+//		  sendata_press[part_loca+10] = '1';
+#endif
+	}
+}
+
+
+void upload_gesture_handle(void)
+{
+	if(g_gesture.sta)
+	{
+		BC95_SendCOAPdata("8",sendata_press);
+		delay_ms(1000);
+		BC95_RECCOAPData();
+	}
+}

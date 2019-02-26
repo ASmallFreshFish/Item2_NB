@@ -11,7 +11,7 @@ extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
 
-//u8 version[3]={0x19,0x02,0x21};
+//u8 version[3]={0x19,0x02,0x26};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 
@@ -36,10 +36,9 @@ int main(void)
 //		upload_press_handle();
 
 		gesture_handle();
-		delay_ms(1000);
-		
-		
-
+		delay_ms(500);
+		upload_buf_gesture_frame();
+		upload_gesture_handle();
 		
 	}
 }

@@ -14,6 +14,7 @@ gesture_struct_type g_gesture;
 void gesture_handle(void)
 {
 	u8 num;
+	g_gesture.sta = NO_GESTURE;
 	if (check_buf_valid_data(RxBuffer2,USART2_BUF_LEN,usart2_read_loc))
     {
 	    	UART1_send_byte('\n');
@@ -98,8 +99,6 @@ void gesture_handle(void)
 			UART1_send_byte('\t');
 			press_ad_debug_print8(usart2_read_loc);
     }
-
-	
 }
 
 

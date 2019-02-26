@@ -30,7 +30,8 @@ void upload_buf_check_write(void);
 void upload_change_sequence(void);
 void upload_buf_press_frame(void);
 void upload_press_handle(void);
-
+void upload_buf_gesture_frame(void);
+void upload_gesture_handle(void);
 void hex_to_char(u8 data_hex,u8 data_ch[2]);
 
 #endif
