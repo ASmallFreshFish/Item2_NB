@@ -21,22 +21,12 @@ int main(void)
 	
 	while (1)
 	{	
-//		int i=0;
-//		UART1_send_byte('\n');
-//		Uart1_SendStr(RxBuffer2);
-//		for(i=0;i<200;i++)
-//			RxBuffer2[i]=0;
-//		usart2_write_loc =0;
-//			
-//		delay_ms(1000);
-
-
 //		press_handle();
 //		upload_buf_press_frame();
 //		upload_press_handle();
 
 		gesture_handle();
-		delay_ms(500);
+		delay_ms(1000);
 		upload_buf_gesture_frame();
 		upload_gesture_handle();
 		

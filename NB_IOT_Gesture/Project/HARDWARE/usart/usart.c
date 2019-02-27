@@ -228,25 +228,17 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 // gesture 传感器(1,2)
 void USART2_IRQHandler(void)                	//串口2中断服务程序
 {
+	char temp; 
 	if(USART_GetITStatus(USART2, USART_IT_RXNE) != RESET)  //接收中断，可以扩展来控制
 	{
-	
-//		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
-//		if(usart2_write_loc < USART2_BUF_LEN - 10)
-//			RxBuffer2[usart2_write_loc++] =USART_ReceiveData(USART2);//接收模块的数据
-//		if(usart2_write_loc > USART2_BUF_LEN - 2)
-//		{
-//			usart2_write_loc = 0; 
-//		}
-//		if((!RxBuffer2[usart2_write_loc])&&(usart2_write_loc <USART2_BUF_LEN - 10))
-//			RxBuffer2[usart2_write_loc++] =USART_ReceiveData(USART2);//接收模块的数据
-
-
-
 		USART_ClearITPendingBit(USART2, USART_IT_RXNE);
-		if(check_buf_empty(RxBuffer2,USART2_BUF_LEN - 10,usart2_write_loc))
-			RxBuffer2[usart2_write_loc++] =USART_ReceiveData(USART2);//接收模块的数据
-		if(usart2_write_loc >= USART2_BUF_LEN - 10)
+		if(check_buf_empty(RxBuffer2,USART2_BUF_LEN,usart2_write_loc))
+		{
+			temp =USART_ReceiveData(USART2);
+			if(((temp>='a')&&(temp<='z'))||((temp>='A')&&(temp<='Z')))
+				RxBuffer2[usart2_write_loc++] =USART_ReceiveData(USART2);//接收模块的数据
+		}
+		if(usart2_write_loc > USART2_BUF_LEN-1)
 			usart2_write_loc =0; 
 	} 
 } 
@@ -266,7 +258,7 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-		if(!ch[location])
+		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
 		{
 			loc = location;
 			return 1;
@@ -275,7 +267,7 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-		if(!ch[location])
+		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
 		{
 			loc = location;
 			return 1;
@@ -289,7 +281,7 @@ u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-		if((ch[location] != 0)&&(ch[location] != '\n')&&(ch[location] != 0x0A)&&(ch[location] != 0x0D))
+		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
 		{
 			loc = location;
 			return 1;
@@ -298,11 +290,12 @@ u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-		if((ch[location] != 0)&&(ch[location] != '\n')&&(ch[location] != 0x0A)&&(ch[location] != 0x0D))
+		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
 		{
 			loc = location;
 			return 1;
 		}
+		
 	}
 	return 0;
 }

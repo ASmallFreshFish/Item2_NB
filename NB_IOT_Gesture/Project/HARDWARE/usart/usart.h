@@ -3,7 +3,7 @@
 
 #include "delay.h"
 
-#define USART2_BUF_LEN 110
+#define USART2_BUF_LEN 100
 
 void uart_init(u32 bound);
 void uart3_init(u32 bound);
