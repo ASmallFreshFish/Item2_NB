@@ -4,6 +4,8 @@
 u8 debug_char;
 #endif
 
+
+u8 sendata_gesture[SEND_DATA_GESTURE_LEN]={0};
 u8 sendata_press[SEND_DATA_PRESS_LEN]={'0'};
 u8 sendata[SEND_DATA_LEN]={'0'};
 u8 send_buf[SEND_BUF_LEN]={'0'};
@@ -15,6 +17,7 @@ u8 write_data_success_flag = 0;
 u8 upload_main_loop_count = 0;
 extern press_ad_type press_ad;
 extern gesture_struct_type g_gesture;
+extern char str_imei[16];
 
 void upload_init(void)
 {	
@@ -429,7 +432,7 @@ void upload_buf_gesture_frame(void)
 		 Uart1_SendStr(sendata_press);
 		 delay_ms(1000);
 		 UART1_send_byte('\n');
-//		  sendata_press[part_loca+10] = '1';
+		  //sendata_press[part_loca+10] = '1';
 #endif
 	}
 }
@@ -444,3 +447,94 @@ void upload_gesture_handle(void)
 		BC95_RECCOAPData();
 	}
 }
+
+
+
+//gesture upload
+//0227
+//void upload_buf_gesture_frame(void)
+//{
+//	u8 loc = 0;
+//	u8 t;
+//	u8 pp[2];
+//	memset(sendata_gesture,0,sizeof(sendata_gesture));
+//	
+//	if(g_gesture.sta)
+//	{
+//		strncat(sendata_gesture,BUS1_MESSAGE_ID_PRESS,2);
+//		loc += 2;
+//		strncat(sendata_gesture,BUS2_HEAD,2);
+//		loc += 2;
+//		//上传MEI号码
+//		//mei号增加一位0
+//		sendata_gesture[loc++] ='0';
+//		strncat(sendata_gesture,str_imei,15);
+//		loc += 15;
+//		strncat(sendata_gesture,"FFFFFF",6);
+//		loc += 6;
+//		strncat(sendata_gesture,BUS4_COMMAND_TYPE_GESTURE,2);
+//		loc += 2;
+//		
+//		t=upload_buf_sequence;
+//		hex_to_char(t,pp);
+//		sendata_gesture[loc++] =pp[0];
+//		sendata_gesture[loc++] =pp[1];
+
+//		switch(g_gesture.sta)
+//		{
+//			case UP_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '1';
+//				break;
+//			case DOWN_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '2';
+//				break;
+//			case LEFT_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '3';
+//				break;
+//			case RIGHT_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '4';
+//				break;
+//			case FAR_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '5';
+//				break;
+//			case NEAR_GESTURE:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '6';
+//				break;
+//			default:
+//				sendata_gesture[loc++]= '0';//转成A-F的字符
+//				sendata_gesture[loc++]= '0';
+//				break;
+//		}
+
+//		sendata_gesture[loc] = 0;
+//		upload_change_sequence();
+
+//#ifdef DEBUG_MACRO
+//		 UART1_send_byte('\n');
+//		 Uart1_SendStr(sendata_gesture);
+//		 delay_ms(1000);
+//		 UART1_send_byte('\n');
+//		  sendata_gesture[part_loca+10] = '1';
+//#endif
+//	}
+//}
+
+
+
+//void upload_gesture_handle(void)
+//{
+//	if(g_gesture.sta)
+//	{
+//		BC95_SendCOAPdata("13",sendata_gesture);
+//		delay_ms(1000);
+//		BC95_RECCOAPData();
+//	}
+//}
+
+

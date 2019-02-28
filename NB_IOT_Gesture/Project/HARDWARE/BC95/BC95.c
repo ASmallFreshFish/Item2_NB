@@ -6,8 +6,13 @@
 #include "led.h"
 
 char *strx,*extstrx;
+//注意char*与char[]的区别
+//char *str_imei = 0;
+char str_imei[16] = {0};
+
 extern char  RxBuffer[100],RxCounter;
 BC95 BC95_Status;
+
 void Clear_Buffer(void)//清空缓存
 {
 	u8 i;
@@ -16,6 +21,19 @@ void Clear_Buffer(void)//清空缓存
 		RxBuffer[i]=0;
 	RxCounter=0;
 }
+
+void copy_buf(char *buf_dest,char *buf_source,u8 len)
+{
+	u8 i;
+	for(i = 0;i<len;i++)
+	{
+		buf_dest[i] = buf_source[i];
+	}
+	buf_dest[len] = NULL;
+	
+	Uart1_SendStr(buf_dest);
+}
+
 void CDP_Init(void)//COAP服务器配置初始化
 {
 	printf("AT\r\n"); 
@@ -127,6 +145,21 @@ void BC95_Init(void)
 		    printf("AT+CIMI\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
 		    Delay(300);
 		    strx=strstr((const char*)RxBuffer,(const char*)"46011");//返回OK,说明卡是存在的电信，移动的是其他数值
+		}
+		
+	printf("AT+CGSN=1\r\n");//获取IMEI号，类似是否存在卡的意思，比较重要。
+		Delay(300);
+		strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返46011，电信，移动的是其他数值
+		//保存IMEI号码
+		copy_buf(str_imei,strx+6,16);
+		Clear_Buffer();
+		while(strx==NULL)
+		{
+		    Clear_Buffer();	
+		    printf("AT+CGSN=1\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
+		    Delay(300);
+		    strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返回OK,说明卡是存在的电信，移动的是其他数值
+			copy_buf(str_imei,strx+6,16);
 		}
 		
     printf("AT+CGATT=1\r\n");//激活网络，PDP

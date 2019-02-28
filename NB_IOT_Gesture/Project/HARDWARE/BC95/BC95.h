@@ -23,6 +23,8 @@ void BC95_RECCOAPData(void);
 void BC95_SendCOAPdata(u8 *len,u8 *data);
 void BC95_SendCOAPdata_try(u8 *len,u8 *data);
 
+void copy_buf(char *buf_dest,char *buf_sour,u8 len);
+
 
 #endif
 
