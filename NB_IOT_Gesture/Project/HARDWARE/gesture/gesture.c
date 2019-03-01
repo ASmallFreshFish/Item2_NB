@@ -7,7 +7,7 @@ extern volatile u8 usart2_write_loc;
 
 static const char *GESTURE_STA[6]={"UP","DOWN","LEFT","RIGHT","FAR","NEAR"};
 static const u8 GESTURE_STA_LEN[6]={2,4,4,5,3,4};
-static const char *GESTURE_INIT="Gesture";
+//static const char *GESTURE_INIT="Gesture sensor initialization success  Gesture sensor is ready";
 
 gesture_struct_type g_gesture;
 
@@ -19,61 +19,70 @@ void gesture_handle(void)
 		
 	if (check_buf_valid_data(RxBuffer2,USART2_BUF_LEN,usart2_read_loc))
     {		
-    		UART1_send_byte('\n');
-    		UART1_send_byte('Q');
-			Uart1_SendStr_Len(RxBuffer2,USART2_BUF_LEN);
+#ifdef DEBUG_MACRO
+UART1_send_byte('\n');
+UART1_send_byte('Q');
+Uart1_SendStr_Len(RxBuffer2,USART2_BUF_LEN);
+#endif
 		if(check_buf_contain_str(RxBuffer2,GESTURE_STA[0],GESTURE_STA_LEN[0]))  
 		{
-			UART1_send_byte('u');
+#ifdef DEBUG_MACRO
+UART1_send_byte('u');
+#endif
 			g_gesture.sta = UP_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[0]);
 			usart2_read_loc+=GESTURE_STA_LEN[0];
 		}
 		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[1],GESTURE_STA_LEN[1]))
 		{
-			UART1_send_byte('d');
+#ifdef DEBUG_MACRO
+UART1_send_byte('d');
+#endif
 			g_gesture.sta = DOWN_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[1]);
 			usart2_read_loc+=GESTURE_STA_LEN[1];
 		}
 		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[2],GESTURE_STA_LEN[2]))
 		{
-			UART1_send_byte('l');
+#ifdef DEBUG_MACRO
+UART1_send_byte('l');
+#endif
 			g_gesture.sta = LEFT_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[2]);
 			usart2_read_loc+=GESTURE_STA_LEN[2];
 		}
 		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[3],GESTURE_STA_LEN[3]))
 		{
-			UART1_send_byte('r');
+#ifdef DEBUG_MACRO
+UART1_send_byte('r');
+#endif
 			g_gesture.sta = RIGHT_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[3]);
 			usart2_read_loc+=GESTURE_STA_LEN[3];
 		}
 		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[4],GESTURE_STA_LEN[4]))
 		{	
-			UART1_send_byte('f');
+#ifdef DEBUG_MACRO
+UART1_send_byte('f');
+#endif
 			g_gesture.sta = FAR_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[4]);
 			usart2_read_loc+=GESTURE_STA_LEN[4];
 		}
 		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[5],GESTURE_STA_LEN[5]))
 		{
-			UART1_send_byte('n');
+#ifdef DEBUG_MACRO
+UART1_send_byte('n');
+#endif
 			g_gesture.sta = NEAR_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[5]);
 			usart2_read_loc+=GESTURE_STA_LEN[5];
 		}
-		else if(check_buf_contain_str(RxBuffer2,GESTURE_INIT,7))
-		{
-			UART1_send_byte('i');
-			g_gesture.sta = NO_GESTURE;
-			clear_buf(RxBuffer2,54);
-			usart2_read_loc+=54;
-		}
 		else
 		{
-			UART1_send_byte('p');
+#ifdef DEBUG_MACRO
+UART1_send_byte('p');
+#endif
 			g_gesture.sta = NO_GESTURE;
 			clear_buf(RxBuffer2,1);
 			usart2_read_loc+=1;
@@ -83,14 +92,13 @@ void gesture_handle(void)
 		{
 			usart2_read_loc = 0;
 		}
-
-		UART1_send_byte('\t');
-		press_ad_debug_print8(usart2_read_loc);
-		UART1_send_byte('\t');
-		press_ad_debug_print8(usart2_write_loc);
-    }
-		
-		
+#ifdef DEBUG_MACRO
+UART1_send_byte('\t');
+press_ad_debug_print8(usart2_read_loc);
+UART1_send_byte('\t');
+press_ad_debug_print8(usart2_write_loc);
+#endif
+	}
 }
 
 
@@ -98,8 +106,6 @@ u8 check_buf_contain_str(char *buf,const char *str,u8 len)
 {
 	char buf_tmp[len+1];
 	u8 i;
-//	strncpy(buf_tmp,buf+usart2_read_loc,len);
-//	buf_tmp[len] = NULL;
 
 	for( i=0;i<len;i++)
 	{

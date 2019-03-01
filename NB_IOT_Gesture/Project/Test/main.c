@@ -10,8 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-
-//u8 version[3]={0x19,0x02,0x26};
+//u8 version[3]={0x19,0x03,0x01};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 
@@ -21,15 +20,14 @@ int main(void)
 	
 	while (1)
 	{	
+		gesture_handle();
+		delay_ms(500);
+		upload_buf_gesture_frame();
+		upload_gesture_handle();
+
 //		press_handle();
 //		upload_buf_press_frame();
 //		upload_press_handle();
-
-		gesture_handle();
-		delay_ms(1000);
-		upload_buf_gesture_frame();
-		upload_gesture_handle();
-		
 	}
 }
 
@@ -84,7 +82,6 @@ void assert_failed(uint8_t* file, uint32_t line)
   }
 }
 #endif
-
 
 
 

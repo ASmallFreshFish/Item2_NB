@@ -235,7 +235,8 @@ void USART2_IRQHandler(void)                	//串口2中断服务程序
 		if(check_buf_empty(RxBuffer2,USART2_BUF_LEN,usart2_write_loc))
 		{
 			temp =USART_ReceiveData(USART2);
-			if(((temp>='a')&&(temp<='z'))||((temp>='A')&&(temp<='Z')))
+//			if(((temp>='a')&&(temp<='z'))||((temp>='A')&&(temp<='Z')))
+			if((temp>='A')&&(temp<='Z'))
 				RxBuffer2[usart2_write_loc++] =USART_ReceiveData(USART2);//接收模块的数据
 		}
 		if(usart2_write_loc > USART2_BUF_LEN-1)
@@ -258,7 +259,13 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
+//		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
+//		{
+//			loc = location;
+//			return 1;
+//		}
+
+		if((ch[location] < 'A' )||(ch[location] > 'Z' ))
 		{
 			loc = location;
 			return 1;
@@ -267,7 +274,13 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
+//		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
+//		{
+//			loc = location;
+//			return 1;
+//		}
+
+		if((ch[location] < 'A' )||(ch[location] > 'Z' ))
 		{
 			loc = location;
 			return 1;
