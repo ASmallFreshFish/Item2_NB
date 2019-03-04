@@ -1,6 +1,0 @@
----- memset Matches (5 in 4 files) ----
-Bus.c (project\hardware\bus):	memset(sendata,'0',SEND_DATA_LEN-1);
-Bus.c (project\hardware\bus):	memset(send_buf,'0',(SEND_BUF_LEN*sizeof(u8))-1);
-Key.c (project\hardware\key):	memset(&g_key,0,sizeof(key_type));
-Pressure_sensor.c (project\hardware\pressure):	memset(&press_ad,0,sizeof(press_ad));
-Usart.c (project\hardware\usart):	memset

@@ -14,7 +14,7 @@ gesture_struct_type g_gesture;
 // 判断字符串数据UP\DOWN\LEFT\RIGHT\FAR\NEAR
 void gesture_handle(void)
 {
-	u8 num,len;
+//	u8 num,len;
 	g_gesture.sta = NO_GESTURE;
 		
 	if (check_buf_valid_data(RxBuffer2,USART2_BUF_LEN,usart2_read_loc))

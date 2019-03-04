@@ -294,7 +294,13 @@ u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
+//		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
+//		{
+//			loc = location;
+//			return 1;
+//		}
+
+		if((ch[location]>='A')&&(ch[location]<='Z'))
 		{
 			loc = location;
 			return 1;
@@ -303,7 +309,13 @@ u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
+//		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
+//		{
+//			loc = location;
+//			return 1;
+//		}
+
+		if((ch[location]>='A')&&(ch[location]<='Z'))
 		{
 			loc = location;
 			return 1;

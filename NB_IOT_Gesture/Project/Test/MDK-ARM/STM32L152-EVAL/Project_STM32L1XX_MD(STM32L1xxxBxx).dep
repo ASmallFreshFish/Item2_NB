@@ -1,6 +1,6 @@
 Dependencies for Project 'Project', Target 'STM32L1XX_MD(STM32L1xxxBxx)': (DO NOT MODIFY !)
-F (..\main.c)(0x5C75077D)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
-I (..\head_include.h)(0x5C73AA28)
+F (..\main.c)(0x5C790601)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
+I (..\head_include.h)(0x5C7649A9)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\main.h)(0x5C738E4B)
@@ -36,13 +36,13 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\HARDWARE\TIMER\timer.h)(0x5C35DE88)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 I (..\..\HARDWARE\key\key.h)(0x5C36BE79)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5C738E4B)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5C7527AF)
 F (..\stm32l1xx_it.c)(0x59CDAE9F)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\stm32l1xx_it.o --omf_browse .\stm32l152-eval\stm32l1xx_it.crf --depend .\stm32l152-eval\stm32l1xx_it.d)
@@ -80,8 +80,8 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353D
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
 I (..\main.h)(0x5C738E4B)
-F (..\..\HARDWARE\BC95\BC95.c)(0x5C738E4B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bc95.o --omf_browse .\stm32l152-eval\bc95.crf --depend .\stm32l152-eval\bc95.d)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+F (..\..\HARDWARE\BC95\BC95.c)(0x5C7668C4)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bc95.o --omf_browse .\stm32l152-eval\bc95.crf --depend .\stm32l152-eval\bc95.d)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h)(0x55353DC4)
 I (..\..\..\Libraries\CMSIS\Include\core_cm3.h)(0x5534FBDB)
@@ -117,7 +117,7 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
 I (..\main.h)(0x5C738E4B)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 F (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\misc.c)(0x55353DCC)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\misc.o --omf_browse .\stm32l152-eval\misc.crf --depend .\stm32l152-eval\misc.d)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
@@ -750,8 +750,8 @@ F (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\Templates\arm\startup_stm
 F (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\Templates\arm\startup_stm32l1xx_mdp.s)(0x55353DC4)()
 F (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\Templates\arm\startup_stm32l1xx_hd.s)(0x55353DC4)()
 F (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\Templates\arm\startup_stm32l1xx_xl.s)(0x55353DC4)()
-F (..\..\HARDWARE\usart\usart.c)(0x5C752EA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\usart.o --omf_browse .\stm32l152-eval\usart.crf --depend .\stm32l152-eval\usart.d)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+F (..\..\HARDWARE\usart\usart.c)(0x5C7C8F63)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\usart.o --omf_browse .\stm32l152-eval\usart.crf --depend .\stm32l152-eval\usart.d)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h)(0x55353DC4)
 I (..\..\..\Libraries\CMSIS\Include\core_cm3.h)(0x5534FBDB)
@@ -788,7 +788,7 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 F (..\..\HARDWARE\TIMER\timer.c)(0x5C6E7EB6)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\timer.o --omf_browse .\stm32l152-eval\timer.crf --depend .\stm32l152-eval\timer.d)
-I (..\head_include.h)(0x5C73AA28)
+I (..\head_include.h)(0x5C7649A9)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\main.h)(0x5C738E4B)
@@ -824,13 +824,13 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\HARDWARE\TIMER\timer.h)(0x5C35DE88)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 I (..\..\HARDWARE\key\key.h)(0x5C36BE79)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5C738E4B)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5C7527AF)
 F (..\..\HARDWARE\LED\LED.c)(0x5C36C3C1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\led.o --omf_browse .\stm32l152-eval\led.crf --depend .\stm32l152-eval\led.d)
@@ -937,7 +937,7 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 F (..\..\HARDWARE\key\key.c)(0x5C738E4B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\key.o --omf_browse .\stm32l152-eval\key.crf --depend .\stm32l152-eval\key.d)
-I (..\head_include.h)(0x5C73AA28)
+I (..\head_include.h)(0x5C7649A9)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\main.h)(0x5C738E4B)
@@ -973,17 +973,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\HARDWARE\TIMER\timer.h)(0x5C35DE88)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 I (..\..\HARDWARE\key\key.h)(0x5C36BE79)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5C738E4B)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5C7527AF)
-F (..\..\HARDWARE\bus\bus.c)(0x5C7508EB)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
-I (..\head_include.h)(0x5C73AA28)
+F (..\..\HARDWARE\bus\bus.c)(0x5C767FA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
+I (..\head_include.h)(0x5C7649A9)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\main.h)(0x5C738E4B)
@@ -1019,13 +1019,13 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\HARDWARE\TIMER\timer.h)(0x5C35DE88)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 I (..\..\HARDWARE\key\key.h)(0x5C36BE79)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5C738E4B)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5C7527AF)
 F (..\..\HARDWARE\pressure\pressure_sensor.c)(0x5C738E4B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_sensor.o --omf_browse .\stm32l152-eval\pressure_sensor.crf --depend .\stm32l152-eval\pressure_sensor.d)
@@ -1063,11 +1063,11 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
-F (..\..\HARDWARE\gesture\gesture.c)(0x5C752EBA)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\gesture.o --omf_browse .\stm32l152-eval\gesture.crf --depend .\stm32l152-eval\gesture.d)
-I (..\head_include.h)(0x5C73AA28)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
+F (..\..\HARDWARE\gesture\gesture.c)(0x5C7C8C5D)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\gesture.o --omf_browse .\stm32l152-eval\gesture.crf --depend .\stm32l152-eval\gesture.d)
+I (..\head_include.h)(0x5C7649A9)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
 I (..\main.h)(0x5C738E4B)
@@ -1103,12 +1103,12 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x55353DCC
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x55353DCC)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x55353DCC)
-I (..\..\HARDWARE\usart\usart.h)(0x5C74FF2D)
+I (..\..\HARDWARE\usart\usart.h)(0x5C75FEE7)
 I (..\..\HARDWARE\delay\delay.h)(0x5C35DE4E)
 I (..\..\HARDWARE\TIMER\timer.h)(0x5C35DE88)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5C52BD90)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5C763A58)
 I (..\..\HARDWARE\LED\led.h)(0x5C36C3ED)
 I (..\..\HARDWARE\key\key.h)(0x5C36BE79)
-I (..\..\HARDWARE\bus\bus.h)(0x5C74D604)
+I (..\..\HARDWARE\bus\bus.h)(0x5C7C8BC8)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5C738E4B)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5C7527AF)
