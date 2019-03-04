@@ -5,6 +5,10 @@
 
 press_ad_type press_ad;
 
+u16 RegularConvData_Tab[2];//存储2个电压值
+u16 VREFINT_DATA;
+float Vbat_value;
+
 void press_ad_debug_print(u16 data)
 {
  	u8 t;
@@ -42,6 +46,11 @@ void  press_sensor_adc_init(void)
 
 	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
+
+	//bat检测口
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
+	GPIO_Init(GPIOA, &GPIO_InitStructure);	
 
 	//PA4 5 6 作为模拟通道输入引脚                         
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
@@ -299,6 +308,65 @@ void press_handle(void)
 		press_ad_sample();
 		press_ad_judge();
 	}
+}
+
+
+
+
+void bat_sample(void)
+{
+		
+#ifdef DEBUG_MACRO
+		UART1_send_byte('\n');
+		UART1_send_byte('Q');
+		UART1_send_byte('\t');
+#endif
+	
+		//PA4
+		RegularConvData_Tab[0] = 0;
+		RegularConvData_Tab[0] = get_press_adc_average(ADC_Channel_0,5);
+//		RegularConvData_Tab[0] =(press_ad.press_ad_value[0] >> 4); 
+#ifdef DEBUG_MACRO
+		press_ad_debug_print(RegularConvData_Tab[0]);
+		UART1_send_byte('\t');
+
+#endif
+}
+
+float bat_get_value(void)
+{
+    VREFINT_DATA=RegularConvData_Tab[0];//获取到ADC值
+    Vbat_value =((3.3*VREFINT_DATA)/4096.0)*2;//等待返回 电阻分压的
+//     	Vbat_value =((3.3*VREFINT_DATA)/255.0)*2;//等待返回 电阻分压的
+    return Vbat_value;//返回当前值  
+}
+
+
+void bat_value_print(void)
+{
+		float Vbat;//电池电压
+    	int SendVbat;//发送电池电压
+    	u16 send2_vbat;
+    	char str[5];
+		
+		Vbat=bat_get_value();//获取电池电压
+		SendVbat=Vbat*1000;//3.33*100=333保留2位有效数据
+		send2_vbat=Vbat*1000;
+//		str[0]=(SendVbat/16)/10+0x30;
+//		str[1]=(SendVbat/16)%10+0x30;
+//		str[2]=(SendVbat%16)/10+0x30;
+//		str[3]=(SendVbat%16)%10+0x30;
+
+		str[0]=SendVbat/1000+0x30;
+		str[1]=SendVbat%1000/100+0x30;
+		str[2]=SendVbat%100/10+0x30;
+		str[3]=SendVbat%10+0x30;
+		str[4] ='\0';
+//		BC95_SendCOAPdata("5",str);
+		Uart1_SendStr(str);
+
+		UART1_send_byte('\t');
+		press_ad_debug_print(send2_vbat);
 }
 
 

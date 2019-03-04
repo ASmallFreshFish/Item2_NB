@@ -60,6 +60,10 @@ void press_ad_sample(void);
 void press_ad_judge(void);
 void press_handle(void);
 
+void bat_sample(void);
+float bat_get_value(void);
+void bat_value_print(void);
+
 
 #endif
 

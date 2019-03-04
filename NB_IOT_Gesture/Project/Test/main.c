@@ -28,6 +28,14 @@ int main(void)
 //		press_handle();
 //		upload_buf_press_frame();
 //		upload_press_handle();
+
+//		bat_sample();
+//		bat_value_print();
+//			delay_ms(1000);
+
+
+
+
 	}
 }
 

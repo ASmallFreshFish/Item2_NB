@@ -202,12 +202,10 @@ void Uart1_SendStr_Len(char*SendBuf,u8 len)//串口1打印数据代码
 	for(i=0;i<len;i++)
 	{
 		while((USART1->SR&0X40)==0){} //等待发送完成
-//		if(*SendBuf == 0) *SendBuf ='*';
 		USART1->DR = (u8) *SendBuf; 
 		SendBuf++;
 	}
 }
-
 
 void uart2_enable(void)
 {
@@ -254,17 +252,12 @@ void USART3_IRQHandler(void)                			//串口3中断服务程序
 	} 
 } 	
 
+//查找可写入位置
 u8 check_buf_empty(char ch[],u8 len,u8 loc)
 {
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-//		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
-//		{
-//			loc = location;
-//			return 1;
-//		}
-
 		if((ch[location] < 'A' )||(ch[location] > 'Z' ))
 		{
 			loc = location;
@@ -274,12 +267,6 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-//		if((ch[location] < 'A' )||((ch[location] > 'Z' )&&(ch[location] < 'a' ))||(ch[location] > 'z' ))
-//		{
-//			loc = location;
-//			return 1;
-//		}
-
 		if((ch[location] < 'A' )||(ch[location] > 'Z' ))
 		{
 			loc = location;
@@ -289,17 +276,12 @@ u8 check_buf_empty(char ch[],u8 len,u8 loc)
 	return 0;
 }
 
+//查找可读取数据
 u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 {
 	u8 location,result;
 	for(location = loc;location<len;location++)
 	{
-//		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
-//		{
-//			loc = location;
-//			return 1;
-//		}
-
 		if((ch[location]>='A')&&(ch[location]<='Z'))
 		{
 			loc = location;
@@ -309,22 +291,14 @@ u8 check_buf_valid_data(char ch[],u8 len,u8 loc)
 
 	for(location = 0;location<loc;location++)
 	{
-//		if(((ch[location]>='a')&&(ch[location]<='z'))||((ch[location]>='A')&&(ch[location]<='Z')))
-//		{
-//			loc = location;
-//			return 1;
-//		}
-
 		if((ch[location]>='A')&&(ch[location]<='Z'))
 		{
 			loc = location;
 			return 1;
 		}
-		
 	}
 	return 0;
 }
-
 
 
 

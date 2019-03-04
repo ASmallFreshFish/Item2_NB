@@ -17,8 +17,6 @@ void uart2_enable(void);
 u8 check_buf_empty(char ch[],u8 len,u8 loc);
 u8 check_buf_valid_data(char ch[],u8 len,u8 loc);
 
-
-
 #endif
 
 
