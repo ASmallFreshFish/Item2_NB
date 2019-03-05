@@ -5,7 +5,7 @@
 #define SEND_DATA_LEN 11
 #define SEND_BUF_LEN  (6*SEND_DATA_LEN)
 #define SEND_DATA_PRESS_LEN 17
-#define SEND_DATA_GESTURE_LEN 30
+#define SEND_DATA_GESTURE_LEN 50
 
 //BUS1:MESSAGE_ID
 #define BUS1_MESSAGE_ID_KEY "00"
@@ -19,7 +19,7 @@
 #define BUS4_COMMAND_TYPE_PRESS "FE"
 #define BUS4_COMMAND_TYPE_GESTURE "FD"
 //BUS5:SEQUENCE
-//BUS6:STA
+//BUS6:DATA
 
 //zhou
 //typedef struct
@@ -47,6 +47,8 @@ void upload_press_handle(void);
 void upload_buf_gesture_frame(void);
 void upload_gesture_handle(void);
 void hex_to_char(u8 data_hex,u8 data_ch[2]);
+void hex_to_str(u8 *inchar,u8 *outtxt,u32 len);
+
 
 #endif
 

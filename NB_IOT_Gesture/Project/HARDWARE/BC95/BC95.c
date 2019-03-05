@@ -7,8 +7,8 @@
 
 char *strx,*extstrx;
 //注意char*与char[]的区别
-//char *str_imei = 0;
-char str_imei[16] = {0};
+//char *imei_str = 0;
+char imei_str[16] = {0};
 
 extern char  RxBuffer[100],RxCounter;
 BC95 BC95_Status;
@@ -151,7 +151,7 @@ void BC95_Init(void)
 		Delay(300);
 		strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返46011，电信，移动的是其他数值
 		//保存IMEI号码
-		copy_buf(str_imei,strx+6,16);
+		copy_buf(imei_str,strx+6,16);
 		Clear_Buffer();
 		while(strx==NULL)
 		{
@@ -159,7 +159,7 @@ void BC95_Init(void)
 		    printf("AT+CGSN=1\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
 		    Delay(300);
 		    strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返回OK,说明卡是存在的电信，移动的是其他数值
-			copy_buf(str_imei,strx+6,16);
+			copy_buf(imei_str,strx+6,16);
 		}
 		
     printf("AT+CGATT=1\r\n");//激活网络，PDP

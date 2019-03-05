@@ -10,7 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-//u8 version[3]={0x19,0x03,0x01};
+//u8 version[3]={0x19,0x03,0x05};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 
