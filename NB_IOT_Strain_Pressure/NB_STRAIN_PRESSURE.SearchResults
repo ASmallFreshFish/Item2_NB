@@ -1,0 +1,6 @@
+---- HX711_Buffer Matches (5 in 2 files) ----
+Pressure_strain.c (project\hardware\presssure_strain):u32 HX711_Buffer;
+Pressure_strain.c (project\hardware\presssure_strain):	HX711_Buffer = HX711_Read();
+Pressure_strain.c (project\hardware\presssure_strain):	if(HX711_Buffer > Weight_Maopi)			
+Pressure_strain.c (project\hardware\presssure_strain):		Weight_Shiwu = HX711_Buffer;
+Pressure_strain.h (project\hardware\presssure_strain):extern u32 HX711_Buffer;
