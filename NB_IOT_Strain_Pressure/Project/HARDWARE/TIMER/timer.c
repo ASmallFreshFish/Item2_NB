@@ -84,6 +84,7 @@ void TIM3_IRQHandler(void)   //TIM3中断
 
 
 //定时器4中断服务程序
+// 500ms一次中断
 void TIM4_IRQHandler(void)   //TIM3中断
 {
 	if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
@@ -101,6 +102,13 @@ void TIM4_IRQHandler(void)   //TIM3中断
 		{
 			press_ad.sample_time_count = 0;
 			press_ad.sample_flag = 1;
+		}
+
+		g_weight.sample_count++;
+		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
+		{
+			g_weight.sample_count = 0;
+			g_weight.sample_flag = 1;
 		}
 	}
 }

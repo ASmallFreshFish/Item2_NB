@@ -10,21 +10,15 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-extern float Weight_Shiwu;
+extern pressure_strain_type g_weight;
 
-
-//u8 version[3]={0x19,0x03,0x011};
+//u8 version[3]={0x19,0x03,0x0121};
 //u8 temp,humi;
 //u8 sendata[7]="001234";	
 
 
 int main(void)
 {		
-//	Init_HX711pin();
-//	delay_init();
-	
-//	NVIC_Configuration(); 	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
-//	uart_init(9600);	 //串口初始化为9600
 
 	main_init();
 
@@ -35,16 +29,13 @@ int main(void)
 	
 	while(1)
 	{
-		Get_Weight();
-		printf_press_strain_float(Weight_Shiwu);
-//		printf("净重量 = %d g\r\n",Weight_Shiwu); //打印 
-		delay_ms(1000);
+		UART1_send_byte('\n');
+		
+		press_strain_handle();
+		upload_buf_press_stra_frame();
+		upload_press_stra_handle();
 	}
 }
-
-
-
-
 
 
 
@@ -86,8 +77,6 @@ void main_init(void)
 	KEY_init();
 	press_sensor_adc_init();
 	Init_HX711pin();
-//	ID 温度 湿度
-//  while(DHT11_Init());//初始化DHT11
 
 	//串口、定时器
     uart_init(9600);  
@@ -102,7 +91,7 @@ void main_init(void)
 	upload_init();
 	
 	//使能串口2:Gesture检测
-	uart2_enable();
+//	uart2_enable();
 	
 //	KEY_scan_start();
 }
