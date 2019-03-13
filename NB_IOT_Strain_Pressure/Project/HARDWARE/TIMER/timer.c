@@ -97,12 +97,12 @@ void TIM4_IRQHandler(void)   //TIM3ÖÐ¶Ï
 			LEDNET_TOGGLE;
 		}
 
-		press_ad.sample_time_count ++;
-		if(press_ad.sample_time_count >= PRESSURE_SAMPLE_NUM )
-		{
-			press_ad.sample_time_count = 0;
-			press_ad.sample_flag = 1;
-		}
+//		press_ad.sample_time_count ++;
+//		if(press_ad.sample_time_count >= PRESSURE_SAMPLE_NUM )
+//		{
+//			press_ad.sample_time_count = 0;
+//			press_ad.sample_flag = 1;
+//		}
 
 		g_weight.sample_count++;
 		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )

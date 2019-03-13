@@ -10,36 +10,19 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-extern pressure_strain_type g_weight;
-
-//u8 version[3]={0x19,0x03,0x0121};
-//u8 temp,humi;
-//u8 sendata[7]="001234";	
-
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190313"
 
 int main(void)
 {		
-
 	main_init();
-
-	Get_Maopi();				//称毛皮重量
-	delay_ms(1000);
-	delay_ms(1000);
-	Get_Maopi();				//重新获取毛皮重量
 	
 	while(1)
 	{
-		UART1_send_byte('\n');
-		
 		press_strain_handle();
 		upload_buf_press_stra_frame();
 		upload_press_stra_handle();
 	}
 }
-
-
-
-
 
 
 //int main(void)
@@ -53,17 +36,9 @@ int main(void)
 //		upload_buf_gesture_frame();
 //		upload_gesture_handle();
 
-//		press_handle();
-//		upload_buf_press_frame();
-//		upload_press_handle();
-
 //		bat_sample();
 //		bat_value_print();
 //			delay_ms(1000);
-
-
-
-
 //	}
 //}
 
@@ -76,7 +51,8 @@ void main_init(void)
     LED_Init();
 	KEY_init();
 	press_sensor_adc_init();
-	Init_HX711pin();
+	press_strain_init();
+//	Init_HX711pin();
 
 	//串口、定时器
     uart_init(9600);  
@@ -89,10 +65,16 @@ void main_init(void)
     CDP_Init();//CDP服务器初始化    
     BC95_Init();
 	upload_init();
+
+	//打印程序版本号
+	Uart1_SendStr(VERSION_Y_M_D);
+	//去皮操作
+	press_strain_init_remove();
 	
 	//使能串口2:Gesture检测
 //	uart2_enable();
-	
+
+	//启动按键扫描
 //	KEY_scan_start();
 }
 

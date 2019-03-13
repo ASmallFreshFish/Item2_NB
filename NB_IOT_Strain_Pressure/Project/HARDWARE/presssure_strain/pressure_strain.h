@@ -7,16 +7,20 @@
 #define GapValue 2322
 #define MAOPI_AD 8618982
 #define MAOPI_WEIGHT (3711.8)
-#define PRESS_STRAIN_CHANGE_LIMIT 20    // 2g
-#define PRESS_STRAIN_STABLE_LIMIT 4	  // 0.4g
-#define PRESS_STRA_SAMPLE_TIME_COUNT 1
+#define PRESS_STRAIN_LITTLE_LIMIT 100    // 10g
+//#define PRESS_STRAIN_CHANGE_LIMIT 20    // 2g
+#define PRESS_STRAIN_CHANGE_LIMIT 15    // 1.5g
+#define PRESS_STRAIN_STABLE_LIMIT 3	  // 0.3g
 
+#define PRESS_STRA_SAMPLE_TIME_COUNT 1
+#define PRESS_STRA_LIEELE_COUNT 5
 
 typedef enum
 {
 	NO_S_STA,
 	GO_S_AGGRAVATE,
-	GO_S_LIGHTEN
+	GO_S_LIGHTEN,
+	GO_S_LITTLE
 }press_stra_ch_type;
 
 
@@ -25,6 +29,7 @@ typedef struct
 	press_stra_ch_type sta;
 	u8 sample_flag;
 	u8 sample_count;
+	u8 little_count;
 	u32 maopi_ad;
 	u32 maopi_weight;
 	u32 shiwu_ad;
@@ -45,8 +50,10 @@ u32 HX711_Read(void);
 void Get_Maopi(void);
 void Get_Weight(void);
 
+void press_strain_init(void);
+void press_strain_init_remove(void);
 void press_strain_judge(void);
-void press_strain_sort_average(u32 ch[],u8 num);
+u32 press_strain_sort_average(u32 ch[],u8 num);
 void press_strain_handle(void);
 
 void printf_press_strain_weight(u32 num_f);

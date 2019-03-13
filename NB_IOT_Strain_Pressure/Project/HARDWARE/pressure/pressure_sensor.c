@@ -254,52 +254,6 @@ void press_ad_judge(void)
 	
 }
 
-
-//void press_ad_judge(void)
-//{
-//	if((press_ad.press_ad_value[0] > PRESSURE20_LIMIT )
-//		||(press_ad.press_ad_value[1] > PRESSURE20_LIMIT )
-//		||(press_ad.press_ad_value[2] > PRESSURE20_LIMIT ))
-//		
-//	{
-//		press_ad.have_press_count++;
-//		press_ad.no_press_count = 0;
-//		if(press_ad.have_press_count >= PRESSURE_CONFIRM_NUM)
-//		{
-//			press_ad.sta = HAVE_PRESSURE_SENEOR;
-//		}
-//	}
-//	else
-//	{
-//		press_ad.have_press_count = 0;
-//		press_ad.no_press_count++;
-//		if(press_ad.no_press_count >= PRESSURE_CONFIRM_NUM)
-//		{
-//			press_ad.sta = NO_PRESSURE_SENSOR;
-//		}
-//		
-//	}
-
-//	if(press_ad.last_sta != press_ad.sta)
-//	{
-//		press_ad.last_sta = press_ad.sta;
-//		if(press_ad.sta == HAVE_PRESSURE_SENEOR)
-//		{
-//			press_ad.change_flag = NO_TO_HAVE_FLAG;
-//			LEDTEST_OPEN;
-//		}
-//		else
-//		{
-//			press_ad.change_flag = HAVE_TO_NO_FLAG;
-//			LEDTEST_CLOSE;
-//		}
-//	}
-//	else
-//	{
-//		press_ad.change_flag = NO_CHAGE;
-//	}
-//}
-
 void press_handle(void)
 {
 	if(press_ad.sample_flag == 1 )
@@ -312,7 +266,7 @@ void press_handle(void)
 
 
 
-
+//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 void bat_sample(void)
 {
 		

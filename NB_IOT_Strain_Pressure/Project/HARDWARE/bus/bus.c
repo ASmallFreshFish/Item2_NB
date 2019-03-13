@@ -420,13 +420,16 @@ void upload_buf_press_stra_frame(void)
 		switch(g_weight.sta)
 		{
 			case GO_S_AGGRAVATE:
-				strncat(sendata_press_stra,"FF",2);
+				strncat(sendata_press_stra,BUS6_PRESS_EVENT_AGGRAVATE,2);
 				break;
 			case GO_S_LIGHTEN:
-				strncat(sendata_press_stra,"FE",2);
+				strncat(sendata_press_stra,BUS6_PRESS_EVENT_LIGHTEN,2);
+				break;
+			case GO_S_LITTLE:
+				strncat(sendata_press_stra,BUS6_PRESS_EVENT_LITTLE,2);
 				break;
 			default:
-				strncat(sendata_press_stra,"00",2);
+				strncat(sendata_press_stra,BUS6_PRESS_EVENT_NO_VALUE,2);
 				break;
 		}
 		loc += 2;
@@ -437,6 +440,7 @@ void upload_buf_press_stra_frame(void)
 #ifdef DEBUG_MACRO
 		 UART1_send_byte('\n');
 		 Uart1_SendStr(sendata_press_stra);
+		 UART1_send_byte('\n');
 #endif
 	}
 }

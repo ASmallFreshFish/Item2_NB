@@ -2,6 +2,20 @@
 
 pressure_strain_type g_weight;
 
+void press_strain_init(void)
+{
+	Init_HX711pin();
+	memset(&g_weight,0,sizeof(pressure_strain_type));
+}
+
+void press_strain_init_remove(void)
+{
+	Get_Maopi();				//称毛皮重量
+	delay_ms(1000);
+	delay_ms(1000);
+	Get_Maopi();	
+}
+
 void Init_HX711pin(void)
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -19,8 +33,6 @@ void Init_HX711pin(void)
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;		//上拉输入
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);  
-
-		
 }
 
 ////读取HX711
@@ -59,7 +71,8 @@ void Get_Maopi(void)
 #ifdef DEBUG_MACRO
 	UART1_send_byte('\n');
 	printf_press_strain_ad(g_weight.maopi_ad);
-	UART1_send_byte('\t\t\t\t');
+	UART1_send_byte('\t');
+	UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight);
 #endif	
 
@@ -85,38 +98,15 @@ void Get_Weight(void)
 	}
 }
 
-//void press_strain_judge(void)
-//{ 
-//	press_strain_sort_average(g_weight.shiwu_weight ,20);
-
-//	#ifdef DEBUG_MACRO
-//		printf_press_strain_weight(g_weight.shiwu_weight_ave);
-//	#endif
-
-//	g_weight.sta = NO_S_STA;
-//	if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[0])
-//	{
-//		if(g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[0] > PRESS_STRAIN_CHANGE_LIMIT)
-//		{
-//			g_weight.sta = GO_S_AGGRAVATE;
-//		}
-//	}
-//	else
-//	{
-//		if(g_weight.shiwu_weight_ave_last[0]-g_weight.shiwu_weight_ave > PRESS_STRAIN_CHANGE_LIMIT)
-//		{
-//			g_weight.sta = GO_S_LIGHTEN;
-//		}
-//	}	
-
-//	g_weight.shiwu_weight_ave_last[0] =g_weight.shiwu_weight_ave;
-//}
-
+//阈值判断
+//稳定的数据(误差小于0.3g)，低于10g，认为没有药了，最多连续上报10次，不再上报
+//不低于10g，检测增加和减少药物(一袋阈值2g)
 void press_strain_judge(void)
 { 
-	press_strain_sort_average(g_weight.shiwu_weight ,20);
+	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,20);
 
 	#ifdef DEBUG_MACRO
+		UART1_send_byte('\n');
 		printf_press_strain_weight(g_weight.shiwu_weight_ave);
 	#endif
 
@@ -125,15 +115,24 @@ void press_strain_judge(void)
 	if((g_weight.shiwu_weight_ave > g_weight.shiwu_weight_ave_last[0]+PRESS_STRAIN_STABLE_LIMIT)
 		||(g_weight.shiwu_weight_ave_last[0] > g_weight.shiwu_weight_ave+PRESS_STRAIN_STABLE_LIMIT))
 	{
-		g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave_last[0];
 		g_weight.shiwu_weight_ave_last[0] =	 g_weight.shiwu_weight_ave;
 		return;
 	}
-	
-	
-	if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
+
+	if(g_weight.shiwu_weight_ave < PRESS_STRAIN_LITTLE_LIMIT)
 	{
-		if(g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1] >= PRESS_STRAIN_CHANGE_LIMIT)
+		if(g_weight.little_count < PRESS_STRA_LIEELE_COUNT)
+		{
+			g_weight.sta = GO_S_LITTLE;
+			if(++g_weight.little_count >= PRESS_STRA_LIEELE_COUNT) 
+				g_weight.little_count = PRESS_STRA_LIEELE_COUNT;
+			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+		}
+	}
+	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
+	{
+		g_weight.little_count = 0;
+		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + PRESS_STRAIN_CHANGE_LIMIT)
 		{
 			g_weight.sta = GO_S_AGGRAVATE;
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
@@ -141,7 +140,8 @@ void press_strain_judge(void)
 	}
 	else
 	{
-		if(g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave >= PRESS_STRAIN_CHANGE_LIMIT)
+		g_weight.little_count = 0;
+		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + PRESS_STRAIN_CHANGE_LIMIT)
 		{
 			g_weight.sta = GO_S_LIGHTEN;
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
@@ -151,7 +151,7 @@ void press_strain_judge(void)
 	g_weight.shiwu_weight_ave_last[0] =g_weight.shiwu_weight_ave;
 }
 
-
+//应变式压力传感器处理流程
 void press_strain_handle(void)
 {
 	if(g_weight.sample_flag)
@@ -164,7 +164,7 @@ void press_strain_handle(void)
 
 //排序
 //20个数据排序，首尾各去5个数据，剩余求平均
-void press_strain_sort_average(u32 ch[],u8 num)
+u32 press_strain_sort_average(u32 ch[],u8 num)
 {
 	u8 i,j;
 	u32 temp;
@@ -177,16 +177,41 @@ void press_strain_sort_average(u32 ch[],u8 num)
 		{
 			if(ch[j]>ch[j+1])
 			{
-				int temp=ch[j];
+				temp=ch[j];
 				ch[j]=ch[j+1];
 				ch[j+1]=temp;
 			}
 		}
 	}
 
+#ifdef DEBUG_MACRO
+if(0)
+{
+	UART1_send_byte('\n');
+	for(i=0;i<num;i++)
+	{
+		printf_press_strain_weight(ch[i]);
+		UART1_send_byte('\t');
+		UART1_send_byte('\t');
+		if(i%10 == 9)
+			UART1_send_byte('\n');
+	}
+}
+#endif
+	
 	for(i=5;i<num-5;i++)
 		total+=ch[i];
-	g_weight.shiwu_weight_ave = total/10;
+	return total/10;
+
+#ifdef DEBUG_MACRO
+if(0)
+{
+	UART1_send_byte('\n');
+	printf_press_strain_weight(total/10);
+	UART1_send_byte('\t');
+}
+#endif
+
 }
 
 
