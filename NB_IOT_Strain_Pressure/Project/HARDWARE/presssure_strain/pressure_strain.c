@@ -111,7 +111,8 @@ void press_strain_judge(void)
 	#endif
 
 	g_weight.sta = NO_S_STA;
-	
+
+	//如果数据不稳定,则不做判断
 	if((g_weight.shiwu_weight_ave > g_weight.shiwu_weight_ave_last[0]+PRESS_STRAIN_STABLE_LIMIT)
 		||(g_weight.shiwu_weight_ave_last[0] > g_weight.shiwu_weight_ave+PRESS_STRAIN_STABLE_LIMIT))
 	{
@@ -119,6 +120,9 @@ void press_strain_judge(void)
 		return;
 	}
 
+	//数据稳定之后
+	//逻辑判断:小于10g,会上报缺少药物;现在重量大于之前的重量,加重;反之,减轻;
+	
 	if(g_weight.shiwu_weight_ave < PRESS_STRAIN_LITTLE_LIMIT)
 	{
 		if(g_weight.little_count < PRESS_STRA_LIEELE_COUNT)
@@ -136,6 +140,7 @@ void press_strain_judge(void)
 		{
 			g_weight.sta = GO_S_AGGRAVATE;
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+			g_weight.sta = NO_S_STA;	//加重不再上报
 		}
 	}
 	else
