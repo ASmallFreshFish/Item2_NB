@@ -1,0 +1,6 @@
+---- GS_SDA_IN Matches (5 in 3 files) ----
+Main.c (project\test):			GS_SDA_IN();
+Paj7620u2_iic.c (project\hardware\paj7620u2)://	GS_SDA_IN();  //SDA设置为输入  
+Paj7620u2_iic.c (project\hardware\paj7620u2)://	GS_SDA_IN();//SDA设置为输入
+Paj7620u2_iic.h (project\hardware\paj7620u2)://#define GS_SDA_IN()  {GPIOB->CRH&=0XFFFF0FFF;GPIOB->CRH|=8<<12;}
+Paj7620u2_iic.h (project\hardware\paj7620u2):#define GS_SDA_IN()  {GPIOA->MODER &=0XFFFF3FFF;GPIOA->PUPDR &=0XFFFF3FFF;}
