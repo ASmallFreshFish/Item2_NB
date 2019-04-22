@@ -5,11 +5,10 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];     //接收缓冲,最大USART2_
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-static const char *GESTURE_STA[6]={"UP","DOWN","LEFT","RIGHT","FAR","NEAR"};
-static const char *GESTURE_STA_PAJ[9]={"UP","DOWN","LEFT","RIGHT","FORWARD","BACKWARD","CLKW","ACLKW","WAVE"};
-
-static const u8 GESTURE_STA_LEN[6]={2,4,4,5,3,4};
-static const u8 GESTURE_STA_PAJ_LEN[9]={2,4,4,5,3,4,4,5,4};
+//static const char *GESTURE_STA[6]={"UP","DOWN","LEFT","RIGHT","FAR","NEAR"};
+//static const char *GESTURE_STA_PAJ[9]={"UP","DOWN","LEFT","RIGHT","FORWARD","BACKWARD","CLKW","ACLKW","WAVE"};
+//static const u8 GESTURE_STA_LEN[6]={2,4,4,5,3,4};
+//static const u8 GESTURE_STA_PAJ_LEN[9]={2,4,4,5,3,4,4,5,4};
 
 //static const char *GESTURE_INIT="Gesture sensor initialization success  Gesture sensor is ready";
 
@@ -32,30 +31,57 @@ void gesture_handle(void)
 			{
 				case GES_UP:               
 					g_gesture.sta = UP_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("up\n");
+#endif
 					break; //向上
 				case GES_DOWM:             
 					g_gesture.sta = DOWN_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("down\n");
+#endif
 					break; //向上
 				case GES_LEFT:            
 					g_gesture.sta = LEFT_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("left\n");
+#endif
 					break; //向上
 				case GES_RIGHT:            
 					g_gesture.sta = RIGHT_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("right\n");
+#endif
 					break; //向上
 				case GES_FORWARD:          
 					g_gesture.sta = FORWARD_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("forward\n");
+#endif
 					break; //向上
 				case GES_BACKWARD:        
 					g_gesture.sta = BACKWARD_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("backward\n");
+#endif
 					break; //向上
 				case GES_CLOCKWISE:        
 					g_gesture.sta = CLKWISE_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("clockwise\n");
+#endif
 					break; //向上
 				case GES_COUNT_CLOCKWISE:  
 					g_gesture.sta = ANTICLKWISE_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("anticlockwise\n");
+#endif
 					break; //向上
 				case GES_WAVE:             
 					g_gesture.sta = WAVE_GESTURE;
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("wave\n");
+#endif
 					break; //向上
 				default:  
 					break;

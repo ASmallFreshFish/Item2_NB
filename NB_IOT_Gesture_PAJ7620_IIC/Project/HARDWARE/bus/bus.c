@@ -379,106 +379,13 @@ void upload_press_handle(void)
 	}
 }
 
-
-//++++++++++++++++++++++++++++++++++++++++++++++++
-//gesture upload
-//void upload_buf_gesture_frame(void)
-//{
-//	if(g_gesture.sta)
-//	{
-//		//message_id
-//		sendata_press[0] = '0';
-//		sendata_press[1] = '2';
-//		//head
-//		sendata_press[2] = 0x44;   //D
-//		sendata_press[3] = 0x44;   
-//		//id
-//		sendata_press[4] =  'F';   //F
-//		sendata_press[5] =  'F';
-//		sendata_press[6] =  'F';   //F
-//		sendata_press[7] =  'F';
-//		sendata_press[8] =  'F';   //F
-//		sendata_press[9] =  'F';
-//		//command_type
-//		sendata_press[10] =  'F';   //F
-//		sendata_press[11] =  'E';
-
-//		if(upload_buf_sequence/16>=10)
-//			sendata_press[12]=upload_buf_sequence/16+0x37;//转成A-F的字符
-//		else
-//			sendata_press[12]=upload_buf_sequence/16+0x30; 
-//		if(upload_buf_sequence%16>=10)
-//			sendata_press[13]=upload_buf_sequence%16+0x37;//转成A-F的字符
-//		else
-//			sendata_press[13]=upload_buf_sequence%16+0x30; 
-
-//		switch(g_gesture.sta)
-//		{
-//			case UP_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '1';
-//				break;
-//			case DOWN_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '2';
-//				break;
-//			case LEFT_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '3';
-//				break;
-//			case RIGHT_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '4';
-//				break;
-//			case FAR_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '5';
-//				break;
-//			case NEAR_GESTURE:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '6';
-//				break;
-//			default:
-//				sendata_press[14]= '0';//转成A-F的字符
-//				sendata_press[15]= '0';
-//				break;
-//		}
-
-//		sendata_press[16] = 0;
-//		upload_change_sequence();
-
-//#ifdef DEBUG_MACRO
-//		 UART1_send_byte('\n');
-//		 Uart1_SendStr(sendata_press);
-//		 delay_ms(1000);
-//		 UART1_send_byte('\n');
-//		  //sendata_press[part_loca+10] = '1';
-//#endif
-//	}
-//}
-
-
-//void upload_gesture_handle(void)
-//{
-//	if(g_gesture.sta)
-//	{
-//		BC95_SendCOAPdata("8",sendata_press);
-//		delay_ms(1000);
-//		BC95_RECCOAPData();
-//	}
-//}
-
-
-
 //gesture upload
 //0227
 void upload_buf_gesture_frame(void)
 {
 	u8 loc = 0;
-	u8 t;
-	u8 pp[2];
 	u8 imei_hex_str[31];
-	u8 gesture_str[3];
+	u8 temp_str[3];
 	memset(sendata_gesture,0,sizeof(sendata_gesture));
 	
 	if(g_gesture.sta)
@@ -501,47 +408,21 @@ void upload_buf_gesture_frame(void)
 		loc += 2;
 		
 		//BUS5:SEQUENCE
-		t=upload_buf_sequence;
-		hex_to_char(t,pp);
-		strncat(sendata_gesture,pp,2);
+		hex_to_str(&upload_buf_sequence,temp_str,1);
+		strncat(sendata_gesture,temp_str,2);
 		loc += 2;
 		
 		//BUS6:DATA
-		hex_to_str(&g_gesture.sta,gesture_str,1);
-		strncat(sendata_gesture,"01",2);
-		
-//		switch(g_gesture.sta)
-//		{
-//			case UP_GESTURE:
-//				strncat(sendata_gesture,"01",2);
-//				break;
-//			case DOWN_GESTURE:
-//				strncat(sendata_gesture,"02",2);
-//				break;
-//			case LEFT_GESTURE:
-//				strncat(sendata_gesture,"03",2);
-//				break;
-//			case RIGHT_GESTURE:
-//				strncat(sendata_gesture,"04",2);
-//				break;
-//			case FAR_GESTURE:
-//				strncat(sendata_gesture,"05",2);
-//				break;
-//			case NEAR_GESTURE:
-//				strncat(sendata_gesture,"06",2);
-//				break;
-//			default:
-//				strncat(sendata_gesture,"00",2);
-//				break;
-//		}
+		hex_to_str(&g_gesture.sta,temp_str,1);
+		strncat(sendata_gesture,temp_str,2);
 		loc += 2;
 		
 		sendata_gesture[loc] = 0;
 		upload_change_sequence();
 
 #ifdef DEBUG_MACRO
-		 UART1_send_byte('\n');
 		 Uart1_SendStr(sendata_gesture);
+		 UART1_send_byte('\n');
 #endif
 	}
 }

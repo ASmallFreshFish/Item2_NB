@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190419"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190422\r\n"
 
 extern volatile char RxBuffer2[USART2_BUF_LEN]; 
 extern volatile u8 usart2_read_loc;
@@ -27,7 +27,7 @@ int main(void)
 
 		gesture_handle();
 		upload_buf_gesture_frame();
-//		upload_gesture_handle();
+		upload_gesture_handle();
 
 
 		//test code
@@ -43,7 +43,7 @@ int main(void)
 //		}
 //		else
 //		{
-			//GS_i2c_set_input();
+//			GS_i2c_set_input();
 //			GS_SDA_IN();
 //			sta = GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_5);
 //			if(sta)
@@ -75,9 +75,9 @@ void main_init(void)
     TIM4_Int_Init(4999,3199);  // 500ms一次中断
     
     //NB模块的初始化
-//    CDP_Init();//CDP服务器初始化    
-//    BC95_Init();
-//	upload_init();
+    CDP_Init();//CDP服务器初始化    
+    BC95_Init();
+	upload_init();
 
 	//打印程序版本号
 	Uart1_SendStr(VERSION_Y_M_D);
