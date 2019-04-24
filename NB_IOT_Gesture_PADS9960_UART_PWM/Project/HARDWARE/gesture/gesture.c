@@ -5,9 +5,9 @@ extern char RxBuffer2[USART2_BUF_LEN];     //接收缓冲,最大USART2_BUF_LEN�
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-static const char *GESTURE_STA[6]={"UP","DOWN","LEFT","RIGHT","NEAR","FAR"};
+static const char *GESTURE_STA[7]={"UP","DOWN","LEFT","RIGHT","NEAR","FAR","NONE"};
 //static const char *GESTURE_STA_PAJ[9]={"UP","DOWN","LEFT","RIGHT","FORWARD","BACKWARD","CLKW","ACLKW","WAVE"};
-static const u8 GESTURE_STA_LEN[6]={2,4,4,5,4,3};
+static const u8 GESTURE_STA_LEN[7]={2,4,4,5,4,3,4};
 //static const u8 GESTURE_STA_PAJ_LEN[9]={2,4,4,5,3,4,4,5,4};
 
 //static const char *GESTURE_INIT="Gesture sensor initialization success  Gesture sensor is ready";
@@ -172,6 +172,15 @@ void gesture_pads9960_pwm_handle(void)
 			g_gesture.sta = BACKWARD_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[5]);
 			usart2_read_loc+=GESTURE_STA_LEN[5];
+		}
+		else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[6],GESTURE_STA_LEN[6]))
+		{
+#ifdef DEBUG_MACRO
+	Uart1_SendStr("none");
+#endif
+			g_gesture.sta = NO_GESTURE;
+			clear_buf(RxBuffer2,GESTURE_STA_LEN[6]);
+			usart2_read_loc+=GESTURE_STA_LEN[6];
 		}
 		else
 		{

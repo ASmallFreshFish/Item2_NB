@@ -9,6 +9,8 @@
 #include "main.h"
 #include "usart.h"
 #include "timer.h"
+#include "iwdg.h"
+
 #include "delay.h"
 #include "sys.h"
 #include "bc95.h"
@@ -19,6 +21,7 @@
 #include "gesture.h"
 #include "paj7620u2.h"
 #include "paj7620u2_iic.h"
+
 
 
 #endif

@@ -365,7 +365,7 @@
               <MiscControls>--c99</MiscControls>
               <Define>USE_STDPERIPH_DRIVER, STM32L1XX_MD, USE_STM32L152_EVAL</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include;..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc;..\..\..\Utilities\STM32_EVAL;..\..\..\Utilities\STM32_EVAL\Common;..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL;..\..\HARDWARE\usart;..\..\HARDWARE\TIMER;..\..\HARDWARE\BC95;..\..\HARDWARE\LED;..\..\HARDWARE\key;..\..\HARDWARE\delay;..\..\HARDWARE\DHT11;..\..\..\Libraries\CMSIS\Include;..\..\HARDWARE\bus;..\..\Test;..\..\HARDWARE\pressure;..\..\HARDWARE\gesture;..\..\HARDWARE\PAJ7620U2</IncludePath>
+              <IncludePath>..\;..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include;..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc;..\..\..\Utilities\STM32_EVAL;..\..\..\Utilities\STM32_EVAL\Common;..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL;..\..\HARDWARE\usart;..\..\HARDWARE\TIMER;..\..\HARDWARE\BC95;..\..\HARDWARE\LED;..\..\HARDWARE\key;..\..\HARDWARE\delay;..\..\HARDWARE\DHT11;..\..\..\Libraries\CMSIS\Include;..\..\HARDWARE\bus;..\..\Test;..\..\HARDWARE\pressure;..\..\HARDWARE\gesture;..\..\HARDWARE\PAJ7620U2;..\..\HARDWARE\IWDG</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -723,6 +723,11 @@
               <FileName>paj7620u2_iic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HARDWARE\IWDG\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1446,6 +1451,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c</FilePath>
             </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HARDWARE\IWDG\iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2168,6 +2178,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c</FilePath>
             </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HARDWARE\IWDG\iwdg.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
@@ -2889,6 +2904,11 @@
               <FileName>paj7620u2_iic.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c</FilePath>
+            </File>
+            <File>
+              <FileName>iwdg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\HARDWARE\IWDG\iwdg.c</FilePath>
             </File>
           </Files>
         </Group>

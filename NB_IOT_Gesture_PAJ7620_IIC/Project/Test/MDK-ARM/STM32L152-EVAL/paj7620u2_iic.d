@@ -39,6 +39,7 @@
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\usart\usart.h
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\delay\delay.h
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\TIMER\timer.h
+.\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\IWDG\iwdg.h
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\delay\sys.h
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\BC95\bc95.h
 .\stm32l152-eval\paj7620u2_iic.o: ..\..\HARDWARE\LED\led.h

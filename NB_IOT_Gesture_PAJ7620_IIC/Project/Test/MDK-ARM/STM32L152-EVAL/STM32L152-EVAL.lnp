@@ -33,6 +33,7 @@
 ".\stm32l152-eval\gesture.o"
 ".\stm32l152-eval\paj7620u2.o"
 ".\stm32l152-eval\paj7620u2_iic.o"
+".\stm32l152-eval\iwdg.o"
 --library_type=microlib --strict --scatter ".\STM32L152-EVAL\STM32L152-EVAL.sct"
 
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols

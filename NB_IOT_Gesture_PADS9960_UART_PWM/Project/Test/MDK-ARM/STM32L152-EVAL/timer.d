@@ -39,6 +39,7 @@
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\usart\usart.h
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\delay\delay.h
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\TIMER\timer.h
+.\stm32l152-eval\timer.o: ..\..\HARDWARE\IWDG\iwdg.h
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\delay\sys.h
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\BC95\bc95.h
 .\stm32l152-eval\timer.o: ..\..\HARDWARE\LED\led.h

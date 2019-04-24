@@ -6,13 +6,11 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190423\r\n"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190424\r\n"
 
 extern volatile char RxBuffer2[USART2_BUF_LEN]; 
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
-
-
 
 int main(void)
 {
@@ -20,6 +18,7 @@ int main(void)
 	
 	while (1)
 	{	
+		IWDG_Feed();	 //喂狗
 		gesture_pads9960_pwm_handle();
 		upload_buf_gesture_frame();
 		upload_gesture_handle();
@@ -59,13 +58,17 @@ void main_init(void)
 	//打印程序版本号
 	Uart1_SendStr(VERSION_Y_M_D);
 
-	///*****************硬件模块初始化***********************/
+	///*****************硬件模块使能***********************/
 	//使能串口2:Gesture检测
 	//PADS9960
 	uart2_enable();
 	gesture_pwm_init();
 	
 //	KEY_scan_start();
+
+	///*****************看门狗初始化***********************/
+	IWDG_Init(4,0x0FFF);   //复位时间6.5s(4.3s-8.7s)
+
 }
 
 

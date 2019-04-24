@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190422\r\n"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190424\r\n"
 
 extern volatile char RxBuffer2[USART2_BUF_LEN]; 
 extern volatile u8 usart2_read_loc;
@@ -16,8 +16,6 @@ int main(void)
 {
 	main_init();
 
-	int sta;
-	
 	while (1)
 	{	
 //		gesture_handle();
@@ -25,33 +23,10 @@ int main(void)
 //		upload_buf_gesture_frame();
 //		upload_gesture_handle();
 
+		IWDG_Feed();	//喂狗
 		gesture_handle();
 		upload_buf_gesture_frame();
 		upload_gesture_handle();
-
-
-		//test code
-//		if(GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_15))	
-//		{
-//			GS_SDA_OUT();
-//			PAout(4) = 0;
-//			PAout(5) = 0;
-//			delay_ms(1500);
-//			PAout(4) = 1;
-//			PAout(5) = 1;
-//			delay_ms(1500);
-//		}
-//		else
-//		{
-//			GS_i2c_set_input();
-//			GS_SDA_IN();
-//			sta = GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_5);
-//			if(sta)
-//				Uart1_SendStr("PA5=1!\r\n");
-//			else
-//				Uart1_SendStr("PA5=0!\r\n");
-//			delay_ms(1000);
-//		}
 	}
 }
 
@@ -59,36 +34,40 @@ void main_init(void)
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // interrupt priority level set
     delay_init();	
-	
-	//硬件模块初始化
-    LED_Init();
-//	KEY_init();
-//	press_sensor_adc_init();
-//	ID 温度 湿度
-//  while(DHT11_Init());//初始化DHT11
 
-	//串口、定时器
-    uart_init(9600);  
+	///*****************硬件模块初始化***********************/
+	//串口
+	 uart_init(9600);  
 //	uart2_gesture_init(9600);   //手势检测
     uart3_init(9600);
+	//定时器
 	TIM3_Int_Init(199,3199);   // 20ms一次中断
     TIM4_Int_Init(4999,3199);  // 500ms一次中断
-    
-    //NB模块的初始化
+	//NB模块的初始化
     CDP_Init();//CDP服务器初始化    
     BC95_Init();
 	upload_init();
+	
+    LED_Init();
+//	KEY_init();
+//	press_sensor_adc_init();
 
-	//打印程序版本号
-	Uart1_SendStr(VERSION_Y_M_D);
 	//手势传感器初始化
 	gesture_paj7620u2_init();
 //	GS_i2c_init();//IIC初始化
-	
+
+	//打印程序版本号
+	Uart1_SendStr(VERSION_Y_M_D);
+
+	///*****************硬件模块使能***********************/
 	//使能串口2:Gesture检测
 //	uart2_enable();
-	
 //	KEY_scan_start();
+
+	
+	///*****************看门狗初始化***********************/
+	IWDG_Init(4,0x0FFF);   //复位时间6.5s(4.3s-8.7s)
+
 }
 
 

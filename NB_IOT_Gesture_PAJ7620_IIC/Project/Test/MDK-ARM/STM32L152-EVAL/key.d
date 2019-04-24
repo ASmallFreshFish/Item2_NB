@@ -39,6 +39,7 @@
 .\stm32l152-eval\key.o: ..\..\HARDWARE\usart\usart.h
 .\stm32l152-eval\key.o: ..\..\HARDWARE\delay\delay.h
 .\stm32l152-eval\key.o: ..\..\HARDWARE\TIMER\timer.h
+.\stm32l152-eval\key.o: ..\..\HARDWARE\IWDG\iwdg.h
 .\stm32l152-eval\key.o: ..\..\HARDWARE\delay\sys.h
 .\stm32l152-eval\key.o: ..\..\HARDWARE\BC95\bc95.h
 .\stm32l152-eval\key.o: ..\..\HARDWARE\LED\led.h

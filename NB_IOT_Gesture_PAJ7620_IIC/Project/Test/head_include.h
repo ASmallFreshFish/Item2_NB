@@ -9,6 +9,8 @@
 #include "main.h"
 #include "usart.h"
 #include "timer.h"
+#include "iwdg.h"
+
 #include "delay.h"
 #include "sys.h"
 #include "bc95.h"
