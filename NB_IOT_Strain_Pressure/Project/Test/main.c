@@ -10,7 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190313"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190424"
 
 int main(void)
 {		
@@ -18,29 +18,12 @@ int main(void)
 	
 	while(1)
 	{
+		IWDG_Feed();	 //喂狗
 		press_strain_handle();
 		upload_buf_press_stra_frame();
 		upload_press_stra_handle();
 	}
 }
-
-
-//int main(void)
-//{
-//	main_init();
-//	
-//	while (1)
-//	{	
-//		gesture_handle();
-//		delay_ms(500);
-//		upload_buf_gesture_frame();
-//		upload_gesture_handle();
-
-//		bat_sample();
-//		bat_value_print();
-//			delay_ms(1000);
-//	}
-//}
 
 void main_init(void)
 {
@@ -76,6 +59,11 @@ void main_init(void)
 
 	//启动按键扫描
 //	KEY_scan_start();
+
+	///*****************看门狗初始化***********************/
+//	IWDG_Init(5,0x0FFF);   //复位时间6.5s(4.3s-8.7s),存在发送失败，复位的情况
+	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
+
 }
 
 

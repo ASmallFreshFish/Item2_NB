@@ -263,10 +263,12 @@ void BC95_Init(void)
 	    Clear_Buffer();    
 }
 
+
 void BC95_SendCOAPdata(u8 *len,u8 *data)
 {
 	printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
 	Delay(1000);
+//	Delay(1000);
 	strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
 	if(strx)//表明发送正确，平台收到数据
 	{
@@ -275,20 +277,23 @@ void BC95_SendCOAPdata(u8 *len,u8 *data)
 	}
 	else//如果返回error 一般是第一次与平台握手问题或者是CDP服务器配置问题。用户可以查询下 AT+NMSTATUS? 打印到显示端进行查看
 	{
-		BC95_SendCOAPdata_try(len,data);
-		printf("AT+NMSTATUS?\r\n");//判断当前模块与平台之间的连接关系，一般未发数据之前都是INIITIALISED，如果正常发送到数据到平台之后是MO_DATA_ENABLED
-		Delay(300);
-		strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:MO_DATA_ENABLED");//查看是否返回是这个数据，
-		if(strx)
+		if(BC95_SendCOAPdata_try(len,data) == FALSE)
 		{
-			Uart1_SendStr("Connect OK!\r\n");  //表明连接上正常的，待下次再发数据就可以了
+			printf("AT+NMSTATUS?\r\n");//判断当前模块与平台之间的连接关系，一般未发数据之前都是INIITIALISED，如果正常发送到数据到平台之后是MO_DATA_ENABLED
+			Delay(300);
+			strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:MO_DATA_ENABLED");//查看是否返回是这个数据，
+			if(strx)
+			{
+				Uart1_SendStr("Connect OK!\r\n");  //表明连接上正常的，待下次再发数据就可以了
+			}
+			Clear_Buffer();	//打印平台的返回值
 		}
-		Clear_Buffer();	//打印平台的返回值
 	}      
 	Clear_Buffer();	
 	
 }
 //接收平台端对设备数据的下发
+
 void BC95_RECCOAPData(void)
 {
 	char i;
@@ -306,22 +311,29 @@ void BC95_RECCOAPData(void)
 //	}
 }
 
-void BC95_SendCOAPdata_try(u8 *len,u8 *data)
+u8 BC95_SendCOAPdata_try(u8 *len,u8 *data)
 {
  	u8 count;
+	u8 result = FALSE;
 	for(count = 0;count <3;count++)
 	{
+		Uart1_SendStr("retry\t");//就让串口1打印发送成功提示
+		UART1_send_byte((char)(count+1+'0'));
+		Uart1_SendStr("\r\n");
+		
 		printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
 		Delay(1000);
 		strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
 		if(strx)//表明发送正确，平台收到数据
 		{
 			Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
-			Clear_Buffer();	
+			Clear_Buffer();
+			result = TRUE;
 			break;
 		}
 		Clear_Buffer();
-		
 	}
+	return result;
 }
+
 
