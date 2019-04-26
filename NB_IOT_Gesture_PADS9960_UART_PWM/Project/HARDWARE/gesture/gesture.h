@@ -5,6 +5,8 @@
 #define OK_STRING 	"OK"
 
 //手势传感器的顺序也是上传的数据
+//01 02 03 04 05 06 07 08 09 10
+//上 下 左 右 前 后 顺 逆 挥 有(不能区分)
 typedef enum
 {
 	NO_GESTURE = 0,
@@ -16,7 +18,8 @@ typedef enum
 	BACKWARD_GESTURE,
 	CLKWISE_GESTURE,   
 	ANTICLKWISE_GESTURE,
-	WAVE_GESTURE
+	WAVE_GESTURE,
+	NONE_GESTURE
 }gesture_type;
 
 typedef struct

@@ -178,7 +178,7 @@ void gesture_pads9960_pwm_handle(void)
 #ifdef DEBUG_MACRO
 	Uart1_SendStr("none");
 #endif
-			g_gesture.sta = NO_GESTURE;
+			g_gesture.sta = NONE_GESTURE;
 			clear_buf(RxBuffer2,GESTURE_STA_LEN[6]);
 			usart2_read_loc+=GESTURE_STA_LEN[6];
 		}
