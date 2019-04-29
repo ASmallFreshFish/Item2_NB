@@ -5,8 +5,12 @@
 //因为不同的传感器特性曲线不是很一致，因此，每一个传感器需要矫正这里这个参数才能使测量值很准确。
 //对应的系数和常量值
 #define GapValue 2322
-#define MAOPI_AD 8618982
-#define MAOPI_WEIGHT (3711.8)
+//#define MAOPI_AD 8618982
+//#define MAOPI_WEIGHT (3711.8)
+#define MAOPI_AD_EVERY_100G 232200
+#define MAOPI_AD (9852392-MAOPI_AD_EVERY_100G)
+#define MAOPI_WEIGHT (1.0*MAOPI_AD/GapValue)
+
 #define PRESS_STRAIN_LITTLE_LIMIT 100    // 10g
 //#define PRESS_STRAIN_CHANGE_LIMIT 20    // 2g
 #define PRESS_STRAIN_CHANGE_LIMIT 15    // 1.5g

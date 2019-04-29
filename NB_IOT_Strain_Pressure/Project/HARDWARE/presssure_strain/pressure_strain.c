@@ -66,18 +66,20 @@ u32 HX711_Read(void)        //增益128
 void Get_Maopi(void)
 {
 	g_weight.maopi_ad = HX711_Read();	
-	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue; 		//计算毛皮的实际重量
+	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue;//计算毛皮的实际重量(此处为重量10倍，显示到0.1g)		
 
-#ifdef DEBUG_MACRO
 	UART1_send_byte('\n');
 	printf_press_strain_ad(g_weight.maopi_ad);
 	UART1_send_byte('\t');
 	UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight);
-#endif	
 
 	g_weight.maopi_ad = MAOPI_AD;
 	g_weight.maopi_weight = MAOPI_WEIGHT;
+
+	UART1_send_byte('\t');
+	UART1_send_byte('\t');
+	printf_press_strain_weight(g_weight.maopi_weight);
 } 
 
 //称重
