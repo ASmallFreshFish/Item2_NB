@@ -3,6 +3,7 @@
 ###### 1. [time_190424_1203](#1) 
 ###### 2. [time_190424_1718](#2) 
 ###### 3. [time_190426_1459](#3) 
+###### 4. [time_190505_1706](#4) 
 ---
 ---
 
@@ -47,4 +48,17 @@
 ##### 4.NB_IOT_Key：NO !
 ##### 5.NB_IOT_Pressure：NO !
 ##### 6.NB_IOT_Strain_Pressure：NO !
+
+---
+---
+## <span id="4">*time_190505_1706*</span>
+###### [返回目录](#99) 
+##### 1.NB_IOT_Gesture：    NO !
+##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
+##### 3.NB_IOT_Gesture_PAJ7620_IIC：    NO !
+##### 4.NB_IOT_Key：    NO !
+##### 5.NB_IOT_Pressure：   NO !
+##### 6.NB_IOT_Strain_Pressure：    NO !
+##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：
+    完成基本功能！
 
