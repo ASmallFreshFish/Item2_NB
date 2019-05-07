@@ -93,7 +93,7 @@ void vl53l0x_general_start_mode(VL53L0X_Dev_t *dev,u8 mode)
 
 		hex_to_str(&ranging_data,temp_str,2);
 		Uart1_SendStr(temp_str);
-		UART1_send_byte('\n');
+		Uart1_SendStr("\t\t\t");
 	}
 }	
 
@@ -107,6 +107,11 @@ void vl53l0x_general_start(VL53L0X_Dev_t *dev)
 	{
 		Status = vl53l0x_start_single_test(dev,&vl53l0x_data,buf);//执行一次测量
 
+//		hex_to_str(&ranging_data,temp_str,2);
+//		Uart1_SendStr(temp_str);
+//		Uart1_SendStr("\t\t\t");
+		
+		ranging_data -= 10;
 		hex_to_str(&ranging_data,temp_str,2);
 		Uart1_SendStr(temp_str);
 		UART1_send_byte('\n');

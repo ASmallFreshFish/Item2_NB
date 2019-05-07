@@ -192,14 +192,8 @@ void vl53l0x_reset(VL53L0X_Dev_t *dev)
 
 void test_vl5310x_judge(void)
 {
-	u8 temp_str[3];
-	u8 temp =	ranging_data;
-	hex_to_str(&temp,temp_str,1);
-		Uart1_SendStr(temp_str);
-		UART1_send_byte('\n');
-		
 	g_ranging.sta=NO_DETECTION;
-	if(temp < RANGING_LIMIT_LOW)
+	if(ranging_data < RANGING_LIMIT_LOW)
 	{
 		g_ranging.sta = HAVE_DETECTION;
 	}

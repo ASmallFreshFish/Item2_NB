@@ -4,6 +4,7 @@
 ###### 2. [time_190424_1718](#2) 
 ###### 3. [time_190426_1459](#3) 
 ###### 4. [time_190505_1706](#4) 
+###### 5. [time_190507_1045](#5) 
 ---
 ---
 
@@ -51,7 +52,7 @@
 
 ---
 ---
-## <span id="4">*time_190505_1706*</span>
+## <span id="5">*time_190507_1045*</span>
 ###### [返回目录](#99) 
 ##### 1.NB_IOT_Gesture：    NO !
 ##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
@@ -60,5 +61,5 @@
 ##### 5.NB_IOT_Pressure：   NO !
 ##### 6.NB_IOT_Strain_Pressure：    NO !
 ##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：
-    完成基本功能！
+    检测距离设定为5cm，建议实际手位置在4cm以内，无遮挡时大于6cm！
 

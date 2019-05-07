@@ -16,8 +16,10 @@
 #define VL53L0X_Xshut PAout(6)	
 //使能2.8V IO电平模式
 #define USE_I2C_2V8  1
-//设置检测距离下界值为35mm(实际约30mm)
-#define RANGING_LIMIT_LOW 35
+//设置检测距离下界值为35mm
+//#define RANGING_LIMIT_LOW 35
+#define RANGING_LIMIT_LOW 50	//设置下界值为50mm
+
 //测量结果的判断
 typedef enum
 {
