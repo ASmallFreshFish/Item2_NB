@@ -68,7 +68,7 @@ void KEY_scan(void)
 			write_location = 0;
 		}
 		
-		LEDTEST_TOGGLE;
+//		LEDTEST_TOGGLE;
 	}
 	else if((KEY_PA4==0)&&(KEY_PA5==0)&&(KEY_PA6==0)&&(KEY_PB12==0)&&(KEY_PB13==0))
 	{

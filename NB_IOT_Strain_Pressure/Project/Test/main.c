@@ -10,7 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190424"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190603"
 
 int main(void)
 {		
@@ -45,9 +45,9 @@ void main_init(void)
     TIM4_Int_Init(4999,3199);  // 500ms一次中断
     
     //NB模块的初始化
-//    CDP_Init();//CDP服务器初始化    
-//    BC95_Init();
-//	upload_init();
+    CDP_Init();//CDP服务器初始化    
+    BC95_Init();
+	upload_init();
 
 	//打印程序版本号
 	Uart1_SendStr(VERSION_Y_M_D);

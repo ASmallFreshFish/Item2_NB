@@ -79,6 +79,9 @@ void Get_Maopi(void)
 
 	UART1_send_byte('\t');
 	UART1_send_byte('\t');
+	printf_press_strain_ad(g_weight.maopi_ad);
+	UART1_send_byte('\t');
+	UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight);
 } 
 
