@@ -4,17 +4,33 @@
 //校准参数
 //因为不同的传感器特性曲线不是很一致，因此，每一个传感器需要矫正这里这个参数才能使测量值很准确。
 //对应的系数和常量值
+//#define GapValue 2322
+//#define MAOPI_AD_REAL 11348548
+//#define MAOPI_AD_EVERY_100G 232200
+//#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_100G)
+//#define MAOPI_WEIGHT (1.0*MAOPI_AD/GapValue)
+
 #define GapValue 2322
-//#define MAOPI_AD 8618982
-//#define MAOPI_WEIGHT (3711.8)
+//test1
 #define MAOPI_AD_REAL 11348548
 #define MAOPI_AD_EVERY_100G 232200
-#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_100G)
-#define MAOPI_WEIGHT (1.0*MAOPI_AD/GapValue)
+#define MAOPI_AD_EVERY_CLEAR0 (3*MAOPI_AD_EVERY_100G) //该重量相当于传感器清零
+#define MAOPI_AD_EVERY_CLEAR100 (4*MAOPI_AD_EVERY_100G) //该重量相当于传感器称重最小100g
+#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_CLEAR0)
+#define MAOPI_WEIGHT (10.0*MAOPI_AD/GapValue)
+
+//test2
+//#define MAOPI_AD_REAL 9395837
+//#define MAOPI_AD_EVERY_100G 232200
+//#define MAOPI_AD_EVERY_400G (4*232200) //该重量相当于传感器清零
+//#define MAOPI_AD_EVERY_500G (5*232200) //该重量相当于传感器称重最小100g
+//#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_400G)
+//#define MAOPI_WEIGHT (10.0*MAOPI_AD/GapValue)
+
 
 #define PRESS_STRAIN_LITTLE_LIMIT 100    // 10g
 //#define PRESS_STRAIN_CHANGE_LIMIT 20    // 2g
-#define PRESS_STRAIN_CHANGE_LIMIT 15    // 1.5g
+#define PRESS_STRAIN_CHANGE_LIMIT 14    // 1.4g
 #define PRESS_STRAIN_STABLE_LIMIT 3	  // 0.3g
 
 #define PRESS_STRA_SAMPLE_TIME_COUNT 1

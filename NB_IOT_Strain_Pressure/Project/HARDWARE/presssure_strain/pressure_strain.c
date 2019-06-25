@@ -72,7 +72,7 @@ void Get_Maopi(void)
 	printf_press_strain_ad(g_weight.maopi_ad);
 	UART1_send_byte('\t');
 	UART1_send_byte('\t');
-	printf_press_strain_weight(g_weight.maopi_weight);
+	printf_press_strain_weight(g_weight.maopi_weight); //计算毛皮的实际重量(此处为重量倍，显示到0.1g)	
 
 	g_weight.maopi_ad = MAOPI_AD;
 	g_weight.maopi_weight = MAOPI_WEIGHT;

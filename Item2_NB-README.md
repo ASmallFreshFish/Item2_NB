@@ -6,6 +6,7 @@
 ###### 4. [time_190505_1706](#4) 
 ###### 5. [time_190507_1045](#5) 
 ###### 6. [time_190603_1053](#6) 
+###### 7. [time_190625_1810](#7) 
 ---
 ---
 
@@ -66,7 +67,7 @@
 
 ---
 ---
-## <span id="6">*time_190603_1053*</span>
+## <span id="6">*time_190625_1810*</span>
 ###### [返回目录](#99) 
 ##### 1.NB_IOT_Gesture：    NO !
 ##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
@@ -74,6 +75,6 @@
 ##### 4.NB_IOT_Key：    NO !
 ##### 5.NB_IOT_Pressure：   NO !
 ##### 6.NB_IOT_Strain_Pressure：    
-    修改毛皮重量；关闭不必要的灯；开启NB模块！
+    修改预重，兼容药盒及传感器！
 ##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：   NO!
 
