@@ -1,0 +1,4 @@
+---- Uart1_SendStr_Len Matches (3 in 0 files) ----
+Gesture.c (project\hardware\gesture):Uart1_SendStr_Len(RxBuffer2,USART2_BUF_LEN);
+Usart.c (project\hardware\usart):void Uart1_SendStr_Len(char*SendBuf,u8 len)//串口1打印数据代码
+Usart.h (project\hardware\usart):void Uart1_SendStr_Len(char*SendBuf,u8 len);

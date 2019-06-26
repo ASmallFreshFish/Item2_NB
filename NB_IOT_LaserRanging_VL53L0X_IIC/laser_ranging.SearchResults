@@ -1,0 +1,8 @@
+---- ranging_data Matches (7 in 2 files) ----
+Vl53l0x.c (project\hardware\vl53l0x\demo):vu16 ranging_data = 0;//保存测距数据
+Vl53l0x.c (project\hardware\vl53l0x\demo)://	u8 temp =	ranging_data-10;
+Vl53l0x.c (project\hardware\vl53l0x\demo):	if(ranging_data < RANGING_LIMIT_LOW)
+Vl53l0x_gen.c (project\hardware\vl53l0x\demo):extern vu16 ranging_data;//保存测距数据
+Vl53l0x_gen.c (project\hardware\vl53l0x\demo):	ranging_data = pdata->RangeMilliMeter;//保存最近一次测距测量数据
+Vl53l0x_gen.c (project\hardware\vl53l0x\demo):		hex_to_str(&ranging_data,temp_str,2);
+Vl53l0x_gen.c (project\hardware\vl53l0x\demo):		hex_to_str(&ranging_data,temp_str,2);
