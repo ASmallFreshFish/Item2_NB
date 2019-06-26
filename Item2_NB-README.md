@@ -6,7 +6,8 @@
 ###### 4. [time_190505_1706](#4) 
 ###### 5. [time_190507_1045](#5) 
 ###### 6. [time_190603_1053](#6) 
-###### 7. [time_190625_1810](#7) 
+###### 7. [time_190625_1810](#7)   
+###### 8. [time_190626_1853](#8) 
 ---
 ---
 
@@ -67,14 +68,13 @@
 
 ---
 ---
-## <span id="6">*time_190625_1810*</span>
+## <span id="8">*time_190626_1853*</span>
 ###### [返回目录](#99) 
 ##### 1.NB_IOT_Gesture：    NO !
 ##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
 ##### 3.NB_IOT_Gesture_PAJ7620_IIC：    NO !
 ##### 4.NB_IOT_Key：    NO !
 ##### 5.NB_IOT_Pressure：   NO !
-##### 6.NB_IOT_Strain_Pressure：    
-    修改预重，兼容药盒及传感器！
+##### 6.NB_IOT_Strain_Pressure：    NO !
 ##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：   NO!
 

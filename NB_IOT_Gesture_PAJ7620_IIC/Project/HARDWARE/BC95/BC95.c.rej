@@ -1,5 +1,0 @@
-diff a/NB_IOT_Pressure/Project/HARDWARE/BC95/BC95.c b/NB_IOT_Pressure/Project/HARDWARE/BC95/BC95.c	(rejected hunks)
-@@ -244,3 +244,2 @@
- 	{
--		BC95_SendCOAPdata_try(len,data);
- 		printf("AT+NMSTATUS?\r\n");//ÅÐ¶Ïµ±Ç°Ä£¿éÓëÆ½Ì¨Ö®¼äµÄÁ¬½Ó¹ØÏµ£¬Ò»°ãÎ´·¢Êý¾ÝÖ®Ç°¶¼ÊÇINIITIALISED£¬Èç¹ûÕý³£·¢ËÍµ½Êý¾Ýµ½Æ½Ì¨Ö®ºóÊÇMO_DATA_ENABLED

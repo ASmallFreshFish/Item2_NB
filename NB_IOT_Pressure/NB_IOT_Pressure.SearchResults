@@ -1,3 +1,0 @@
----- hex_to_char Matches (2 in 2 files) ----
-Bus.c (project\hardware\bus):u8 * hex_to_char(u8 data_hex,u8 data_ch[2])
-Bus.h (project\hardware\bus):u8 *  hex_to_char(u8 data_hex); 
