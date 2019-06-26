@@ -1,0 +1,51 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Z JW, Microsoft, LIC=YA39U-S0Q0D-RA5DM-XACV9-QA6N8-PNDFL
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.14.0.0
+Toolchain Path:  D:\ProgramFiles\MDK5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\Project.uvprojx
+Project File Date:  03/05/2019
+
+<h2>Output:</h2>
+Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
+compiling usart.c...
+..\..\HARDWARE\usart\usart.c(137): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "void *"
+        memset(RxBuffer2,0,USART2_BUF_LEN-1);
+..\..\HARDWARE\usart\usart.c(234): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                if(check_buf_empty(RxBuffer2,USART2_BUF_LEN,usart2_write_loc))
+..\..\HARDWARE\usart\usart.c(259): warning:  #177-D: variable "result" was declared but never referenced
+        u8 location,result;
+..\..\HARDWARE\usart\usart.c(283): warning:  #177-D: variable "result" was declared but never referenced
+        u8 location,result;
+..\..\HARDWARE\usart\usart.c: 4 warnings, 0 errors
+compiling init.c...
+linking...
+Program Size: Code=8800 RO-data=324 RW-data=220 ZI-data=2060  
+".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 4 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  F:\MyGitHub\Item2_NB\NB_IOT_Gesture\Project\Test\MDK-ARM\RTE
+  D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>

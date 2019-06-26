@@ -1,0 +1,7 @@
+---- main_init Matches (6 in 4 files) ----
+Init.c (project\hardware\init):void main_init(void)
+Init.c (project\hardware\init)://void main_init(void)
+Init.h (project\hardware\init):void main_init(void);
+Main.c (project\test):	main_init();
+Main.c (project\test)://void main_init(void)
+Main.h (project\test)://void main_init(void);
