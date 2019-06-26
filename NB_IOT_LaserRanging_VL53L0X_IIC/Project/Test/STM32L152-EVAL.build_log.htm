@@ -1,0 +1,201 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: μVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Z JW, Microsoft, LIC=YA39U-S0Q0D-RA5DM-XACV9-QA6N8-PNDFL
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.14.0.0
+Toolchain Path:  D:\ProgramFiles\MDK5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+D:\MY3\NB_IOT_LaserRanging_VL53L0X_IIC\Project\Test\MDK-ARM\Project.uvprojx
+Project File Date:  05/05/2019
+
+<h2>Output:</h2>
+Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
+compiling main.c...
+compiling stm32l1xx_it.c...
+compiling BC95.c...
+..\..\HARDWARE\BC95\BC95.c(39): warning:  #223-D: function "printf" declared implicitly
+        printf("AT\r\n"); 
+..\..\HARDWARE\BC95\BC95.c(113): warning:  #223-D: function "printf" declared implicitly
+      printf("AT\r\n"); 
+..\..\HARDWARE\BC95\BC95.c(268): warning:  #223-D: function "printf" declared implicitly
+        printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
+..\..\HARDWARE\BC95\BC95.c(323): warning:  #223-D: function "printf" declared implicitly
+                printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
+..\..\HARDWARE\BC95\BC95.c: 4 warnings, 0 errors
+compiling misc.c...
+compiling stm32l1xx_adc.c...
+compiling stm32l1xx_aes.c...
+compiling stm32l1xx_comp.c...
+compiling stm32l1xx_crc.c...
+compiling stm32l1xx_dbgmcu.c...
+compiling stm32l1xx_exti.c...
+compiling stm32l1xx_gpio.c...
+compiling stm32l1xx_iwdg.c...
+compiling stm32l1xx_lcd.c...
+compiling stm32l1xx_opamp.c...
+compiling stm32l1xx_pwr.c...
+compiling stm32l1xx_rcc.c...
+compiling stm32l1xx_syscfg.c...
+compiling stm32l1xx_tim.c...
+compiling stm32l1xx_usart.c...
+compiling stm32l1xx_wwdg.c...
+compiling stm32l1xx_aes_util.c...
+compiling system_stm32l1xx.c...
+assembling startup_stm32l1xx_md.s...
+compiling usart.c...
+..\..\HARDWARE\usart\usart.c(137): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "void *"
+        memset(RxBuffer2,0,USART2_BUF_LEN-1);
+..\..\HARDWARE\usart\usart.c(233): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                if(check_buf_empty(RxBuffer2,USART2_BUF_LEN,usart2_write_loc))
+..\..\HARDWARE\usart\usart.c(258): warning:  #177-D: variable "result" was declared but never referenced
+        u8 location,result;
+..\..\HARDWARE\usart\usart.c(282): warning:  #177-D: variable "result" was declared but never referenced
+        u8 location,result;
+..\..\HARDWARE\usart\usart.c: 4 warnings, 0 errors
+compiling timer.c...
+compiling LED.c...
+compiling delay.c...
+compiling dht11.c...
+compiling key.c...
+compiling bus.c...
+..\..\HARDWARE\bus\bus.c(172): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(send_buf);
+..\..\HARDWARE\bus\bus.c(240): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(sendata);
+..\..\HARDWARE\bus\bus.c(364): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_press);
+..\..\HARDWARE\bus\bus.c(396): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(400): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(404): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+                hex_to_str(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(405): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(405): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(409): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS4_COMMAND_TYPE_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(414): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(414): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(419): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(419): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(426): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_gesture);
+..\..\HARDWARE\bus\bus.c(455): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(459): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(463): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+                hex_to_str(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(464): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(464): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(468): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS4_COMMAND_TYPE_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(473): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(473): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(478): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(478): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,temp_str,2);
+..\..\HARDWARE\bus\bus.c(485): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_gesture);
+..\..\HARDWARE\bus\bus.c: 25 warnings, 0 errors
+compiling pressure_sensor.c...
+..\..\HARDWARE\pressure\pressure_sensor.c(82): warning:  #223-D: function "memset" declared implicitly
+        memset(&press_ad,0,sizeof(press_ad));
+..\..\HARDWARE\pressure\pressure_sensor.c(115): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(200);
+..\..\HARDWARE\pressure\pressure_sensor.c: 2 warnings, 0 errors
+compiling gesture.c...
+compiling paj7620u2.c...
+compiling paj7620u2_iic.c...
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(57): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(4);
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(69): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(4);
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(83): warning:  #223-D: function "delay_us" declared implicitly
+        GS_IIC_SDA=1;delay_us(3);          
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(104): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(3);
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(116): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(2);
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(138): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(5);  
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c(155): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(4);
+..\..\HARDWARE\PAJ7620U2\paj7620u2_iic.c: 7 warnings, 0 errors
+compiling iwdg.c...
+compiling vl53l0x_api.c...
+compiling vl53l0x_api_calibration.c...
+compiling vl53l0x_api_core.c...
+compiling vl53l0x_api_ranging.c...
+compiling vl53l0x_api_strings.c...
+compiling vl53l0x.c...
+..\..\HARDWARE\VL53L0X\demo\vl53l0x.c(87): warning:  #940-D: missing return statement at end of non-void function "vl53l0x_init"
+  }
+..\..\HARDWARE\VL53L0X\demo\vl53l0x.c: 1 warning, 0 errors
+compiling vl53l0x_gen.c...
+..\..\HARDWARE\VL53L0X\demo\vl53l0x_gen.c(94): warning:  #223-D: function "hex_to_str" declared implicitly
+                hex_to_str(&ranging_data,temp_str,2);
+..\..\HARDWARE\VL53L0X\demo\vl53l0x_gen.c(95): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(temp_str);
+..\..\HARDWARE\VL53L0X\demo\vl53l0x_gen.c(115): warning:  #223-D: function "hex_to_str" declared implicitly
+                hex_to_str(&ranging_data,temp_str,2);
+..\..\HARDWARE\VL53L0X\demo\vl53l0x_gen.c(116): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(temp_str);
+..\..\HARDWARE\VL53L0X\demo\vl53l0x_gen.c: 4 warnings, 0 errors
+compiling vl53l0x_i2c.c...
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(51): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(4);
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(63): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(4);
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(77): warning:  #223-D: function "delay_us" declared implicitly
+        VL_IIC_SDA=1;delay_us(1);          
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(98): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(2);
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(110): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(2);
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(132): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(2);  
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c(149): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(4);
+..\..\HARDWARE\VL53L0X\platform\vl53l0x_i2c.c: 7 warnings, 0 errors
+compiling vl53l0x_platform.c...
+linking...
+Program Size: Code=22176 RO-data=276 RW-data=940 ZI-data=2092  
+FromELF: creating hex file...
+"..\STM32L152-EVAL.axf" - 0 Error(s), 54 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\MY3\NB_IOT_LaserRanging_VL53L0X_IIC\Project\Test\MDK-ARM\RTE
+  D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>

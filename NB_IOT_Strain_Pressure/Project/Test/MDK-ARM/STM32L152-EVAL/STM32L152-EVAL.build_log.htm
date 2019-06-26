@@ -1,0 +1,154 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.14.0.0
+Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Z JW, Microsoft, LIC=YA39U-S0Q0D-RA5DM-XACV9-QA6N8-PNDFL
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Standard  Version: 5.14.0.0
+Toolchain Path:  D:\ProgramFiles\MDK5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.05 update 1 (build 106)
+Assembler:       Armasm.exe V5.05 update 1 (build 106)
+Linker/Locator:  ArmLink.exe V5.05 update 1 (build 106)
+Library Manager: ArmAr.exe V5.05 update 1 (build 106)
+Hex Converter:   FromElf.exe V5.05 update 1 (build 106)
+CPU DLL:         SARMCM3.DLL V5.14.0.0
+Dialog DLL:      DCM.DLL V1.13.1.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.14.0_KEIL
+Dialog DLL:      TCM.DLL V1.14.4.0
+ 
+<h2>Project:</h2>
+D:\MY3\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\Project.uvprojx
+Project File Date:  06/26/2019
+
+<h2>Output:</h2>
+Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
+compiling main.c...
+..\main.c(23): warning:  #223-D: function "upload_buf_press_stra_frame" declared implicitly
+                upload_buf_press_stra_frame();
+..\main.c(24): warning:  #223-D: function "upload_press_stra_handle" declared implicitly
+                upload_press_stra_handle();
+..\main.c: 2 warnings, 0 errors
+compiling timer.c...
+compiling key.c...
+compiling bus.c...
+..\..\HARDWARE\bus\bus.c(174): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(send_buf);
+..\..\HARDWARE\bus\bus.c(242): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                Uart1_SendStr(sendata);
+..\..\HARDWARE\bus\bus.c(365): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_press);
+..\..\HARDWARE\bus\bus.c(397): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_press_stra,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(401): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_press_stra,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(405): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+                hex_to_str(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(406): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_press_stra,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(406): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_press_stra,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(410): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_press_stra,BUS4_COMMAND_TYPE_PRESS,2);
+..\..\HARDWARE\bus\bus.c(416): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_press_stra,pp,2);
+..\..\HARDWARE\bus\bus.c(416): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_press_stra,pp,2);
+..\..\HARDWARE\bus\bus.c(423): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_press_stra,BUS6_PRESS_EVENT_AGGRAVATE,2);
+..\..\HARDWARE\bus\bus.c(426): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_press_stra,BUS6_PRESS_EVENT_LIGHTEN,2);
+..\..\HARDWARE\bus\bus.c(429): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_press_stra,BUS6_PRESS_EVENT_LITTLE,2);
+..\..\HARDWARE\bus\bus.c(432): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_press_stra,BUS6_PRESS_EVENT_NO_VALUE,2);
+..\..\HARDWARE\bus\bus.c(442): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_press_stra);
+..\..\HARDWARE\bus\bus.c(456): warning:  #188-D: enumerated type mixed with another type
+                g_weight.sta = 0;
+..\..\HARDWARE\bus\bus.c(474): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(478): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(482): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+                hex_to_str(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(483): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(483): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(487): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,BUS4_COMMAND_TYPE_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(493): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                strncat(sendata_gesture,pp,2);
+..\..\HARDWARE\bus\bus.c(493): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+                strncat(sendata_gesture,pp,2);
+..\..\HARDWARE\bus\bus.c(500): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"01",2);
+..\..\HARDWARE\bus\bus.c(503): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"02",2);
+..\..\HARDWARE\bus\bus.c(506): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"03",2);
+..\..\HARDWARE\bus\bus.c(509): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"04",2);
+..\..\HARDWARE\bus\bus.c(512): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"05",2);
+..\..\HARDWARE\bus\bus.c(515): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"06",2);
+..\..\HARDWARE\bus\bus.c(518): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+                                strncat(sendata_gesture,"00",2);
+..\..\HARDWARE\bus\bus.c(528): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(sendata_gesture);
+..\..\HARDWARE\bus\bus.c: 33 warnings, 0 errors
+compiling gesture.c...
+..\..\HARDWARE\gesture\gesture.c(20): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+        if (check_buf_valid_data(RxBuffer2,USART2_BUF_LEN,usart2_read_loc))
+..\..\HARDWARE\gesture\gesture.c(25): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+  Uart1_SendStr_Len(RxBuffer2,USART2_BUF_LEN);
+..\..\HARDWARE\gesture\gesture.c(27): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                if(check_buf_contain_str(RxBuffer2,GESTURE_STA[0],GESTURE_STA_LEN[0]))  
+..\..\HARDWARE\gesture\gesture.c(33): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[0]);
+..\..\HARDWARE\gesture\gesture.c(36): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[1],GESTURE_STA_LEN[1]))
+..\..\HARDWARE\gesture\gesture.c(42): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[1]);
+..\..\HARDWARE\gesture\gesture.c(45): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[2],GESTURE_STA_LEN[2]))
+..\..\HARDWARE\gesture\gesture.c(51): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[2]);
+..\..\HARDWARE\gesture\gesture.c(54): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[3],GESTURE_STA_LEN[3]))
+..\..\HARDWARE\gesture\gesture.c(60): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[3]);
+..\..\HARDWARE\gesture\gesture.c(63): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[4],GESTURE_STA_LEN[4]))
+..\..\HARDWARE\gesture\gesture.c(69): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[4]);
+..\..\HARDWARE\gesture\gesture.c(72): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[5],GESTURE_STA_LEN[5]))
+..\..\HARDWARE\gesture\gesture.c(78): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[5]);
+..\..\HARDWARE\gesture\gesture.c(87): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,1);
+..\..\HARDWARE\gesture\gesture.c: 15 warnings, 0 errors
+compiling pressure_strain.c...
+..\..\HARDWARE\presssure_strain\pressure_strain.c(46): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(1);
+..\..\HARDWARE\presssure_strain\pressure_strain.c(217): warning:  #111-D: statement is unreachable
+  if(0)
+..\..\HARDWARE\presssure_strain\pressure_strain.c: 2 warnings, 0 errors
+linking...
+Program Size: Code=9044 RO-data=276 RW-data=168 ZI-data=1696  
+".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 52 Warning(s).
+
+<h2>Collection of Component include folders:</h2>
+  D:\MY3\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE
+  D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
+
+<h2>Collection of Component Files used:</h2>
+</pre>
+</body>
+</html>

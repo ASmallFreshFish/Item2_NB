@@ -36,3 +36,4 @@
 .\stm32l152-eval\pressure_sensor.o: ..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h
 .\stm32l152-eval\pressure_sensor.o: ..\..\HARDWARE\usart\usart.h
 .\stm32l152-eval\pressure_sensor.o: ..\..\HARDWARE\LED\led.h
+.\stm32l152-eval\pressure_sensor.o: ..\..\HARDWARE\bus\bus.h
