@@ -38,3 +38,4 @@
 .\stm32l152-eval\bc95.o: D:\ProgramFiles\MDK5\ARM\ARMCC\Bin\..\include\string.h
 .\stm32l152-eval\bc95.o: ..\..\HARDWARE\usart\usart.h
 .\stm32l152-eval\bc95.o: ..\..\HARDWARE\LED\led.h
+.\stm32l152-eval\bc95.o: ..\..\HARDWARE\bus\bus.h

@@ -157,8 +157,13 @@ void press_strain_judge(void)
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 		}
 	}	
-
+	
 	g_weight.shiwu_weight_ave_last[0] =g_weight.shiwu_weight_ave;
+
+	if(g_weight.sta)
+	{
+		g_bus.report_flag |= PRESS_FLAG;
+	}
 }
 
 //应变式压力传感器处理流程

@@ -480,12 +480,12 @@ ARM Macro Assembler    Page 8
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
 ork --depend=.\stm32l152-eval\startup_stm32l1xx_md.d -o.\stm32l152-eval\startup
-_stm32l1xx_md.o -ID:\MY3\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE -ID:\P
-rogramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include -ID:\ProgramF
-iles\MDK5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --predefine="__UVIS
-ION_VERSION SETA 514" --predefine="STM32L1XX_MD SETA 1" --list=.\stm32l152-eval
-\startup_stm32l1xx_md.lst ..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\T
-emplates\arm\startup_stm32l1xx_md.s
+_stm32l1xx_md.o -IF:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-
+ARM\RTE -ID:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include
+ -ID:\ProgramFiles\MDK5\ARM\CMSIS\Include --predefine="__MICROLIB SETA 1" --pre
+define="__UVISION_VERSION SETA 514" --predefine="STM32L1XX_MD SETA 1" --list=.\
+stm32l152-eval\startup_stm32l1xx_md.lst ..\..\..\Libraries\CMSIS\Device\ST\STM3
+2L1xx\Source\Templates\arm\startup_stm32l1xx_md.s
 
 
 

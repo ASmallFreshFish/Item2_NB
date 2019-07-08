@@ -10,7 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190625"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190708"
 
 int main(void)
 {		
@@ -20,8 +20,7 @@ int main(void)
 	{
 		IWDG_Feed();	 //Î¹¹·
 		press_strain_handle();
-		upload_buf_press_stra_frame();
-		upload_press_stra_handle();
+		upload_handle();
 	}
 }
 
@@ -50,6 +49,7 @@ void main_init(void)
 	upload_init();
 
 	//´òÓ¡³ÌÐò°æ±¾ºÅ
+	Uart1_SendStr("\r\n");
 	Uart1_SendStr(VERSION_Y_M_D);
 	//È¥Æ¤²Ù×÷
 	press_strain_init_remove();

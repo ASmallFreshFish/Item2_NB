@@ -4,6 +4,7 @@
 #include "delay.h"
 #include "usart.h"
 #include "led.h"
+#include "bus.h"
 
 char *strx,*extstrx;
 //注意char*与char[]的区别
@@ -15,8 +16,11 @@ BC95 BC95_Status;
 
 void Clear_Buffer(void)//清空缓存
 {
-	u8 i;
+#ifdef DEBUG_MACRO
 	Uart1_SendStr(RxBuffer);
+#endif
+
+	u8 i;
 	for(i=0;i<100;i++)
 		RxBuffer[i]=0;
 	RxCounter=0;
@@ -30,8 +34,11 @@ void copy_buf(char *buf_dest,char *buf_source,u8 len)
 		buf_dest[i] = buf_source[i];
 	}
 	buf_dest[len] = NULL;
-	
-	Uart1_SendStr(buf_dest);
+		//LOG打印
+	#ifdef DEBUG_MACRO_INIT
+		Uart1_SendStr("\r\n");
+		Uart1_SendStr(buf_dest);
+	#endif
 }
 
 void CDP_Init(void)//COAP服务器配置初始化
@@ -138,6 +145,12 @@ void BC95_Init(void)
     printf("AT+CIMI\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
 		Delay(300);
 		strx=strstr((const char*)RxBuffer,(const char*)"46011");//返46011，电信，移动的是其他数值
+		//LOG打印
+		#ifdef DEBUG_MACRO_INIT
+			Uart1_SendStr("\r\n");
+			Uart1_SendStr(strx);
+		#endif
+		
 		Clear_Buffer();	
 		while(strx==NULL)
 		{
@@ -145,20 +158,28 @@ void BC95_Init(void)
 		    printf("AT+CIMI\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
 		    Delay(300);
 		    strx=strstr((const char*)RxBuffer,(const char*)"46011");//返回OK,说明卡是存在的电信，移动的是其他数值
+		    //LOG打印
+		    #ifdef DEBUG_MACRO_INIT
+				Uart1_SendStr("\r\n");
+				Uart1_SendStr(strx);
+			#endif
+			
 		}
 		
-	printf("AT+CGSN=1\r\n");//获取IMEI号，类似是否存在卡的意思，比较重要。
+	printf("AT+CGSN=1\r\n");//获取IMEI号，类似是否存在NB设备的意思，比较重要。
 		Delay(300);
-		strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返46011，电信，移动的是其他数值
+		strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");
+
 		//保存IMEI号码
 		copy_buf(imei_str,strx+6,16);
+		
 		Clear_Buffer();
 		while(strx==NULL)
 		{
 		    Clear_Buffer();	
-		    printf("AT+CGSN=1\r\n");//获取卡号，类似是否存在卡的意思，比较重要。
+		    printf("AT+CGSN=1\r\n");//获取IMEI号，类似是否存在NB设备的意思，比较重要。
 		    Delay(300);
-		    strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");//返回OK,说明卡是存在的电信，移动的是其他数值
+		    strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");
 			copy_buf(imei_str,strx+6,16);
 		}
 		
@@ -271,7 +292,10 @@ void BC95_SendCOAPdata(u8 *len,u8 *data)
 	strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
 	if(strx)//表明发送正确，平台收到数据
 	{
-		Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
+		#ifdef DEBUG_MACRO
+			Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
+		#endif
+		
 		Clear_Buffer();	
 	}
 	else//如果返回error 一般是第一次与平台握手问题或者是CDP服务器配置问题。用户可以查询下 AT+NMSTATUS? 打印到显示端进行查看
@@ -283,7 +307,9 @@ void BC95_SendCOAPdata(u8 *len,u8 *data)
 			strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:MO_DATA_ENABLED");//查看是否返回是这个数据，
 			if(strx)
 			{
-				Uart1_SendStr("Connect OK!\r\n");  //表明连接上正常的，待下次再发数据就可以了
+				#ifdef DEBUG_MACRO
+					Uart1_SendStr("Connect OK!\r\n");  //表明连接上正常的，待下次再发数据就可以了
+				#endif
 			}
 			Clear_Buffer();	//打印平台的返回值
 		}
@@ -298,7 +324,11 @@ void BC95_RECCOAPData(void)
     strx=strstr((const char*)RxBuffer,(const char*)"+NNMI:");//返回+NSONMI:，表明接收到UDP服务器发回的数据
 	if(strx)
 	{
-		Uart1_SendStr("RECEIVE +NIMI OK!\r\n");
+
+		#ifdef DEBUG_MACRO
+			Uart1_SendStr("RECEIVE +NIMI OK!\r\n");
+		#endif
+		
 	    Clear_Buffer();	
 	    for(i=0;i<100;i++)
 	    RxBuffer[i]=0;
@@ -315,16 +345,21 @@ u8 BC95_SendCOAPdata_try(u8 *len,u8 *data)
 	u8 result = FALSE;
 	for(count = 0;count <3;count++)
 	{
-		Uart1_SendStr("retry\t");//就让串口1打印发送成功提示
-		UART1_send_byte((char)(count+1+'0'));
-		Uart1_SendStr("\r\n");
+		#ifdef DEBUG_MACRO
+			Uart1_SendStr("retry\t");//就让串口1打印发送成功提示
+			UART1_send_byte((char)(count+1+'0'));
+			Uart1_SendStr("\r\n");
+		#endif
 		
 		printf("AT+NMGS=%s,%s\r\n",len,data);//发送COAP数据
 		Delay(1000);
 		strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
 		if(strx)//表明发送正确，平台收到数据
 		{
-			Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
+			#ifdef DEBUG_MACRO
+				Uart1_SendStr("SEND DATA OK!\r\n");//就让串口1打印发送成功提示
+			#endif
+			
 			Clear_Buffer();
 			result = TRUE;
 			break;
