@@ -42,6 +42,7 @@
 #define BUS6_PRESS_EVENT_NO_VALUE 	"00"
 //BUS6:HEART EVENT
 #define BUS6_HEART_TICK_EVENT			"01"
+#define BUS6_HEART_TICK_EVENT_DATA	0x01
 
 //heart tick
 //#define HEART_UPLOAD_INTERVAL_5MIN	60
@@ -78,8 +79,10 @@ extern bus_type g_bus;
 void upload_init(void);
 void upload_handle(void);
 void upload_change_sequence(void);
-void upload_buf_press_stra_frame(void);
-void upload_press_stra_handle(void);
+void upload_send_data_frame(u8* command_type,u8 data);
+void upload_send_data_frame_heart_tick(void);
+void upload_send_data_frame_press(void);
+void upload_send_data_handle(void);
 
 void hex_to_char(u8 data_hex,u8 data_ch[2]);
 void hex_to_str(u8 *inchar,u8 *outtxt,u32 len);

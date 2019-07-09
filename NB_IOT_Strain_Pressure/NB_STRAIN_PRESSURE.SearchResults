@@ -1,6 +1,12 @@
----- DEBUG_MACRO_INIT Matches (5 in 2 files) ----
-BC95.c (project\hardware\bc95):	#ifdef DEBUG_MACRO_INIT
-BC95.c (project\hardware\bc95):		#ifdef DEBUG_MACRO_INIT
-BC95.c (project\hardware\bc95):		    #ifdef DEBUG_MACRO_INIT
-Bus.h (project\hardware\bus):#define DEBUG_MACRO_INIT
-Bus.h (project\hardware\bus):#define DEBUG_MACRO_INIT
+---- g_weight.sta Matches (11 in 2 files) ----
+Bus.c (project\hardware\bus)://	if(g_weight.sta)
+Bus.c (project\hardware\bus)://	if(g_weight.sta)
+Bus.c (project\hardware\bus)://	if(g_weight.sta)
+Bus.c (project\hardware\bus):		switch(g_weight.sta)
+Bus.c (project\hardware\bus):		g_weight.sta = 0;
+Pressure_strain.c (project\hardware\presssure_strain):	g_weight.sta = NO_S_STA;
+Pressure_strain.c (project\hardware\presssure_strain):			g_weight.sta = GO_S_LITTLE;
+Pressure_strain.c (project\hardware\presssure_strain):			g_weight.sta = GO_S_AGGRAVATE;
+Pressure_strain.c (project\hardware\presssure_strain):			g_weight.sta = NO_S_STA;	//加重不再上报
+Pressure_strain.c (project\hardware\presssure_strain):			g_weight.sta = GO_S_LIGHTEN;
+Pressure_strain.c (project\hardware\presssure_strain):	if(g_weight.sta)

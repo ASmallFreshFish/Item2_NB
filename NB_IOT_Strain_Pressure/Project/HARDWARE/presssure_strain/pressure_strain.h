@@ -39,9 +39,10 @@
 typedef enum
 {
 	NO_S_STA,
-	GO_S_AGGRAVATE,
-	GO_S_LIGHTEN,
-	GO_S_LITTLE
+	GO_S_AGGRAVATE = 0xFF,
+	GO_S_LIGHTEN = 0xFE,
+	GO_S_LITTLE =0xFD
+
 }press_stra_ch_type;
 
 

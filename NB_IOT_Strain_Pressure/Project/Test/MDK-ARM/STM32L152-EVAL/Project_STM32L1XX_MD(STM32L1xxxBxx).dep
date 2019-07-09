@@ -1,5 +1,5 @@
 Dependencies for Project 'Project', Target 'STM32L1XX_MD(STM32L1xxxBxx)': (DO NOT MODIFY !)
-F (..\main.c)(0x5D22EC82)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
+F (..\main.c)(0x5D22EFA5)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
 I (..\head_include.h)(0x5D132BE8)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
@@ -44,10 +44,10 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
 F (..\stm32l1xx_it.c)(0x5D131A18)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\stm32l1xx_it.o --omf_browse .\stm32l152-eval\stm32l1xx_it.crf --depend .\stm32l152-eval\stm32l1xx_it.d)
 I (..\stm32l1xx_it.h)(0x5D131A18)
 I (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h)(0x5D131A15)
@@ -122,7 +122,7 @@ I (..\main.h)(0x5D131A18)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (..\..\HARDWARE\usart\usart.h)(0x5D131A18)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 F (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\misc.c)(0x5D131A18)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\misc.o --omf_browse .\stm32l152-eval\misc.crf --depend .\stm32l152-eval\misc.d)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D131A18)
 I (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h)(0x5D131A15)
@@ -836,10 +836,10 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
 F (..\..\HARDWARE\LED\LED.c)(0x5D132BE8)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\led.o --omf_browse .\stm32l152-eval\led.crf --depend .\stm32l152-eval\led.d)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h)(0x5D131A15)
@@ -988,11 +988,11 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
-F (..\..\HARDWARE\bus\bus.c)(0x5D22E2B4)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
+F (..\..\HARDWARE\bus\bus.c)(0x5D2305F6)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
 I (..\head_include.h)(0x5D132BE8)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\stdlib.h)(0x5475F300)
@@ -1037,10 +1037,10 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
 F (..\..\HARDWARE\pressure\pressure_sensor.c)(0x5D22E30B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_sensor.o --omf_browse .\stm32l152-eval\pressure_sensor.crf --depend .\stm32l152-eval\pressure_sensor.d)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\delay\delay.h)(0x5D132BE8)
@@ -1078,7 +1078,7 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D131A1
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D131A18)
 I (..\..\HARDWARE\usart\usart.h)(0x5D131A18)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 F (..\..\HARDWARE\gesture\gesture.c)(0x5D131A18)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\gesture.o --omf_browse .\stm32l152-eval\gesture.crf --depend .\stm32l152-eval\gesture.d)
 I (..\head_include.h)(0x5D132BE8)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -1124,10 +1124,10 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
 F (..\..\HARDWARE\presssure_strain\pressure_strain.c)(0x5D22E0FF)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_strain.o --omf_browse .\stm32l152-eval\pressure_strain.crf --depend .\stm32l152-eval\pressure_strain.d)
 I (..\head_include.h)(0x5D132BE8)
 I (D:\ProgramFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -1173,10 +1173,10 @@ I (..\..\HARDWARE\delay\sys.h)(0x5D132BE8)
 I (..\..\HARDWARE\BC95\bc95.h)(0x5D132BE8)
 I (..\..\HARDWARE\LED\led.h)(0x5D131A18)
 I (..\..\HARDWARE\key\key.h)(0x5D131A18)
-I (..\..\HARDWARE\bus\bus.h)(0x5D22EF51)
+I (..\..\HARDWARE\bus\bus.h)(0x5D2307D1)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5D131A18)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D131A18)
-I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D13319A)
+I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5D230372)
 F (..\..\HARDWARE\IWDG\iwdg.c)(0x5D132BE8)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG --c99-I F:\MyGitHub\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\ProgramFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\ProgramFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\iwdg.o --omf_browse .\stm32l152-eval\iwdg.crf --depend .\stm32l152-eval\iwdg.d)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D132BE8)
 I (..\..\HARDWARE\delay\delay.h)(0x5D132BE8)
