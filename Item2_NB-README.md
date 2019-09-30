@@ -10,6 +10,7 @@
 ###### 8. [time_190626_1853](#8) 
 ###### 9. [time_190708_1526](#9) 
 ###### 10. [time_190708_1810](#10) 
+###### 11. [time_190930_1738](#11) 
 ---
 ---
 
@@ -96,13 +97,11 @@
 
 ---
 ---
-## <span id="10">*time_190708_1810*</span>
+## <span id="11">*time_190930_1738*</span>
 ###### [返回目录](#99) 
-##### 1.NB_IOT_Gesture：    NO !
 ##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
-##### 3.NB_IOT_Gesture_PAJ7620_IIC：    NO !
-##### 4.NB_IOT_Key：    NO !
-##### 5.NB_IOT_Pressure：   NO !
 ##### 6.NB_IOT_Strain_Pressure：    
-    优化上报的函数实现。
+    1、增加3kg称重传感器对应的调整系数。
+    2、将配置放到data_setting.h文件中。
+    3、组网过程，蓝灯0.5s闪烁，组网成功，红灯2s闪烁。
 ##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：   NO!

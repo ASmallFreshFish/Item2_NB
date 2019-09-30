@@ -10,7 +10,7 @@ extern volatile char RxBuffer2[USART2_BUF_LEN];
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190708"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:190930"
 
 int main(void)
 {		

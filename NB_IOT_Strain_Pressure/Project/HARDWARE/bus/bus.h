@@ -1,5 +1,6 @@
 #ifndef __BUS_H
 #define __BUS_H
+#include "data_setting.h"
 
 //LOGºê¿ª¹Ø
 //#define DENUG_MACRO_ALL_OPEN 

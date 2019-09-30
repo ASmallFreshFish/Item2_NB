@@ -94,7 +94,16 @@ void TIM4_IRQHandler(void)   //TIM3ÖÐ¶Ï
 		if(netstatus>=BC95_Status.netstatus)
 		{
 			netstatus=0;
-			LEDNET_TOGGLE;
+			
+			if(BC95_Status.netstatus>2)
+			{
+				LEDNET_CLOSE;
+				LEDMCU_TOGGLE;
+			}
+			else
+			{
+				LEDNET_TOGGLE;
+			}
 		}
 
 
