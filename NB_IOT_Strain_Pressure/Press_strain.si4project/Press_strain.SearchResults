@@ -1,8 +1,4 @@
----- MAOPI_AD_EVERY_100G Matches (7 in 1 files) ----
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 15 : //#define MAOPI_AD_EVERY_100G 232200
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 16 : //#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_100G)
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 24 : //#define MAOPI_AD_EVERY_100G 232200
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 25 : //#define MAOPI_AD_EVERY_CLEAR0 (3*MAOPI_AD_EVERY_100G) //该重量相当于传感器清零
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 26 : //#define MAOPI_AD_EVERY_CLEAR100 (4*MAOPI_AD_EVERY_100G) //该重量相当于传感器称重最小100g
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 32 : #define MAOPI_AD_EVERY_100G (100*GapValue)
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 41 : #define MAOPI_AD_EVERY_100G (100*GapValue)
+---- WEIGHT_SENSOR_1KG Matches (3 in 2 files) ----
+data_setting.h (Project\Test) line 8 : #define WEIGHT_SENSOR_1KG
+pressure_strain.h (Project\HARDWARE\presssure_strain) line 6 : //#define WEIGHT_SENSOR_1KG
+pressure_strain.h (Project\HARDWARE\presssure_strain) line 21 : #ifdef WEIGHT_SENSOR_1KG

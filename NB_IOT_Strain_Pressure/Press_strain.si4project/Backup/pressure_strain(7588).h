@@ -39,10 +39,7 @@
 #define MAOPI_WEIGHT (10.0*MAOPI_AD/GapValue)
 
 #else
-//#define GapValue 715 //计算原始
-#define GapValue 703
-
-
+#define GapValue 715
 #define MAOPI_AD_REAL 8463254
 #define MAOPI_AD_EVERY_100G (100*GapValue)
 #define MAOPI_AD_EVERY_400G (400*GapValue) //该重量相当于传感器清零
