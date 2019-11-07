@@ -1,7 +1,8 @@
 #include "head_include.h"
 
 key_type g_key;
-extern u8 volatile write_location;
+u8 volatile write_location = 0;
+
 
 void KEY_init(void)
 {

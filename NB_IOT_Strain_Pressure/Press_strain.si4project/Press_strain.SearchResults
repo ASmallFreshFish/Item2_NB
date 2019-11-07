@@ -1,4 +1,4 @@
----- WEIGHT_SENSOR_1KG Matches (3 in 2 files) ----
-data_setting.h (Project\Test) line 8 : #define WEIGHT_SENSOR_1KG
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 6 : //#define WEIGHT_SENSOR_1KG
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 21 : #ifdef WEIGHT_SENSOR_1KG
+---- bus_type Matches (3 in 2 files) ----
+bus.c (Project\HARDWARE\bus) line 3 : bus_type g_bus ={0};
+{anonbus_type} in bus.h (Project\HARDWARE\bus) : }bus_type;
+bus.h (Project\HARDWARE\bus) line 89 : extern bus_type g_bus;

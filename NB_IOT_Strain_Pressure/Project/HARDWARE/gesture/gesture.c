@@ -1,7 +1,7 @@
 #include "head_include.h"
 #include "string.h"
 
-extern volatile char RxBuffer2[USART2_BUF_LEN];     //接收缓冲,最大USART2_BUF_LEN个字节.
+//extern volatile char RxBuffer2[USART2_BUF_LEN];     //接收缓冲,最大USART2_BUF_LEN个字�?
 extern volatile u8 usart2_read_loc;
 extern volatile u8 usart2_write_loc;
 

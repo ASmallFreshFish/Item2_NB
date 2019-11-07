@@ -15,12 +15,12 @@ void press_ad_debug_print(u16 data)
 	u8 pp[2];
 	
 	t = data;
-	hex_to_char(t,pp);
+	hex8_to_char(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 	
 	t = (data>>8);
-	hex_to_char(t,pp);
+	hex8_to_char(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 	UART1_send_byte('\t');
@@ -32,7 +32,7 @@ void press_ad_debug_print8(u8 data)
 	u8 pp[2];
 	
 	t = data;
-	hex_to_char(t,pp);
+	hex8_to_char(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 }

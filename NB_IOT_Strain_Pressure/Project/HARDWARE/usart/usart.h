@@ -5,6 +5,9 @@
 
 #define USART2_BUF_LEN 100
 
+extern volatile char RxBuffer2[USART2_BUF_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
+
+
 void uart_init(u32 bound);
 void uart3_init(u32 bound);
 void UART1_send_byte(char data);

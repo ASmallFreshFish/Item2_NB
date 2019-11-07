@@ -20,6 +20,7 @@
 #include "pressure_sensor.h"
 #include "gesture.h"
 #include "pressure_strain.h"
+#include "eeprom.h"
 
 #endif
 

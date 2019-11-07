@@ -49,3 +49,4 @@
 .\stm32l152-eval\main.o: ..\..\HARDWARE\pressure\pressure_sensor.h
 .\stm32l152-eval\main.o: ..\..\HARDWARE\gesture\gesture.h
 .\stm32l152-eval\main.o: ..\..\HARDWARE\presssure_strain\pressure_strain.h
+.\stm32l152-eval\main.o: ..\..\HARDWARE\eeprom\eeprom.h

@@ -69,7 +69,7 @@ void Get_Maopi(void)
 	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue;//计算毛皮的实际重量(此处为重量10倍，显示到0.1g)		
 
 	UART1_send_byte('\n');
-	printf_press_strain_ad(g_weight.maopi_ad);
+	printf_u32(g_weight.maopi_ad);
 	UART1_send_byte('\t');UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight); //计算毛皮的实际重量(此处为重量倍，显示到0.1g)	
 
@@ -77,7 +77,7 @@ void Get_Maopi(void)
 	g_weight.maopi_weight = MAOPI_WEIGHT;
 
 	UART1_send_byte('\t');UART1_send_byte('\t');
-	printf_press_strain_ad(g_weight.maopi_ad);
+	printf_u32(g_weight.maopi_ad);
 	UART1_send_byte('\t');UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight);
 } 
@@ -100,19 +100,24 @@ void Get_Weight(void)
 	}
 }
 
+/***************************************************************************/
 //阈值判断
 //稳定的数据(误差小于0.3g)，低于10g，认为没有药了，最多连续上报10次，不再上报
 //不低于10g，检测增加和减少药物(一袋阈值2g)
+//last[0]是实时值，用于判断是否稳定；last[1]是稳态值，用于判断是否是变化超过阈值。
+/***************************************************************************/
+
 void press_strain_judge(void)
 { 
 	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,20);
 
 	#ifdef DEBUG_MACRO
-		UART1_send_byte('\n');
+		printf_char('\n');
 		printf_press_strain_weight(g_weight.shiwu_weight_ave);
 	#endif
 
 	g_weight.sta = NO_S_STA;
+	g_weight.changed_data =0;
 
 	//如果数据不稳定,则不做判断
 	if((g_weight.shiwu_weight_ave > g_weight.shiwu_weight_ave_last[0]+PRESS_STRAIN_STABLE_LIMIT)
@@ -140,9 +145,14 @@ void press_strain_judge(void)
 		g_weight.little_count = 0;
 		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + PRESS_STRAIN_CHANGE_LIMIT)
 		{
-			g_weight.sta = GO_S_AGGRAVATE;
+			if(g_weight.shiwu_weight_ave_last[1] ==0)
+				g_weight.sta = NO_S_STA;
+			else
+				g_weight.sta = GO_S_AGGRAVATE;
+			
+			g_weight.changed_data=g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1];
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
-			g_weight.sta = NO_S_STA;	//加重不再上报
+//			g_weight.sta = NO_S_STA;	//加重不再上报
 		}
 	}
 	else
@@ -151,6 +161,7 @@ void press_strain_judge(void)
 		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + PRESS_STRAIN_CHANGE_LIMIT)
 		{
 			g_weight.sta = GO_S_LIGHTEN;
+			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;
 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 		}
 	}	
@@ -161,6 +172,16 @@ void press_strain_judge(void)
 	{
 		g_bus.report_flag |= PRESS_FLAG;
 	}
+
+#ifdef DEBUG_MACRO
+	printf_string("\tg_weight.sta  change_data:\t ");
+	printf_u8(g_weight.sta);
+	printf_char('\t');
+	printf_u16(g_weight.changed_data);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.changed_data);
+#endif
+
 }
 
 //应变式压力传感器处理流程
@@ -197,18 +218,18 @@ u32 press_strain_sort_average(u32 ch[],u8 num)
 	}
 
 #ifdef DEBUG_MACRO
-if(0)
-{
-	UART1_send_byte('\n');
-	for(i=0;i<num;i++)
+	if(0)
 	{
-		printf_press_strain_weight(ch[i]);
-		UART1_send_byte('\t');
-		UART1_send_byte('\t');
-		if(i%10 == 9)
-			UART1_send_byte('\n');
+		UART1_send_byte('\n');
+		for(i=0;i<num;i++)
+		{
+			printf_press_strain_weight(ch[i]);
+			UART1_send_byte('\t');
+			UART1_send_byte('\t');
+			if(i%10 == 9)
+				UART1_send_byte('\n');
+		}
 	}
-}
 #endif
 	
 	for(i=5;i<num-5;i++)
@@ -216,67 +237,15 @@ if(0)
 	return total/10;
 
 #ifdef DEBUG_MACRO
-if(0)
-{
-	UART1_send_byte('\n');
-	printf_press_strain_weight(total/10);
-	UART1_send_byte('\t');
-}
+	if(0)
+	{
+		UART1_send_byte('\n');
+		printf_press_strain_weight(total/10);
+		UART1_send_byte('\t');
+	}
 #endif
 
 }
 
-
-//打印重量
-void printf_press_strain_weight(u32 num_f)
-{
-	u32 para_f = num_f;
-	u8 bit1,bit2,bit3,bit4,point1;
-	
-	bit1 = para_f/10000;
-		printf_press_strain_u8(bit1);
-	bit2 = para_f%10000/1000;
-		printf_press_strain_u8(bit2);
-	bit3 = para_f%1000/100;
-		printf_press_strain_u8(bit3);
-	bit4 = para_f%100/10;
-		printf_press_strain_u8(bit4);
-	UART1_send_byte('.');
-	point1 = para_f%10;
-		printf_press_strain_u8(point1);
-	UART1_send_byte('g');
-
-//	UART1_send_byte('\n');
-}
-
-void printf_press_strain_ad(u32 num_d)
-{
-	u32 para_f = num_d;
-	u8 i,bit[10];
-
-	for(i=0;i<10;i++)
-	{
-		bit[i] = para_f%10;
-		para_f = para_f/10;
-	}
-	for(i=0;i<10;i++)
-	{
-		printf_press_strain_u8(bit[9-i]);
-	}
-}
-
-void printf_press_strain_u8(u8 data)
-{
- 	u8 t;
-	u8 pp[2];
-	
-	t = data;
-	hex_to_char(t,pp);
-	if(pp[0]!= '0')
-	{
-		UART1_send_byte(pp[0]);
-	}
-	UART1_send_byte(pp[1]);
-}
 
 

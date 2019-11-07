@@ -33,6 +33,7 @@
 ".\stm32l152-eval\gesture.o"
 ".\stm32l152-eval\pressure_strain.o"
 ".\stm32l152-eval\iwdg.o"
+".\stm32l152-eval\eeprom.o"
 --library_type=microlib --strict --scatter ".\STM32L152-EVAL\STM32L152-EVAL.sct"
 
 --diag_suppress=L6329 --summary_stderr --info summarysizes --map --xref --callgraph --symbols

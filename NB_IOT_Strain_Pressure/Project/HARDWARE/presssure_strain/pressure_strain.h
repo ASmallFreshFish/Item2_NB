@@ -2,13 +2,6 @@
 #define __PRESS_STRAIN_H
 #include "data_setting.h"
 
-
-//#define WEIGHT_SENSOR_1KG
-//#define WEIGHT_SENSOR_3KG
-
-
-
-
 //校准参数
 //因为不同的传感器特性曲线不是很一致，因此，每一个传感器需要矫正这里这个参数才能使测量值很准确。
 //对应的系数和常量值
@@ -76,6 +69,7 @@ typedef struct
 	u8 sample_flag;
 	u8 sample_count;
 	u8 little_count;
+	u16 changed_data;
 	u32 maopi_ad;
 	u32 maopi_weight;
 	u32 shiwu_ad;
@@ -101,11 +95,6 @@ void press_strain_init_remove(void);
 void press_strain_judge(void);
 u32 press_strain_sort_average(u32 ch[],u8 num);
 void press_strain_handle(void);
-
-void printf_press_strain_weight(u32 num_f);
-void printf_press_strain_u8(u8 data);
-void printf_press_strain_ad(u32 num_d);
-
 
 
 #endif

@@ -6,16 +6,12 @@
 
 #include "head_include.h"
 
-extern volatile char RxBuffer2[USART2_BUF_LEN]; 
-extern volatile u8 usart2_read_loc;
-extern volatile u8 usart2_write_loc;
-
-#define VERSION_Y_M_D		"VERSION_Y_M_D:190930"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:191107"
 
 int main(void)
 {		
 	main_init();
-	
+
 	while(1)
 	{
 		IWDG_Feed();	 //喂狗
@@ -34,7 +30,6 @@ void main_init(void)
 	KEY_init();
 	press_sensor_adc_init();
 	press_strain_init();
-//	Init_HX711pin();
 
 	//串口、定时器
     uart_init(9600);  
@@ -44,7 +39,7 @@ void main_init(void)
     TIM4_Int_Init(4999,3199);  // 500ms一次中断
     
     //NB模块的初始化
-    CDP_Init();//CDP服务器初始化    
+    CDP_Init();     //CDP服务器初始化    
     BC95_Init();
 	upload_init();
 
@@ -61,7 +56,6 @@ void main_init(void)
 //	KEY_scan_start();
 
 	///*****************看门狗初始化***********************/
-//	IWDG_Init(5,0x0FFF);   //复位时间6.5s(4.3s-8.7s),存在发送失败，复位的情况
 	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
 
 }
