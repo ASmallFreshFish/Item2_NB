@@ -4,7 +4,7 @@ bus_type g_bus ={0};
 u8 upload_send_data[UPLOAD_SEND_DATA_LEN]={0};
 u8 upload_buf_sequence = 1;
 
-extern press_ad_type press_ad;
+extern press_ad_type g_press;
 extern gesture_struct_type g_gesture;
 extern char imei_str[16];
 
@@ -21,7 +21,7 @@ void printf_string(char ch[])
 	Uart1_SendStr(ch);
 }
 
-void printf_u8(u8 data)
+void printf_u8_hexStr(u8 data)
 {
  	u8 t = data;
 	u8 pp[2];
@@ -34,7 +34,7 @@ void printf_u8(u8 data)
 	printf_char(pp[1]);
 }
 
-void printf_u16(u16 data)
+void printf_u16_hexStr(u16 data)
 {
 	u8 i;
 	u16 t=data;
@@ -47,8 +47,24 @@ void printf_u16(u16 data)
 	}
 }
 
+void printf_u16_decStr(u16 data)
+{
+	u16 para_f = data;
+	u8 i,bit[5];
+
+	for(i=0;i<5;i++)
+	{
+		bit[i] = para_f%10;
+		para_f = para_f/10;
+	}
+	for(i=0;i<5;i++)
+	{
+		printf_u8_hexStr(bit[4-i]);
+	}
+}
+
 //二级制32位以十进制表示最大有10位
-void printf_u32(u32 data)
+void printf_u32_decStr(u32 data)
 {
 	u32 para_f = data;
 	u8 i,bit[10];
@@ -60,33 +76,11 @@ void printf_u32(u32 data)
 	}
 	for(i=0;i<10;i++)
 	{
-		printf_u8(bit[9-i]);
+		printf_u8_hexStr(bit[9-i]);
 	}
 }
 
 //特殊应用
-//打印重量
-//void printf_press_strain_weight(u32 num_f)
-//{
-//	u32 para_f = num_f;
-//	u8 bit1,bit2,bit3,bit4,point1;
-//	
-//	bit1 = para_f/10000;
-//		printf_u8(bit1);
-//	bit2 = para_f%10000/1000;
-//		printf_u8(bit2);
-//	bit3 = para_f%1000/100;
-//		printf_u8(bit3);
-//	bit4 = para_f%100/10;
-//		printf_u8(bit4);
-//	UART1_send_byte('.');
-//	point1 = para_f%10;
-//		printf_u8(point1);
-//	UART1_send_byte('g');
-
-	//UART1_send_byte('\n');
-//}
-
 void printf_press_strain_weight(u32 num_f)
 {
 	u32 para_f = num_f;
@@ -104,12 +98,40 @@ void printf_press_strain_weight(u32 num_f)
 	}
 	for(j=i;j<9;j++)
 	{
-		printf_u8(bit[9-j]);
+		printf_u8_hexStr(bit[9-j]);
 	}
 	
 	printf_char('.');
-		printf_u8(bit[0]);
+		printf_u8_hexStr(bit[0]);
 	printf_char('g');
+
+}
+
+void printf_bat_value(u16 num_f)
+{
+	u8 num=5;
+	u16 para_f = num_f;
+	u8 i,j,bit[num];
+
+	for(i=0;i<num;i++)
+	{
+		bit[i] = para_f%10;
+		para_f = para_f/10;
+	}
+	for(i=0;i<num-3;i++)
+	{
+		if(bit[num-1-i]!=0)
+			break;
+	}
+	for(j=i;j<num-2;j++)
+	{
+		printf_u8_hexStr(bit[num-1-j]);
+	}
+	
+	printf_char('.');
+		printf_u8_hexStr(bit[1]);
+		printf_u8_hexStr(bit[0]);
+	printf_char('v');
 
 }
 
@@ -249,15 +271,31 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data)
 
 
 void upload_send_data_handle(void)
-{
-		BC95_SendCOAPdata("22",upload_send_data);
-		delay_ms(1000);
-		BC95_RECCOAPData();
+{		
+	BC95_SendCOAPdata("22",upload_send_data);
+	delay_ms(1000);
+	BC95_RECCOAPData();
 }
 
 // 处理所有上报事件
-void upload_handle(void)
+void  upload_handle(void)
 {
+	if(g_bus.report_flag&BAT_OFF_POWER_FLAG)
+	{
+		//关机上报处理
+		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
+	}
+	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
+	{
+		//低电量上报处理
+		g_bus.have_reported_flag|=g_bus.have_reported_flag;
+	}
+
+	if(g_bat.sta == BAT_STA_OFF_POWER)
+	{
+		return;
+	}
+
 	if(g_bus.report_flag & HEART_FLAG)
 	{
 		g_bus.report_flag &= ~HEART_FLAG;
@@ -285,6 +323,64 @@ void upload_handle(void)
 		g_bus.report_flag &= ~GESTURE_FLAG;
 		//处理
 	}
+
+	
 }
+
+void eld_upload_handle(void)
+{
+	
+	if(g_bus.report_flag & HEART_FLAG)
+	{
+		g_bus.report_flag &= ~HEART_FLAG;
+		//处理
+		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
+		upload_send_data_handle();
+	}
+
+	if(g_bus.report_flag & PRESS_FLAG)
+	{
+		g_bus.report_flag &= ~PRESS_FLAG;
+		//处理
+		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS,g_weight.sta,g_weight.changed_data);
+		upload_send_data_handle();
+	}
+}
+
+
+void old_ad_handle(void)
+{
+
+	if(g_bus.report_flag & HEART_FLAG)
+	{
+		g_bus.report_flag &= ~HEART_FLAG;
+		//处理
+		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
+		upload_send_data_handle();
+	}
+
+	if(g_bus.report_flag & KEY_FLAG)
+	{
+		g_bus.report_flag &= ~KEY_FLAG;
+		//处理
+	}
+
+	if(g_bus.report_flag & PRESS_FLAG)
+	{
+		g_bus.report_flag &= ~PRESS_FLAG;
+		//处理
+		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS,g_weight.sta,g_weight.changed_data);
+		upload_send_data_handle();
+	}
+
+	if(g_bus.report_flag & GESTURE_FLAG)
+	{	
+		g_bus.report_flag &= ~GESTURE_FLAG;
+		//处理
+	}
+
+	
+}
+
 
 

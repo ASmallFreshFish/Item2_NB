@@ -56,18 +56,19 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|changed_data
 
 
 //heart tick(定时器0.5s一次)
-//#define HEART_UPLOAD_INTERVAL_5MIN	60
 #define HEART_UPLOAD_INTERVAL_5MIN	600
+//#define HEART_UPLOAD_INTERVAL_5MIN	120
 
 
 typedef enum
 {
+	NO_REPORT=0,
 	HEART_FLAG = 0x01,
 	KEY_FLAG =  0x02,
 	PRESS_FLAG = 0x04,
 	GESTURE_FLAG = 0x08,
-	reserved_FLAG1 = 0x10,
-	reserved_FLAG2 = 0x20,
+	BAT_LOW_POWER_FLAG = 0x10,
+	BAT_OFF_POWER_FLAG = 0x20,
 	reserved_FLAG3 = 0x40,
 	reserved_FLAG4 = 0x80
 }report_flag_type;
@@ -83,6 +84,7 @@ typedef struct
 //	u8 end_data;
 	u16 heart_count;
 	u8 report_flag;
+	u8 have_reported_flag;
 }bus_type;
 
 extern bus_type g_bus;

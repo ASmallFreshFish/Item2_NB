@@ -26,7 +26,56 @@ Project File Date:  11/07/2019
 
 <h2>Output:</h2>
 Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
-".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 0 Warning(s).
+compiling bus.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(81): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\bus\bus.c(228): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(232): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(236): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+        hex8_to_str(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(237): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(237): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(241): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(241): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(247): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(247): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(253): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(253): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(258): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(258): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(266): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(upload_send_data);
+..\..\HARDWARE\bus\bus.c: 15 warnings, 0 errors
+compiling pressure_sensor.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(81): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\pressure\pressure_sensor.c(67): warning:  #223-D: function "delay_us" declared implicitly
+                delay_us(200);
+..\..\HARDWARE\pressure\pressure_sensor.c(386): warning:  #223-D: function "printf_u16_decStr" declared implicitly
+        printf_u16_decStr(g_press.press_ad_value[6]);
+..\..\HARDWARE\pressure\pressure_sensor.c(438): warning:  #223-D: function "printf_u16_hexStr" declared implicitly
+                printf_u16_hexStr(g_bat.bat_ad_value);
+..\..\HARDWARE\pressure\pressure_sensor.c(452): warning:  #223-D: function "printf_bat_value" declared implicitly
+        printf_bat_value(g_bat.bat_value);
+..\..\HARDWARE\pressure\pressure_sensor.c(454): warning:  #223-D: function "printf_u16_decStr" declared implicitly
+        printf_u16_decStr(g_bat.bat_value);
+..\..\HARDWARE\pressure\pressure_sensor.c: 6 warnings, 0 errors
+linking...
+Program Size: Code=12136 RO-data=276 RW-data=104 ZI-data=2240  
+FromELF: creating hex file...
+".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 21 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE

@@ -30,10 +30,23 @@
 
 #include "stm32l1xx.h"
 
+typedef enum
+{
+	PRESS_HANDLE_STA=0,
+	STRAIN_HANDLE_STA,
+	UPLOAD_HANDLE_STA,
+	BAT_HANDLE_STA
+}main_data_type;
+
+extern main_data_type g_sta;
+
+
 //every loop arround 10ms,send in 1th loop,receive in 101th loop
 #define MAIN_LOOP_UPLOAD_NUM 1 
 #define MAIN_LOOP_RECEIVE_NUM 101
 
+void main_sta_judge(void);
+void main_handle(void);
 void main_init(void);
 
 #endif 

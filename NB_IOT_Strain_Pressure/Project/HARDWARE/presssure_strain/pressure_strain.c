@@ -69,7 +69,7 @@ void Get_Maopi(void)
 	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue;//计算毛皮的实际重量(此处为重量10倍，显示到0.1g)		
 
 	UART1_send_byte('\n');
-	printf_u32(g_weight.maopi_ad);
+	printf_u32_decStr(g_weight.maopi_ad);
 	UART1_send_byte('\t');UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight); //计算毛皮的实际重量(此处为重量倍，显示到0.1g)	
 
@@ -77,7 +77,7 @@ void Get_Maopi(void)
 	g_weight.maopi_weight = MAOPI_WEIGHT;
 
 	UART1_send_byte('\t');UART1_send_byte('\t');
-	printf_u32(g_weight.maopi_ad);
+	printf_u32_decStr(g_weight.maopi_ad);
 	UART1_send_byte('\t');UART1_send_byte('\t');
 	printf_press_strain_weight(g_weight.maopi_weight);
 } 
@@ -112,7 +112,7 @@ void press_strain_judge(void)
 	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,20);
 
 	#ifdef DEBUG_MACRO
-		printf_char('\n');
+		printf_string("\nweight_sample:");
 		printf_press_strain_weight(g_weight.shiwu_weight_ave);
 	#endif
 
@@ -171,13 +171,18 @@ void press_strain_judge(void)
 	if(g_weight.sta)
 	{
 		g_bus.report_flag |= PRESS_FLAG;
+		g_sta =UPLOAD_HANDLE_STA;
+	}
+	else
+	{
+		g_sta =PRESS_HANDLE_STA;
 	}
 
 #ifdef DEBUG_MACRO
 	printf_string("\tg_weight.sta  change_data:\t ");
-	printf_u8(g_weight.sta);
+	printf_u8_hexStr(g_weight.sta);
 	printf_char('\t');
-	printf_u16(g_weight.changed_data);
+	printf_u16_hexStr(g_weight.changed_data);
 	printf_char('\t');
 	printf_press_strain_weight((u32)g_weight.changed_data);
 #endif
@@ -187,12 +192,12 @@ void press_strain_judge(void)
 //应变式压力传感器处理流程
 void press_strain_handle(void)
 {
-	if(g_weight.sample_flag)
-	{
-		g_weight.sample_flag = 0;
+//	if(g_weight.sample_flag)
+//	{
+//		g_weight.sample_flag = 0;
 		Get_Weight();
 		press_strain_judge();
-	}
+//	}
 }
 
 //排序

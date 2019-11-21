@@ -7,13 +7,6 @@
 #define u32 unsigned int 
 #define vu16 volatile unsigned short
 
-//#define u8 unsigned char 
-//#define u16 unsigned short 
-//#define u32 unsigned int 
-//#define volatile u16 vu16;
-
-
-
 #define FALSE 	0
 #define TRUE	1
 
@@ -76,8 +69,5 @@ void Delay(u16 nms);
 //#endif
 
 
-
 #endif
-
-
 

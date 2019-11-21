@@ -8,17 +8,68 @@
 
 #define VERSION_Y_M_D		"VERSION_Y_M_D:191107"
 
+main_data_type g_sta =PRESS_HANDLE_STA;
+
 int main(void)
 {		
 	main_init();
-
+	
 	while(1)
 	{
 		IWDG_Feed();	 //喂狗
-		press_strain_handle();
-		upload_handle();
+		main_sta_judge();
+		main_handle();
 	}
 }
+
+void main_sta_judge(void)
+{
+	if(g_bus.report_flag)
+	{
+		g_sta = UPLOAD_HANDLE_STA;
+	}
+}
+void main_handle(void)
+{
+	switch(g_sta)
+	{
+		case PRESS_HANDLE_STA:
+			press_sensor_handle();
+			break;
+		
+		case STRAIN_HANDLE_STA:
+			press_strain_handle();
+			break;
+		
+		case UPLOAD_HANDLE_STA:
+			bat_hangdle();
+			upload_handle();
+			g_sta = PRESS_HANDLE_STA;
+			break;
+			
+		default:
+			g_sta = PRESS_HANDLE_STA;
+			break;
+	}
+}
+
+
+//int main(void)
+//{		
+//	main_init();
+
+//	while(1)
+//	{
+//		IWDG_Feed();	 //喂狗
+//		bat_hangdle();
+//		if(!g_bat.off_power_flag)
+//		{
+//			press_sensor_handle();
+//			press_strain_handle();
+//			upload_handle();
+//		}
+//	}
+//}
 
 void main_init(void)
 {
@@ -28,8 +79,9 @@ void main_init(void)
 	//硬件模块初始化
     LED_Init();
 	KEY_init();
-	press_sensor_adc_init();
-	press_strain_init();
+	//	adc_init();
+//		press_strain_init();
+
 
 	//串口、定时器
     uart_init(9600);  
@@ -42,6 +94,11 @@ void main_init(void)
     CDP_Init();     //CDP服务器初始化    
     BC95_Init();
 	upload_init();
+
+	adc_init();
+	bat_init();
+	press_sensor_init();
+	press_strain_init();
 
 	//打印程序版本号
 	Uart1_SendStr("\r\n");
@@ -56,7 +113,7 @@ void main_init(void)
 //	KEY_scan_start();
 
 	///*****************看门狗初始化***********************/
-	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
+//	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
 
 }
 

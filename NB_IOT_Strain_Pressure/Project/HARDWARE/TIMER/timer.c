@@ -4,7 +4,7 @@ time_type g_time;
 volatile u8 netstatus;//网络状态灯
 
 extern BC95 BC95_Status;
-extern press_ad_type press_ad;
+extern press_ad_type g_press;
 
 
 void TIM3_Int_Init(u16 arr,u16 psc)
@@ -31,6 +31,13 @@ void TIM3_Int_Init(u16 arr,u16 psc)
 	TIM_Cmd(TIM3, DISABLE);  //不使能TIMx外设
 							 
 }
+/********************************************************
+T=(arr+1)*(psc+1)/HCLK;
+ex:HCLK=2Mhz
+TIM4_Int_Init(4999,3199);
+T=(5000)*(3200)/32=500000us=500ms
+**********************************************************/
+
 
 void TIM4_Int_Init(u16 arr,u16 psc)
 {
@@ -97,22 +104,36 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			
 			if(BC95_Status.netstatus>2)
 			{
-				LEDNET_CLOSE;
-				LEDMCU_TOGGLE;
+				LEDNET_BLUE_CLOSE;
+				LEDMCU_RED_TOGGLE;
 			}
 			else
 			{
-				LEDNET_TOGGLE;
+				LEDNET_BLUE_TOGGLE;
 			}
 		}
 
 
-		g_weight.sample_count++;
-		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
+//		g_weight.sample_count++;
+//		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
+//		{
+//			g_weight.sample_count = 0;
+//			g_weight.sample_flag = 1;
+//		}
+		
+		g_press.sample_count++;
+		if(g_press.sample_count >= PRESS_SAMPLE_TIME_COUNT)
 		{
-			g_weight.sample_count = 0;
-			g_weight.sample_flag = 1;
+			g_press.sample_count = 0;
+			g_press.sample_flag = 1;
 		}
+
+//		g_bat.sample_count++;
+//		if(g_bat.sample_count >= BAT_SAMPLE_INTERVAL_3MIN)
+//		{
+//			g_bat.sample_count =0;
+//			g_bat.sample_flag =1;
+//		}
 
 		g_bus.heart_count++;
 		if(g_bus.heart_count >= HEART_UPLOAD_INTERVAL_5MIN )

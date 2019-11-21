@@ -12,7 +12,9 @@
 //#define MAOPI_WEIGHT (1.0*MAOPI_AD/GapValue)
 
 #ifdef WEIGHT_SENSOR_1KG
-#define GapValue 2322
+//#define GapValue 2322
+#define GapValue 2458.3
+
 
 //test1
 //#define MAOPI_AD_REAL 11348548
@@ -33,7 +35,8 @@
 
 #else
 //#define GapValue 715 //º∆À„‘≠ º
-#define GapValue 703
+//#define GapValue 703
+#define GapValue 689
 
 
 #define MAOPI_AD_REAL 8463254
@@ -46,8 +49,8 @@
 #endif
 
 #define PRESS_STRAIN_LITTLE_LIMIT 100    // 10g
-//#define PRESS_STRAIN_CHANGE_LIMIT 20    // 2g
-#define PRESS_STRAIN_CHANGE_LIMIT 14    // 1.4g
+//#define PRESS_STRAIN_CHANGE_LIMIT 14    // 1.4g
+#define PRESS_STRAIN_CHANGE_LIMIT 25    // 1.4g
 #define PRESS_STRAIN_STABLE_LIMIT 4	  // 0.4g
 
 #define PRESS_STRA_SAMPLE_TIME_COUNT 1
