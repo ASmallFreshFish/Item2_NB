@@ -75,8 +75,8 @@
       <flags>2</flags>
       <showCmd>3</showCmd>
       <MinPosition>
-        <xPos>-32000</xPos>
-        <yPos>-32000</yPos>
+        <xPos>-1</xPos>
+        <yPos>-1</yPos>
       </MinPosition>
       <MaxPosition>
         <xPos>-1</xPos>
@@ -2589,7 +2589,7 @@
       <Doc>
         <Name>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_gpio.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>317</TopLine>
+        <TopLine>319</TopLine>
         <CurrentLine>322</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2607,7 +2607,7 @@
       <Doc>
         <Name>..\..\HARDWARE\gesture\gesture.c</Name>
         <ColumnNumber>29</ColumnNumber>
-        <TopLine>6</TopLine>
+        <TopLine>8</TopLine>
         <CurrentLine>18</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2625,7 +2625,7 @@
       <Doc>
         <Name>..\..\HARDWARE\presssure_strain\pressure_strain.h</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>14</TopLine>
+        <TopLine>15</TopLine>
         <CurrentLine>16</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2643,7 +2643,7 @@
       <Doc>
         <Name>..\..\HARDWARE\delay\delay.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>17</TopLine>
+        <TopLine>19</TopLine>
         <CurrentLine>22</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2652,7 +2652,7 @@
       <Doc>
         <Name>..\..\HARDWARE\usart\usart.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>18</TopLine>
+        <TopLine>20</TopLine>
         <CurrentLine>23</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2661,7 +2661,7 @@
       <Doc>
         <Name>..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Source\Templates\arm\startup_stm32l1xx_md.s</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>139</TopLine>
+        <TopLine>140</TopLine>
         <CurrentLine>141</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2670,7 +2670,7 @@
       <Doc>
         <Name>..\main.c</Name>
         <ColumnNumber>14</ColumnNumber>
-        <TopLine>2</TopLine>
+        <TopLine>4</TopLine>
         <CurrentLine>13</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2679,7 +2679,7 @@
       <Doc>
         <Name>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_usart.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>1273</TopLine>
+        <TopLine>1275</TopLine>
         <CurrentLine>1278</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
@@ -2688,7 +2688,7 @@
       <Doc>
         <Name>..\stm32l1xx_it.c</Name>
         <ColumnNumber>0</ColumnNumber>
-        <TopLine>57</TopLine>
+        <TopLine>59</TopLine>
         <CurrentLine>66</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
