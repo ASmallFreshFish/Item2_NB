@@ -47,6 +47,24 @@ void printf_u16_hexStr(u16 data)
 	}
 }
 
+//二级制8位以十进制表示最大有3位
+void printf_u8_decStr(u8 data)
+{
+	u8 para_f = data;
+	u8 i,bit[3];
+
+	for(i=0;i<3;i++)
+	{
+		bit[i] = para_f%10;
+		para_f = para_f/10;
+	}
+	for(i=0;i<3;i++)
+	{
+		printf_u8_hexStr(bit[2-i]);
+	}
+}
+
+//二级制16位以十进制表示最大有5位
 void printf_u16_decStr(u16 data)
 {
 	u16 para_f = data;
@@ -326,27 +344,6 @@ void  upload_handle(void)
 
 	
 }
-
-void eld_upload_handle(void)
-{
-	
-	if(g_bus.report_flag & HEART_FLAG)
-	{
-		g_bus.report_flag &= ~HEART_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
-		upload_send_data_handle();
-	}
-
-	if(g_bus.report_flag & PRESS_FLAG)
-	{
-		g_bus.report_flag &= ~PRESS_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS,g_weight.sta,g_weight.changed_data);
-		upload_send_data_handle();
-	}
-}
-
 
 void old_ad_handle(void)
 {

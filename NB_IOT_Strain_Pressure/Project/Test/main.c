@@ -82,7 +82,6 @@ void main_init(void)
 	//	adc_init();
 //		press_strain_init();
 
-
 	//串口、定时器
     uart_init(9600);  
 	uart2_gesture_init(9600); 
@@ -99,6 +98,8 @@ void main_init(void)
 	bat_init();
 	press_sensor_init();
 	press_strain_init();
+	eeprom_init();
+	
 
 	//打印程序版本号
 	Uart1_SendStr("\r\n");
@@ -113,7 +114,7 @@ void main_init(void)
 //	KEY_scan_start();
 
 	///*****************看门狗初始化***********************/
-//	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
+	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
 
 }
 

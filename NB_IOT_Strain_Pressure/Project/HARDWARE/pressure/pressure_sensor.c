@@ -309,55 +309,6 @@ void  adc_init(void)
 	{}
 }
 
-void  eld_adc_init(void)
-{ 	
-	ADC_InitTypeDef ADC_InitStructure; 
-	GPIO_InitTypeDef GPIO_InitStructure;
-
-	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE );	  //使能ADC1通道时钟
-
-	//bat检测口
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
-	GPIO_Init(GPIOA, &GPIO_InitStructure);	
-
-	//PA4 5 6 作为模拟通道输入引脚                         
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_6 ;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
-	GPIO_Init(GPIOA, &GPIO_InitStructure);	
-	//PB12 13 14 15作为模拟通道输入引脚                         
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
-	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;		//模拟输入引脚
-	GPIO_Init(GPIOB, &GPIO_InitStructure);	
-
-	ADC_DeInit(ADC1);  //复位ADC1 
-
-	/* Enable the HSI oscillator */
-	RCC_HSICmd(ENABLE);
-	/* Check that HSI oscillator is ready */
-	while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
-
-	ADC_InitStructure.ADC_ScanConvMode = DISABLE;		//模数转换工作在单通道模式
-	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;	//模数转换工作在单次转换模式
-	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;
-//	ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;
-	ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConvEdge_None;	//转换由软件而不是外部触发启动
-	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;	//ADC数据右对齐
-	ADC_InitStructure.ADC_NbrOfConversion = 1;	//顺序进行规则转换的ADC通道的数目
-	ADC_Init(ADC1, &ADC_InitStructure);	//根据ADC_InitStruct中指定的参数初始化外设ADCx的寄存器   
-  
-	ADC_Cmd(ADC1, ENABLE);	//使能指定的ADC1
-
-	memset(&g_press,0,sizeof(g_press));
-
-	/* Wait until the ADC1 is ready */
-	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
-	{}
-
-}
-
-
 void press_sensor_init()
 {
 	memset(&g_press,0,sizeof(g_press));
@@ -378,9 +329,9 @@ void press_ad_sample(void)
 //PB15
 	g_press.press_ad_value[6] = 0;
 	g_press.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,3);
-//	g_press.press_ad_value[6]= get_adc(ADC_Channel_21);
-	g_press.press_ad_value[6] &=(0x00FF);
-//	g_press.press_ad_value[6] =(g_press.press_ad_value[6] >> 8); 
+	g_press.press_ad_value[6] &=(0x00FF);	//8位分辨率
+//	g_press.press_ad_value[6] &=(0x0FFF);	//12位分辨率
+
 #ifdef DEBUG_MACRO
 	printf_string("\npress_sample:");
 	printf_u16_decStr(g_press.press_ad_value[6]);
@@ -390,7 +341,7 @@ void press_ad_sample(void)
 
 void press_ad_judge(void)
 {
-	if(g_press.press_ad_value[6]>1)
+	if(g_press.press_ad_value[6]>10)
 	{
 		g_press.press_result = STA_BOX_CLOSED;
 	}
@@ -427,8 +378,9 @@ void bat_sample(void)
 	//PA0
 	g_bat.bat_ad_value = 0;
 	g_bat.bat_ad_value = get_press_adc_average(ADC_Channel_0,3);
-//	g_bat.bat_ad_value =get_adc(ADC_Channel_0);
-	g_bat.bat_ad_value &=(0x00FF);
+	g_bat.bat_ad_value &=(0x00FF);	//8位分辨率
+//	g_bat.bat_ad_value &=(0x0FFF);	//12位分辨率
+	//error algorithm
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 8); 	//8位分辨率
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 4); 	//12位分辨率
 

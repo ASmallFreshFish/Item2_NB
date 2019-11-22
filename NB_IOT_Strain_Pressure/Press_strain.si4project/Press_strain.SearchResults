@@ -1,4 +1,5 @@
----- g_press.sample_flag Matches (3 in 2 files) ----
-press_sensor_handle in pressure_sensor.c (Project\HARDWARE\pressure) : 	if(g_press.sample_flag == 1 )
-press_sensor_handle in pressure_sensor.c (Project\HARDWARE\pressure) : 		g_press.sample_flag = 0; 
-TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			g_press.sample_flag = 1;
+---- RxCounter Matches (4 in 2 files) ----
+BC95.c (Project\HARDWARE\BC95) line 14 : extern char  RxBuffer[100],RxCounter;
+Clear_Buffer in BC95.c (Project\HARDWARE\BC95) : 	RxCounter=0;
+usart.c (Project\HARDWARE\usart) line 34 : char RxCounter,RxBuffer[100];     //接收缓冲,最大USART_REC_LEN个字节.
+USART3_IRQHandler in usart.c (Project\HARDWARE\usart) : 		RxBuffer[RxCounter++]=USART_ReceiveData(USART3);		//接收模块的数据;

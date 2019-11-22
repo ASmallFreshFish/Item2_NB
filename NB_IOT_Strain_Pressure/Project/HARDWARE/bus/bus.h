@@ -101,11 +101,16 @@ void hex16_to_str(u16 data_hex,u8 *outtxt);
 
 void printf_char(char ch);
 void printf_string(char ch[]);
-void printf_u8(u8 data);
-void printf_u16(u16 data);
-void printf_u32(u32 data);
+void printf_u8_hexStr(u8 data);
+void printf_u16_hexStr(u16 data);
+void printf_u8_decStr(u8 data);
+void printf_u16_decStr(u16 data);
+void printf_u32_decStr(u32 data);
 
+//Ãÿ ‚”¶”√
 void printf_press_strain_weight(u32 num_f);
+void printf_bat_value(u16 num_f);
+
 
 
 #endif

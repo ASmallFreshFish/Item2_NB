@@ -1,9 +1,14 @@
-#include "eeprom.h"
+#include "head_include.h"
 
-#include "delay.h"
-//#include "usart.h"
- 
+eeprom_data_type g_eeprom[]={{0x0,1},{0x64,1},{0xC8,1},{0x12C,1},{0x190,1}};
+
  /*
+ //////////////////////////////////////////////////////////////////////////////////////////////////////
+//用户根据自己的需要设置
+#define STM32_FLASH_SIZE 512 	 		//所选STM32的FLASH容量大小(单位为K)
+#define STM32_FLASH_WREN 1              //使能FLASH写入(0，不是能;1，使能)
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //读取指定地址的半字(16位数据)
 //faddr:读地址(此地址必须为2的倍数!!)
 //返回值:对应数据.
@@ -109,34 +114,20 @@ void Test_Write(u32 WriteAddr,u16 WriteData)
 
 
 
-
-
-#define PEKEY1	0x89ABCDEF		//FLASH_PEKEYR
-#define PEKEY2	0x02030405		//FLASH_PEKEYR
-
-#define EN_INT      	__enable_irq();		//系统开全局中断
-#define DIS_INT     	__disable_irq();	//系统关全局中断
-
-
-/********************************************************************************/
-/*------------------------------------------------------------
- Func: EEPROM数据按字节读出
- Note:
--------------------------------------------------------------*/
+/********************************************************************************
+可以按字节和字读取。
+********************************************************************************/
+//按字节读出，数据在EEPROM里按4字节对齐存储，
 void EEPROM_ReadBytes(u16 Addr,u8 *Buffer,u16 Length)
 {
-	u8 *wAddr;
-	wAddr=(u8 *)(EEPROM_BASE_ADDR+Addr);
+	u32 *wAddr;
+	wAddr=(u32 *)(EEPROM_BASE_ADDR+Addr);
 	while(Length--){
 		*Buffer++=*wAddr++;
 	}	
 }
 
-
-/*------------------------------------------------------------
- Func: EEPROM数据读出
- Note:
--------------------------------------------------------------*/
+//按字读出，数据在EEPROM里按4字节对齐存储，
 void EEPROM_ReadWords(u16 Addr,u16 *Buffer,u16 Length)
 {
 	u32 *wAddr;
@@ -146,17 +137,11 @@ void EEPROM_ReadWords(u16 Addr,u16 *Buffer,u16 Length)
 	}	
 }
 
-
-
-
-/*------------------------------------------------------------
- Func: EEPROM数据按字节写入
- Note:
--------------------------------------------------------------*/
+//按字节写入，数据在EEPROM里按4字节对齐存储，
 void EEPROM_WriteBytes(u16 Addr,u8 *Buffer,u16 Length)
 {
-	u8 *wAddr;
-	wAddr=(u8 *)(EEPROM_BASE_ADDR+Addr);
+	u32 *wAddr;
+	wAddr=(u32 *)(EEPROM_BASE_ADDR+Addr);
 	DIS_INT
 	FLASH->PEKEYR=PEKEY1;				//unlock
 	FLASH->PEKEYR=PEKEY2;
@@ -170,10 +155,7 @@ void EEPROM_WriteBytes(u16 Addr,u8 *Buffer,u16 Length)
 	EN_INT
 }
 
-/*------------------------------------------------------------
- Func: EEPROM数据按字写入
- Note: 字当半字用
--------------------------------------------------------------*/
+//按字写入，数据在EEPROM里按4字节对齐存储，
 void EEPROM_WriteWords(u16 Addr,u16 *Buffer,u16 Length)
 {
 	u32 *wAddr;
@@ -192,65 +174,166 @@ void EEPROM_WriteWords(u16 Addr,u16 *Buffer,u16 Length)
 }
 
 
-
-u8 eeprom_r[100]={0};
-u8 eerpom_w[]={"zhou jian wen !"}; 
-u8 eerpom_w1[100]={0}; 
-#define SIZE sizeof(eerpom_w)
-
-
-void test(void)
+//以ID为偏移，每次双字节清除本ID的100个字节
+//eg：eeprom_clear(0x0,0,25);
+void eeprom_clear(u16 Addr,u32 data,u16 Length)
 {
-//	memset(eeprom_r,0,2048*sizeof(eeprom_r));
-//	EEPROM_ReadWords(0,eeprom_r,100);
+	u32 *wAddr;
+	wAddr=(u32 *)(EEPROM_BASE_ADDR+Addr);
+	DIS_INT
+	FLASH->PEKEYR=PEKEY1;				//unlock
+	FLASH->PEKEYR=PEKEY2;
+	while(FLASH->PECR&FLASH_PECR_PELOCK);
+	FLASH->PECR|=FLASH_PECR_FTDW;		//not fast write
+	while(Length--){
+		*wAddr++=data;
+		while(FLASH->SR&FLASH_SR_BSY);
+	}
+	FLASH->PECR|=FLASH_PECR_PELOCK;
+	EN_INT
+}
 
-	Uart1_SendStr("\na");
-//	EEPROM_WriteBytes(0,eerpom_w,SIZE);
-	EEPROM_WriteWords(0x0,(u16*)eerpom_w,SIZE);
+//按字写入，数据在EEPROM里按4字节对齐存储，
+void eeprom_write(u16 addr,u16 *buffer,u16 length)
+{
+	u8 i;
+	u16 *p_buf=buffer;
+	u16 len=length;
+	u32 *w_addr=(u32 *)(EEPROM_BASE_ADDR+addr);
 
-
-	Uart1_SendStr("b");
-	delay_ms(1000);
-
-//	EEPROM_ReadBytes(0,eeprom_r,SIZE);
-//	Uart1_SendStr("c");
-
-	EEPROM_ReadWords(0,(u16 *)eeprom_r,SIZE);
-	Uart1_SendStr("d\n");
+	DIS_INT
+	FLASH->PEKEYR=PEKEY1;				//unlock
+	FLASH->PEKEYR=PEKEY2;
+	while(FLASH->PECR&FLASH_PECR_PELOCK);
+	FLASH->PECR|=FLASH_PECR_FTDW;		//not fast write
+	for(i=0;i<3;i++)
+	{
+		p_buf=buffer;
+		len=length;
+		while(len--)
+		{
+			*w_addr++=*p_buf++;
+			while(FLASH->SR&FLASH_SR_BSY);
+		}
+	}
 	
-//	EEPROM_ReadWords(0,(u16*)eeprom_r,SIZE);
+	FLASH->PECR|=FLASH_PECR_PELOCK;
+	EN_INT
+}
+
+u8 eeprom_read(u16 addr,u16 *buffer,u16 length)
+{
+	u8 result=TRUE;
+	u8 i;
+	u16 data1,data2,data3;
+	u32 *w_addr=(u32 *)(EEPROM_BASE_ADDR+addr);
+	
+	for(i = 0; i < length; i ++)
+	{
+		data1  = *(u16 *)(w_addr);
+		data2  = *(u16 *)(w_addr + length);
+		data3  = *(u16 *)(w_addr + (u16)(length<<1));
+
+		if(data1 == data2)
+		{
+			*buffer++ = data1;
+		}
+		else if(data1 == data3)
+		{
+			*buffer++ = data1;
+		}
+		else if(data2 == data3)
+		{
+			*buffer++ = data2;
+		}
+		else
+		{
+			*buffer++ = 0;
+			result = FALSE;
+		}
+
+		w_addr++;
+	}
+	return result;
+}
+
+
+/******************************************
+EEPROM应用函数
+******************************************/
+//上电读一下flash，和默认值相同认为OK，否则写flash。
+void eeprom_init()
+{	
+	u16 read_buf[5];
+	u8 result = TRUE;
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
+	{
+		if(read_buf[0] != g_weight.change_threshold)
+		{
+			result=FALSE;
+		}
+	}
+	else
+	{
+		result=FALSE;
+	}
+	if(!result)
+	{
+		eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,25);
+		eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
+			(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
+	}
 }
 
 
 
 
 
+void test(void)
+{	
+	u8 i;
+	u16 eerpom_r[10];
+	u16 eerpom_w[5]={1,2,65535,65534,65533}; 
+//	eeprom_clear(g_eeprom[EEP_ID_W_CHANGE_THRESHOLD],0,25);
 
+//	eeprom_write(g_eeprom[EEP_ID_W_CHANGE_THRESHOLD],(u16*)eerpom_w,5);
+	delay_ms(500);
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,eerpom_r,5))
+	{
+		for(i=0;i<5;i++)
+		{
+			printf_u16_hexStr(eerpom_r[i]);
+			printf_string("\t");
+		}
+	}
+	
+	printf_string("\nd\n");
+}
 
+void old_test()
+{
+	u8 eeprom_r1[10]={0};
+	u8 eeprom_r2[10]={0};
 
+	u16 eerpom_w[5]={1,2,65535,65534,65533};
+	memset(eeprom_r1,0,sizeof(eeprom_r1));
+	memset(eeprom_r2,0,sizeof(eeprom_r2));
+		
+	printf_string("\na:");
+	EEPROM_WriteWords((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,(u16*)eerpom_w,10);
+	printf_string("\tb:");
+	delay_ms(500);
+	EEPROM_ReadWords((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,(u16 *)eeprom_r2,10);
+	printf_string(eeprom_r2);
+	printf_string("\nd\n");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	delay_ms(500);
+	printf_string("\na:");
+	EEPROM_WriteBytes((u16)g_eeprom[EEPROM_ID_RESERVED1].offset_addr,(u8 *)eerpom_w,10);
+	printf_string("\tb:");
+	delay_ms(500);
+	EEPROM_ReadBytes((u16)g_eeprom[EEPROM_ID_RESERVED1].offset_addr,(u8 *)eeprom_r1,10);
+	printf_string(eeprom_r1);
+}
 

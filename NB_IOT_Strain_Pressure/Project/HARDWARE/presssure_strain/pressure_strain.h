@@ -5,26 +5,11 @@
 //校准参数
 //因为不同的传感器特性曲线不是很一致，因此，每一个传感器需要矫正这里这个参数才能使测量值很准确。
 //对应的系数和常量值
-//#define GapValue 2322
-//#define MAOPI_AD_REAL 11348548
-//#define MAOPI_AD_EVERY_100G 232200
-//#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_100G)
-//#define MAOPI_WEIGHT (1.0*MAOPI_AD/GapValue)
-
 #ifdef WEIGHT_SENSOR_1KG
+
 //#define GapValue 2322
 #define GapValue 2458.3
 
-
-//test1
-//#define MAOPI_AD_REAL 11348548
-//#define MAOPI_AD_EVERY_100G 232200
-//#define MAOPI_AD_EVERY_CLEAR0 (3*MAOPI_AD_EVERY_100G) //该重量相当于传感器清零
-//#define MAOPI_AD_EVERY_CLEAR100 (4*MAOPI_AD_EVERY_100G) //该重量相当于传感器称重最小100g
-//#define MAOPI_AD (MAOPI_AD_REAL-MAOPI_AD_EVERY_CLEAR0)
-//#define MAOPI_WEIGHT (10.0*MAOPI_AD/GapValue)
-
-//test2
 #define MAOPI_AD_REAL 9395837
 #define MAOPI_AD_EVERY_100G (100*GapValue)
 #define MAOPI_AD_EVERY_400G (400*GapValue) //该重量相当于传感器清零
@@ -38,7 +23,6 @@
 //#define GapValue 703
 #define GapValue 689
 
-
 #define MAOPI_AD_REAL 8463254
 #define MAOPI_AD_EVERY_100G (100*GapValue)
 #define MAOPI_AD_EVERY_400G (400*GapValue) //该重量相当于传感器清零
@@ -49,8 +33,8 @@
 #endif
 
 #define PRESS_STRAIN_LITTLE_LIMIT 100    // 10g
-//#define PRESS_STRAIN_CHANGE_LIMIT 14    // 1.4g
-#define PRESS_STRAIN_CHANGE_LIMIT 25    // 1.4g
+//#define g_weight.change_threshold 14    // 1.4g
+//#define g_weight.change_threshold 25    // 2.5g
 #define PRESS_STRAIN_STABLE_LIMIT 4	  // 0.4g
 
 #define PRESS_STRA_SAMPLE_TIME_COUNT 1
@@ -73,12 +57,14 @@ typedef struct
 	u8 sample_count;
 	u8 little_count;
 	u16 changed_data;
+	u16 change_threshold;
 	u32 maopi_ad;
 	u32 maopi_weight;
 	u32 shiwu_ad;
 	u32 shiwu_weight[20];
 	u32 shiwu_weight_ave;
 	u32 shiwu_weight_ave_last[2];
+	
 }pressure_strain_type;
 
 extern pressure_strain_type g_weight;

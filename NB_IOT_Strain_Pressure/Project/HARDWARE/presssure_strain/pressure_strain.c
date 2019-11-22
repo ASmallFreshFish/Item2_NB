@@ -6,6 +6,7 @@ void press_strain_init(void)
 {
 	Init_HX711pin();
 	memset(&g_weight,0,sizeof(pressure_strain_type));
+	g_weight.change_threshold = 25;   //´ú±í2.5g
 }
 
 void press_strain_init_remove(void)
@@ -143,7 +144,7 @@ void press_strain_judge(void)
 	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
 	{
 		g_weight.little_count = 0;
-		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + PRESS_STRAIN_CHANGE_LIMIT)
+		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + g_weight.change_threshold)
 		{
 			if(g_weight.shiwu_weight_ave_last[1] ==0)
 				g_weight.sta = NO_S_STA;
@@ -158,7 +159,7 @@ void press_strain_judge(void)
 	else
 	{
 		g_weight.little_count = 0;
-		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + PRESS_STRAIN_CHANGE_LIMIT)
+		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + g_weight.change_threshold)
 		{
 			g_weight.sta = GO_S_LIGHTEN;
 			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;

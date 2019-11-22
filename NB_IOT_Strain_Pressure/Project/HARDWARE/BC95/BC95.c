@@ -273,15 +273,16 @@ void BC95_Init(void)
     printf("AT+NMSTATUS?\r\n");//判断当前模块与平台之间的连接关系，一般未发数据之前都是INIITIALISED，如果正常发送到数据到平台之后是MO_DATA_ENABLED
 		Delay(300);
 		strx=strstr((const char*)RxBuffer,(const char*)"+NMSTATUS:INIITIALISED");//判断是否返回初始化状态。用户可以在此做一些相关的判断
-		if(strx)//如果是的，就点亮LED灯
+//		if(strx)//如果是的，就点亮LED灯
 //			LEDMCU_RED_OPEN;
 		
     printf("AT+NNMI=1\r\n");//配置模块收到下行数据直接打印到串口
 	    Delay(300);
 	    strx=strstr((const char*)RxBuffer,(const char*)"OK");//
 	    for(i=0;i<100;i++)
-	    RxBuffer[i]=0;	
+	    	RxBuffer[i]=0;	
 	    Clear_Buffer();    
+
 }
 
 void BC95_SendCOAPdata(u8 *len,u8 *data)
@@ -317,6 +318,7 @@ void BC95_SendCOAPdata(u8 *len,u8 *data)
 	Clear_Buffer();	
 	
 }
+
 //接收平台端对设备数据的下发
 void BC95_RECCOAPData(void)
 {
@@ -367,6 +369,31 @@ u8 BC95_SendCOAPdata_try(u8 *len,u8 *data)
 		Clear_Buffer();
 	}
 	return result;
+}
+
+
+//接收平台端对设备数据的下发
+void BC95_send_pull_data(void)
+{
+	char i;
+	printf("AT+NMGR\r\n"); 
+		Delay(300);
+    strx=strstr((const char*)RxBuffer,(const char*)"+NNMI:");//返回+NSONMI:，表明接收到UDP服务器发回的数据
+	if(strx)
+	{
+
+		#ifdef DEBUG_MACRO
+			Uart1_SendStr("RECEIVE +NIMI OK!\r\n");
+		#endif
+		
+	    Clear_Buffer();	
+	    for(i=0;i<100;i++)
+	    	RxBuffer[i]=0;
+	}
+//	else
+//	{
+//		Uart1_SendStr("RECEIVE NO +NIMI!\r\n");
+//	}
 }
 
 
