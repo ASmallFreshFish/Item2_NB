@@ -420,7 +420,6 @@ bat_type g_bat;
 void bat_init(void)
 {
 	memset(&g_bat,0,sizeof(bat_type));
-	g_bat.sample_flag =1;
 }
 
 void bat_sample(void)
@@ -447,6 +446,7 @@ void bat_get_value(void)
 //	bat_v =((3.3*g_bat.bat_ad_value)/4096.0)*2;		//12位分辨率，等待返回 电阻分压的
 
 	g_bat.bat_value =bat_v*100;
+	
 #ifdef DEBUG_MACRO
 	printf_char('\t');
 	printf_bat_value(g_bat.bat_value);
@@ -457,6 +457,11 @@ void bat_get_value(void)
 
 void bat_judge(void)
 {
+	if(g_bat.bat_value > BAT_HIGH_POWER_LIMIT)
+	{
+		return;
+	}
+	
 	if(g_bat.bat_value<=BAT_LOW_POWER_LIMIT)
 	{
 		g_bat.normal_power_count = 0;
@@ -517,13 +522,8 @@ void bat_judge(void)
 
 void bat_hangdle()
 {
-	
-//	if(g_bat.sample_flag ==1)
-//	{
-		g_bat.sample_flag =0;
-		bat_sample();
-		bat_get_value();
-		bat_judge();
-//	}
+	bat_sample();
+	bat_get_value();
+	bat_judge();
 }
 

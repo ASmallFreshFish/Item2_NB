@@ -128,13 +128,6 @@ void TIM4_IRQHandler(void)   //TIM3ÖÐ¶Ï
 			g_press.sample_flag = 1;
 		}
 
-//		g_bat.sample_count++;
-//		if(g_bat.sample_count >= BAT_SAMPLE_INTERVAL_3MIN)
-//		{
-//			g_bat.sample_count =0;
-//			g_bat.sample_flag =1;
-//		}
-
 		g_bus.heart_count++;
 		if(g_bus.heart_count >= HEART_UPLOAD_INTERVAL_5MIN )
 		{
