@@ -278,13 +278,13 @@ void  adc_init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);	
 
-	//PB14 15作为模拟通道输入引脚                         
+	//PB14 15作为薄膜压力模拟通道输入引脚                         
 	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_14 | GPIO_Pin_15;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;		//模拟输入引脚
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);	
 
-//	ADC_DeInit(ADC1);  //复位ADC1 
+	ADC_DeInit(ADC1);  //复位ADC1 
 
 	// Enable the HSI oscillator
 	RCC_HSICmd(ENABLE);
@@ -318,12 +318,12 @@ void press_ad_sample(void)
 {
 
 //PB14
-//	g_press.press_ad_value[5] = 0;
-//	g_press.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,5);
-//	g_press.press_ad_value[5] =(g_press.press_ad_value[5] >> 8); 
+	g_press.press_ad_value[5] = 0;
+	g_press.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,3);
+	g_press.press_ad_value[5] &=(0x00FF);	//8位分辨率
 //#ifdef DEBUG_MACRO
-//	press_ad_debug_print(g_press.press_ad_value[5]);
-//	printf_u16_hexStr(g_press.press_ad_value[5]);
+//	printf_string("\npress_sample:");
+//	printf_u16_decStr(g_press.press_ad_value[5]);
 //#endif
 
 //PB15
@@ -334,6 +334,8 @@ void press_ad_sample(void)
 
 #ifdef DEBUG_MACRO
 	printf_string("\npress_sample:");
+	printf_u16_decStr(g_press.press_ad_value[5]);
+	printf_string("\t");
 	printf_u16_decStr(g_press.press_ad_value[6]);
 #endif
 
@@ -341,15 +343,30 @@ void press_ad_sample(void)
 
 void press_ad_judge(void)
 {
-	if(g_press.press_ad_value[6]>10)
+	if(g_press.press_ad_value[5]<PRESS_CLOSE_THRESHOLD)
 	{
-		g_press.press_result = STA_BOX_CLOSED;
+		if(g_press.press_ad_value[6]<PRESS_CLOSE_THRESHOLD)
+		{
+			g_press.press_result = STA_BOX_OPENED_TWO;
+		}
+		else
+		{
+			g_press.press_result = STA_BOX_OPENED_ONE;
+		}
 	}
 	else
 	{
-		g_press.press_result = STA_BOX_OPENED;
-		g_sta = STRAIN_HANDLE_STA;
+		if(g_press.press_ad_value[6]<PRESS_CLOSE_THRESHOLD)
+		{
+			g_press.press_result = STA_BOX_OPENED_ONE;
+		}
+		else
+		{
+			g_press.press_result = STA_BOX_CLOSED;
+		}
 	}
+
+	g_sta = STRAIN_HANDLE_STA;
 }
 
 void press_sensor_handle(void)
@@ -371,6 +388,7 @@ bat_type g_bat;
 void bat_init(void)
 {
 	memset(&g_bat,0,sizeof(bat_type));
+	g_bat.sample_flag =1;
 }
 
 void bat_sample(void)
@@ -398,7 +416,7 @@ void bat_get_value(void)
 //	bat_v =((3.3*g_bat.bat_ad_value)/4096.0)*2;		//12位分辨率，等待返回 电阻分压的
 
 	g_bat.bat_value =bat_v*100;
-	
+
 #ifdef DEBUG_MACRO
 	printf_char('\t');
 	printf_bat_value(g_bat.bat_value);
@@ -417,22 +435,26 @@ void bat_judge(void)
 	if(g_bat.bat_value<=BAT_LOW_POWER_LIMIT)
 	{
 		g_bat.normal_power_count = 0;
+		
 		if(g_bat.bat_value<=BAT_OFF_POWER_LIMIT)
 		{
 			g_bat.off_power_count++;
 			if(g_bat.off_power_count>=3)
 			{
 				g_bat.sta =BAT_STA_OFF_POWER;
+				g_bat.sample_flag =0;
 				LED_all_off();
+				
 			}
 		}
 		else
 		{
 			g_bat.off_power_count=0;
 			g_bat.low_power_count++;
+			g_bat.sample_flag =1;
 			if(g_bat.low_power_count>=3)
 			{
-				g_bat.sta =BAT_STA_LOW_POWER;
+				g_bat.sta = BAT_STA_LOW_POWER;
 			}
 		}
 	}
@@ -441,6 +463,7 @@ void bat_judge(void)
 		g_bat.off_power_count=0;
 		g_bat.low_power_count=0;
 		g_bat.normal_power_count++;
+		g_bat.sample_flag =1;
 		if(g_bat.normal_power_count>=3)
 		{
 			g_bat.sta =BAT_STA_NORMAL_POWER;
@@ -458,13 +481,14 @@ void bat_judge(void)
 		case BAT_STA_OFF_POWER:
 			if(!(g_bus.have_reported_flag&BAT_OFF_POWER_FLAG))
 			{
-				g_bus.report_flag = BAT_OFF_POWER_FLAG;
+				g_bus.report_flag |= BAT_OFF_POWER_FLAG;
 			}
 			break;
 		case BAT_STA_LOW_POWER:
+			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;
 			if(!(g_bus.have_reported_flag&BAT_LOW_POWER_FLAG))
 			{
-				g_bus.report_flag = BAT_LOW_POWER_FLAG;
+				g_bus.report_flag |= BAT_LOW_POWER_FLAG;
 			}
 			break;
 		default:
@@ -473,9 +497,53 @@ void bat_judge(void)
 }
 
 void bat_hangdle()
+{	
+	if(g_bat.sample_flag)
+	{
+		bat_sample();
+		bat_get_value();
+		bat_judge();
+	}
+}
+
+void test_bat()
 {
-	bat_sample();
-	bat_get_value();
-	bat_judge();
+	g_test.count++;
+	if(g_test.count<=5)
+	{
+		g_bat.bat_value =380;
+	}
+	else if(g_test.count<=10)
+	{
+		g_bat.bat_value =360;
+	}
+	else if(g_test.count<=15)
+	{
+		g_bat.bat_value =340;
+	}
+	else if(g_test.count<=20)
+	{
+		g_bat.bat_value =360;
+	}
+	else if(g_test.count<=25)
+	{
+		g_bat.bat_value =380;
+	}
+	else if(g_test.count<=30)
+	{
+		g_bat.bat_value =360;
+	}
+	else if(g_test.count<=35)
+	{
+		g_bat.bat_value =340;
+	}
+	else if(g_test.count<=40)
+	{
+		g_bat.bat_value =360;
+	}
+	else if(g_test.count<=45)
+	{
+		g_bat.bat_value =380;
+	}
 }
 

@@ -265,7 +265,7 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data)
 	strncat(upload_send_data,pp,2);
 	loc += 2;
 	
-	//BUS6:DATA
+	//BUS6:EVENT
 	t=event;
 	hex8_to_char(t,pp);
 	strncat(upload_send_data,pp,2);
@@ -296,53 +296,54 @@ void upload_send_data_handle(void)
 }
 
 // 处理所有上报事件
+// 事件增多，按照事件优先级分时上报。
 void  upload_handle(void)
 {
-	if(g_bus.report_flag&BAT_OFF_POWER_FLAG)
+	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
+	{
+		return;
+	}
+	
+#ifdef DEBUG_MACRO
+	printf_string("\nreport_flag:");
+	printf_u8_hexStr(g_bus.report_flag);
+#endif
+
+	if(g_bus.report_flag & STRAIN_FLAG)				//重量上报
+	{
+		g_bus.report_flag &= ~STRAIN_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
+		upload_send_data_handle();
+	}
+	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
+	{
+		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS_SENSOR,BUS6_PRESS_SENSOR_OPEN_DATA,g_press.press_result);
+		upload_send_data_handle();
+	}
+	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
 	{
 		//关机上报处理
+		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
 		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_OFF_POWER_DATA,0);
+		upload_send_data_handle();
 	}
 	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
 	{
 		//低电量上报处理
-		g_bus.have_reported_flag|=g_bus.have_reported_flag;
+		g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
+		g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0);
+		upload_send_data_handle();
 	}
-
-	if(g_bat.sta == BAT_STA_OFF_POWER)
-	{
-		return;
-	}
-
-	if(g_bus.report_flag & HEART_FLAG)
+	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
 	{
 		g_bus.report_flag &= ~HEART_FLAG;
 		//处理
 		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
 		upload_send_data_handle();
 	}
-
-	if(g_bus.report_flag & KEY_FLAG)
-	{
-		g_bus.report_flag &= ~KEY_FLAG;
-		//处理
-	}
-
-	if(g_bus.report_flag & PRESS_FLAG)
-	{
-		g_bus.report_flag &= ~PRESS_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS,g_weight.sta,g_weight.changed_data);
-		upload_send_data_handle();
-	}
-
-	if(g_bus.report_flag & GESTURE_FLAG)
-	{	
-		g_bus.report_flag &= ~GESTURE_FLAG;
-		//处理
-	}
-
-	
 }
 
 void old_ad_handle(void)
@@ -362,11 +363,11 @@ void old_ad_handle(void)
 		//处理
 	}
 
-	if(g_bus.report_flag & PRESS_FLAG)
+	if(g_bus.report_flag & STRAIN_FLAG)
 	{
-		g_bus.report_flag &= ~PRESS_FLAG;
+		g_bus.report_flag &= ~STRAIN_FLAG;
 		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS,g_weight.sta,g_weight.changed_data);
+		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
 		upload_send_data_handle();
 	}
 
@@ -378,6 +379,21 @@ void old_ad_handle(void)
 
 	
 }
+
+
+
+
+
+
+/*************************************************
+test 
+**************************************************/
+test_type g_test ={0};
+
+
+
+
+
 
 
 

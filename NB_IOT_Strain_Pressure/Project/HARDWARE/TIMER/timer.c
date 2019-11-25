@@ -101,18 +101,19 @@ void TIM4_IRQHandler(void)   //TIM3中断
 		if(netstatus>=BC95_Status.netstatus)
 		{
 			netstatus=0;
-			
-			if(BC95_Status.netstatus>2)
+			if(g_bat.sta != BAT_STA_OFF_POWER)
 			{
-				LEDNET_BLUE_CLOSE;
-				LEDMCU_RED_TOGGLE;
-			}
-			else
-			{
-				LEDNET_BLUE_TOGGLE;
+				if(BC95_Status.netstatus>2)
+				{
+					LEDNET_BLUE_CLOSE;
+					LEDMCU_RED_TOGGLE;
+				}
+				else
+				{
+					LEDNET_BLUE_TOGGLE;
+				}
 			}
 		}
-
 
 //		g_weight.sample_count++;
 //		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
@@ -120,20 +121,32 @@ void TIM4_IRQHandler(void)   //TIM3中断
 //			g_weight.sample_count = 0;
 //			g_weight.sample_flag = 1;
 //		}
+		//电池在关机情况下30s采样一次
+		if(g_bat.sta == BAT_STA_OFF_POWER)
+		{
+			g_bat.sample_count++;
+			if(g_bat.sample_count >= BAT_SAMPLE_INTERVAL_HALFMIN)
+			{
+				g_bat.sample_count = 0;
+				g_bat.sample_flag = 1;
+			}
+		}
 		
+		//0.5s进行一次薄膜压力和重量检测
 		g_press.sample_count++;
 		if(g_press.sample_count >= PRESS_SAMPLE_TIME_COUNT)
 		{
 			g_press.sample_count = 0;
 			g_press.sample_flag = 1;
 		}
-
+		//心跳5min一次
 		g_bus.heart_count++;
 		if(g_bus.heart_count >= HEART_UPLOAD_INTERVAL_5MIN )
 		{
 			g_bus.heart_count = 0;
-			g_bus.report_flag = HEART_FLAG;
+			g_bus.report_flag |= HEART_FLAG;
 		}
+
 	}
 }
 

@@ -41,7 +41,7 @@ typedef enum
 extern main_data_type g_sta;
 
 
-//every loop arround 10ms,send in 1th loop,receive in 101th loop
+//every loop around 10ms,send in 1th loop,receive in 101th loop
 #define MAIN_LOOP_UPLOAD_NUM 1 
 #define MAIN_LOOP_RECEIVE_NUM 101
 

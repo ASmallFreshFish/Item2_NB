@@ -19,7 +19,6 @@
 #define LEDPOWER_TOGGLE	 GPIO_ToggleBits(GPIOB,GPIO_Pin_1)
 
 void LED_Init(void);
-void LED_handle(void);
 void LED_all_off(void);
 
 

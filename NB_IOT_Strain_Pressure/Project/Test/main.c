@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:191107"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:191125"
 
 main_data_type g_sta =PRESS_HANDLE_STA;
 

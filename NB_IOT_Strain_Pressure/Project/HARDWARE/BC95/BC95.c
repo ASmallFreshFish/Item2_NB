@@ -26,6 +26,22 @@ void Clear_Buffer(void)//清空缓存
 	RxCounter=0;
 }
 
+void old_Clear_Buffer(void)//清空缓存
+{
+#ifdef DEBUG_MACRO
+	for(u8 i=0;i<100;i++)
+	{
+		printf_char(RxBuffer[i]);	
+	}
+#endif
+
+	u8 i;
+	for(i=0;i<100;i++)
+		RxBuffer[i]=0;
+	RxCounter=0;
+}
+
+
 void copy_buf(char *buf_dest,char *buf_source,u8 len)
 {
 	u8 i;
@@ -326,14 +342,14 @@ void BC95_RECCOAPData(void)
     strx=strstr((const char*)RxBuffer,(const char*)"+NNMI:");//返回+NSONMI:，表明接收到UDP服务器发回的数据
 	if(strx)
 	{
-
+		
 		#ifdef DEBUG_MACRO
 			Uart1_SendStr("RECEIVE +NIMI OK!\r\n");
 		#endif
 		
 	    Clear_Buffer();	
 	    for(i=0;i<100;i++)
-	    RxBuffer[i]=0;
+	    	RxBuffer[i]=0;
 	}
 //	else
 //	{

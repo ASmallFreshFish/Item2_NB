@@ -9,6 +9,9 @@
 #define PRESSURE_SAMPLE_NUM 2
 #define PRESS_SAMPLE_TIME_COUNT 1
 
+
+#define PRESS_CLOSE_THRESHOLD 100
+
 typedef enum
 {
 	NO_PRESSURE_SENSOR,
@@ -54,8 +57,9 @@ typedef enum
 //}press_ad_type;
 typedef enum
 {
-	STA_BOX_CLOSED,
-	STA_BOX_OPENED
+	STA_BOX_CLOSED=0,
+	STA_BOX_OPENED_ONE,
+	STA_BOX_OPENED_TWO
 }press_result_type;
 
 typedef struct
@@ -90,7 +94,9 @@ void press_sensor_handle(void);
 * 电池电量相关处理
 **********************************************************/
 //#define BAT_SAMPLE_INTERVAL_3MIN 360
-#define BAT_SAMPLE_INTERVAL_3MIN 60
+//#define BAT_SAMPLE_INTERVAL_3MIN 60
+#define BAT_SAMPLE_INTERVAL_HALFMIN 60
+
 
 #define BAT_LOW_POWER_LIMIT 370	//电量低于3.70V，低电量
 #define BAT_OFF_POWER_LIMIT 350	//电量低于3.50V，关机
@@ -111,6 +117,8 @@ typedef struct
 	u8 normal_power_count;
 	u8 low_power_count;
 	u8 off_power_count;
+	u8 sample_count;
+	u8 sample_flag; 
 	bat_sta_type sta;
 }bat_type;
 

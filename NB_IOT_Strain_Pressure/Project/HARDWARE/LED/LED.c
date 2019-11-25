@@ -14,11 +14,6 @@ void LED_Init(void)
 	LEDPOWER_CLOSE;
  } 
 
-void LED_handle(void)
-{
-	LEDMCU_RED_TOGGLE;
-}
-
 void LED_all_off(void)
 {
 	LEDMCU_RED_CLOSE;
