@@ -88,9 +88,18 @@ void Get_Maopi(void)
 void Get_Weight(void)
 {
 	u8 i;
-	for(i=0;i<20;i++)
+	for(i=0;i<WEIGHT_SAMPLE_NUMBER;i++)
 	{
 		g_weight.shiwu_ad = HX711_Read();
+		
+#ifdef DEBUG_MACRO
+	if(0)
+	{
+		printf_string("\nweight sample:\t");
+		printf_u32_decStr(g_weight.shiwu_ad);
+	}
+#endif
+			
 		if(g_weight.shiwu_ad > g_weight.maopi_ad)			
 		{
 			g_weight.shiwu_ad = g_weight.shiwu_ad - g_weight.maopi_ad;		//获取实物的AD采样数值。
@@ -98,6 +107,8 @@ void Get_Weight(void)
 		}
 		else
 			g_weight.shiwu_weight[i] = 0; 		
+
+		delay_ms(25);
 	}
 }
 
@@ -110,8 +121,11 @@ void Get_Weight(void)
 
 void press_strain_judge(void)
 { 
-	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,20);
+	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,WEIGHT_SAMPLE_NUMBER);
 
+		//test
+//		g_weight.shiwu_weight_ave=0;
+	
 	#ifdef DEBUG_MACRO
 		printf_string("\nweight_sample:");
 		printf_press_strain_weight(g_weight.shiwu_weight_ave);
@@ -202,8 +216,19 @@ void press_strain_handle(void)
 //	}
 }
 
+void old_press_strain_handle(void)
+{
+	if(g_weight.sample_flag)
+	{
+		g_weight.sample_flag = 0;
+		Get_Weight();
+		press_strain_judge();
+	}
+}
+
+
 //排序
-//20个数据排序，首尾各去5个数据，剩余求平均
+//10个数据排序，首尾各去2个数据，剩余求平均
 u32 press_strain_sort_average(u32 ch[],u8 num)
 {
 	u8 i,j;
@@ -239,15 +264,15 @@ u32 press_strain_sort_average(u32 ch[],u8 num)
 	}
 #endif
 	
-	for(i=5;i<num-5;i++)
+	for(i=2;i<num-2;i++)
 		total+=ch[i];
-	return total/10;
+	return total/6;
 
 #ifdef DEBUG_MACRO
 	if(0)
 	{
 		UART1_send_byte('\n');
-		printf_press_strain_weight(total/10);
+		printf_press_strain_weight(total/6);
 		UART1_send_byte('\t');
 	}
 #endif

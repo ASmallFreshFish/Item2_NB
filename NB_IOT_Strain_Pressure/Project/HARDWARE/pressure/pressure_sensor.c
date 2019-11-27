@@ -45,7 +45,7 @@ u16 get_adc(u8 ch)
 {
 //	adc_init();
   	//设置指定ADC的规则组通道，一个序列，采样时间
-	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_4Cycles );	//ADC1,ADC通道,采样时间为4周期	  			    
+	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为4周期	  			    
 
 	// Start ADC1 Software Conversion
 	ADC_SoftwareStartConv(ADC1);
@@ -63,8 +63,7 @@ u16 get_press_adc_average(u8 ch,u8 times)
 	{
 		temp_val+=get_adc(ch);
 //		delay_ms(1);
-//		delay_ms(5);
-		delay_us(200);
+		delay_ms(5);
 	}
 	return temp_val/times;
 } 	 
@@ -319,16 +318,14 @@ void press_ad_sample(void)
 
 //PB14
 	g_press.press_ad_value[5] = 0;
-	g_press.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,3);
+//	g_press.press_ad_value[5] = get_press_adc_average(ADC_Channel_20,3);
+	g_press.press_ad_value[5] = get_adc(ADC_Channel_20);
 	g_press.press_ad_value[5] &=(0x00FF);	//8位分辨率
-//#ifdef DEBUG_MACRO
-//	printf_string("\npress_sample:");
-//	printf_u16_decStr(g_press.press_ad_value[5]);
-//#endif
 
 //PB15
 	g_press.press_ad_value[6] = 0;
-	g_press.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,3);
+//	g_press.press_ad_value[6] = get_press_adc_average(ADC_Channel_21,3);
+	g_press.press_ad_value[6] = get_adc(ADC_Channel_21);
 	g_press.press_ad_value[6] &=(0x00FF);	//8位分辨率
 //	g_press.press_ad_value[6] &=(0x0FFF);	//12位分辨率
 
@@ -395,7 +392,9 @@ void bat_sample(void)
 {
 	//PA0
 	g_bat.bat_ad_value = 0;
-	g_bat.bat_ad_value = get_press_adc_average(ADC_Channel_0,3);
+//	g_bat.bat_ad_value = get_press_adc_average(ADC_Channel_0,3);
+	g_bat.bat_ad_value = get_adc(ADC_Channel_0);
+
 	g_bat.bat_ad_value &=(0x00FF);	//8位分辨率
 //	g_bat.bat_ad_value &=(0x0FFF);	//12位分辨率
 	//error algorithm
@@ -439,13 +438,13 @@ void bat_judge(void)
 		if(g_bat.bat_value<=BAT_OFF_POWER_LIMIT)
 		{
 			g_bat.off_power_count++;
-			if(g_bat.off_power_count>=3)
-			{
-				g_bat.sta =BAT_STA_OFF_POWER;
-				g_bat.sample_flag =0;
-				LED_all_off();
-				
-			}
+//			if(g_bat.off_power_count>=3)
+//			{
+//				g_bat.sta =BAT_STA_OFF_POWER;
+//				g_bat.sample_flag =0;
+//				LED_all_off();
+//				
+//			}
 		}
 		else
 		{

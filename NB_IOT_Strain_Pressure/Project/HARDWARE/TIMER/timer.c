@@ -115,12 +115,13 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			}
 		}
 
-//		g_weight.sample_count++;
-//		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
-//		{
-//			g_weight.sample_count = 0;
-//			g_weight.sample_flag = 1;
-//		}
+		g_weight.sample_count++;
+		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
+		{
+			g_weight.sample_count = 0;
+			g_weight.sample_flag = 1;
+		}
+		
 		//电池在关机情况下30s采样一次
 		if(g_bat.sta == BAT_STA_OFF_POWER)
 		{

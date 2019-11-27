@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:191125"
+#define VERSION_Y_M_D		"VERSION_Y_M_D:191127"
 
 main_data_type g_sta =PRESS_HANDLE_STA;
 
@@ -52,24 +52,6 @@ void main_handle(void)
 			break;
 	}
 }
-
-
-//int main(void)
-//{		
-//	main_init();
-
-//	while(1)
-//	{
-//		IWDG_Feed();	 //Î¹¹·
-//		bat_hangdle();
-//		if(!g_bat.off_power_flag)
-//		{
-//			press_sensor_handle();
-//			press_strain_handle();
-//			upload_handle();
-//		}
-//	}
-//}
 
 void main_init(void)
 {

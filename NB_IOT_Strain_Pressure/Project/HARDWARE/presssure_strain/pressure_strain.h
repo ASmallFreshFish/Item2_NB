@@ -8,7 +8,10 @@
 #ifdef WEIGHT_SENSOR_1KG
 
 //#define GapValue 2322
-#define GapValue 2458.3
+//#define GapValue 2458.3
+//(70671,1kg)
+#define GapValue 2114.1
+
 
 #define MAOPI_AD_REAL 9395837
 #define MAOPI_AD_EVERY_100G (100*GapValue)
@@ -21,7 +24,8 @@
 #else
 //#define GapValue 715 //º∆À„‘≠ º
 //#define GapValue 703
-#define GapValue 689
+//#define GapValue 689
+#define GapValue 784
 
 #define MAOPI_AD_REAL 8463254
 #define MAOPI_AD_EVERY_100G (100*GapValue)
@@ -50,6 +54,7 @@ typedef enum
 }press_stra_ch_type;
 
 
+#define WEIGHT_SAMPLE_NUMBER 10
 typedef struct
 {
 	press_stra_ch_type sta;
@@ -61,7 +66,7 @@ typedef struct
 	u32 maopi_ad;
 	u32 maopi_weight;
 	u32 shiwu_ad;
-	u32 shiwu_weight[20];
+	u32 shiwu_weight[WEIGHT_SAMPLE_NUMBER];
 	u32 shiwu_weight_ave;
 	u32 shiwu_weight_ave_last[2];
 	
