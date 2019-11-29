@@ -1,7 +1,3 @@
-//#include "pressure_sensor.h"
-//#include "usart.h"
-//#include "led.h"
-//#include "bus.h"
 #include "head_include.h"
 
 press_ad_type g_press;

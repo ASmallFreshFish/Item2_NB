@@ -108,7 +108,7 @@ void Get_Weight(void)
 		else
 			g_weight.shiwu_weight[i] = 0; 		
 
-		delay_ms(25);
+		delay_ms(100);
 	}
 }
 
