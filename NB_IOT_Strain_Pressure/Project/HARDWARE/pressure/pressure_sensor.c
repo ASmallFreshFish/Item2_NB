@@ -12,12 +12,12 @@ void press_ad_debug_print(u16 data)
 	u8 pp[2];
 	
 	t = data;
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 	
 	t = (data>>8);
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 	UART1_send_byte('\t');
@@ -29,7 +29,7 @@ void press_ad_debug_print8(u8 data)
 	u8 pp[2];
 	
 	t = data;
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	UART1_send_byte(pp[0]);
 	UART1_send_byte(pp[1]);
 }
@@ -39,10 +39,10 @@ void press_ad_debug_print8(u8 data)
 //对应引脚 PA4/5/6/7/PB12/13/14/15
 u16 get_adc(u8 ch)   
 {
-//	adc_init();
+	adc_init();
   	//设置指定ADC的规则组通道，一个序列，采样时间
 	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_384Cycles );	//ADC1,ADC通道,采样时间为4周期	  			    
-
+//	ADC_RegularChannelConfig(ADC1, ch, 1, ADC_SampleTime_9Cycles );	
 	// Start ADC1 Software Conversion
 	ADC_SoftwareStartConv(ADC1);
 
@@ -304,6 +304,22 @@ void  adc_init(void)
 	{}
 }
 
+void adc_enable(void)
+{
+	ADC_Cmd(ADC1, ENABLE);	//使能指定的ADC1
+
+	// Wait until the ADC1 is ready 
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
+	{}
+}
+
+void adc_disable(void)
+{
+	ADC_Cmd(ADC1, DISABLE);	//失能指定的ADC1
+
+}
+
+
 void press_sensor_init()
 {
 	memset(&g_press,0,sizeof(g_press));
@@ -359,7 +375,6 @@ void press_ad_judge(void)
 		}
 	}
 
-	g_sta = STRAIN_HANDLE_STA;
 }
 
 void press_sensor_handle(void)
@@ -367,7 +382,9 @@ void press_sensor_handle(void)
 	if(g_press.sample_flag == 1 )
 	{
 		g_press.sample_flag = 0; 
+//		adc_enable();
 		press_ad_sample();
+		adc_disable();
 		press_ad_judge();
 	}
 }
@@ -386,6 +403,8 @@ void bat_init(void)
 
 void bat_sample(void)
 {
+//	adc_enable();
+		
 	//PA0
 	g_bat.bat_ad_value = 0;
 //	g_bat.bat_ad_value = get_press_adc_average(ADC_Channel_0,3);
@@ -397,6 +416,7 @@ void bat_sample(void)
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 8); 	//8位分辨率
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 4); 	//12位分辨率
 
+	adc_disable();
 #ifdef DEBUG_MACRO
 		printf_string("\nbat_sample:");
 		printf_u16_hexStr(g_bat.bat_ad_value);
@@ -494,8 +514,10 @@ void bat_judge(void)
 void bat_hangdle()
 {	
 	if(g_bat.sample_flag)
-	{
+	{	
+		
 		bat_sample();
+		
 		bat_get_value();
 		bat_judge();
 	}
@@ -541,4 +563,161 @@ void test_bat()
 		g_bat.bat_value =380;
 	}
 }
+
+
+/*********************************************************
+* 设备时间相关处理
+**********************************************************/
+my_time_val_type my_g_time;
+
+void clock_init_time(void)
+{
+	memset(&my_g_time,0,sizeof(my_g_time));
+}
+
+void clock_timer(void)
+{
+    ++my_g_time.m_clock_utc;   
+}
+
+u8 clock_time_get_week(my_time_type *time)
+{
+	u8 week;
+	u16 year = time->year;
+	u8 month = time->month;
+	if(month == 1 || month == 2)
+	{
+		month += 12;
+		year --;
+	}
+	week = (time->day+2*month+3*(month+1)/5+year+year/4-year/100+year/400) % 7;
+	time->week = (week+1)%7;
+	
+	return time->week;
+}
+
+int clock_time_to_utc(my_time_type *time)
+{
+    int utc = 0;
+    struct tm  timeinfo = {0};
+    timeinfo.tm_year =  time->year - 1900;
+    timeinfo.tm_mon = time->month - 1;
+    timeinfo.tm_mday = time->day;
+    timeinfo.tm_hour = time->hour;
+    timeinfo.tm_min = time->minutes;
+    timeinfo.tm_sec = time->seconds;
+    utc = mktime(&timeinfo);
+    return utc;
+}
+
+void clock_set_time(my_time_type *time) 
+{
+    time->year += 2000;
+    my_g_time.m_clock_utc = clock_time_to_utc(time);
+	
+#ifdef DEBUG_MACRO
+	printf_string("\nutc:");
+	printf_u32_decStr(my_g_time.m_clock_utc);
+#endif
+}
+
+ void clock_get_time(my_time_type* time)
+{
+    struct tm *ltime;
+
+   ltime = localtime(&my_g_time.m_clock_utc);
+   
+   time->seconds = ltime->tm_sec;
+   time->minutes = ltime->tm_min;
+   time->hour    = ltime->tm_hour + 8;
+   time->day     = ltime->tm_mday;
+   time->month   = ltime->tm_mon + 1;
+   time->year    = ltime->tm_year + 1900;
+   time->hour %= 24;
+   clock_time_get_week(time);
+}
+
+ void clock_cclk_handle(char *p) 
+ {
+ 	my_time_type now_time={0};
+	my_time_type next_time={0};
+	u32 year,month,day,hour,minute,second;
+
+	p += strlen("+CCLK:");
+
+	sscanf(p,"%02d/%02d/%02d,%02d:%02d:%02d",&year,&month,&day,&hour,&minute,&second);
+	
+	now_time.year = year;
+	now_time.month = month;
+	now_time.day= day;
+	now_time.hour= hour;
+	now_time.minutes= minute;
+	now_time.seconds= second;
+	clock_set_time(&now_time);
+
+#ifdef DEBUG_MACRO_INIT
+if(0)
+{
+	printf_string("\ntime:");
+	printf_u16_decStr(now_time.year);	printf_string("/");
+	printf_u8_decStr(now_time.month);	printf_string("/");
+	printf_u8_decStr(now_time.day);		printf_string(":");
+	printf_u8_decStr(now_time.hour);	printf_string(":");
+	printf_u8_decStr(now_time.minutes);	printf_string(":");
+	printf_u8_decStr(now_time.seconds);
+}
+#endif
+
+#ifdef DEBUG_MACRO_INIT
+	if(0)
+	{
+		clock_timer();
+		clock_get_time(&next_time);
+
+		printf_string("\ntime:");
+		printf_u16_decStr(next_time.year);	printf_string("/");
+		printf_u8_decStr(next_time.month);	printf_string("/");
+		printf_u8_decStr(next_time.day);	printf_string(":");
+		printf_u8_decStr(next_time.hour);	printf_string(":");
+		printf_u8_decStr(next_time.minutes);printf_string(":");
+		printf_u8_decStr(next_time.seconds);
+	}
+#endif
+
+ } 
+
+ u8 clock_syn_time(void)
+ {
+	 u8 result =FALSE;
+	 
+	 printf("AT+CCLK?\r\n");//同步基站时间
+		 Delay(300);
+		 strx=strstr((const char*)RxBuffer,(const char*)"+CCLK:");
+ 
+		 if(strx !=NULL)
+		 {
+			 clock_cclk_handle(strx);
+			 result=TRUE;
+		 }
+		 Clear_Buffer();
+ 
+		 return result;
+ }
+
+void clock_copy_time_to_buf(u8 *buf)
+{
+	my_time_type now_time={0};
+
+	clock_get_time(&now_time);
+
+	buf[0] = (now_time.year-2000);
+	buf[1] = now_time.month;
+	buf[2] = now_time.day;
+	buf[3] = now_time.hour;
+	buf[4] = now_time.minutes;
+	buf[5] = now_time.seconds;
+	buf[6] = 0;
+}
+
+
 

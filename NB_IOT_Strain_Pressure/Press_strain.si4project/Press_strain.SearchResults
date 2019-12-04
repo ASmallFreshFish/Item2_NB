@@ -1,5 +1,7 @@
----- BAT_STA_OFF_POWER Matches (4 in 3 files) ----
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 				g_bat.sta =BAT_STA_OFF_POWER;
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 		case BAT_STA_OFF_POWER:
-pressure_sensor.h (Project\HARDWARE\pressure) line 108 : 	BAT_STA_OFF_POWER
-TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			if(g_bat.sta != BAT_STA_OFF_POWER)
+---- PRESS_SENSOR_FLAG Matches (6 in 3 files) ----
+upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
+upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
+eld_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
+eld_upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
+bus.h (Project\HARDWARE\bus) line 97 : 	PRESS_SENSOR_FLAG= 0x10,
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : //		g_bus.report_flag |= PRESS_SENSOR_FLAG;

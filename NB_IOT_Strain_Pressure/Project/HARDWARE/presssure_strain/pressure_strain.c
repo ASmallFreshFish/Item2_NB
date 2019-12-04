@@ -186,8 +186,8 @@ void press_strain_judge(void)
 	if(g_weight.sta)
 	{
 		g_bus.report_flag |= STRAIN_FLAG;
-		g_bus.report_flag |= PRESS_SENSOR_FLAG;
-		g_sta =UPLOAD_HANDLE_STA;
+//		g_bus.report_flag |= PRESS_SENSOR_FLAG;
+		g_sta =BUS_UPLOAD_HANDLE_STA;
 	}
 	else
 	{

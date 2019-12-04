@@ -6,7 +6,8 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D		"VERSION_Y_M_D:191127"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191127"
+const char version_number[]={"1.1"};	
 
 main_data_type g_sta =PRESS_HANDLE_STA;
 
@@ -26,7 +27,7 @@ void main_sta_judge(void)
 {
 	if(g_bus.report_flag)
 	{
-		g_sta = UPLOAD_HANDLE_STA;
+		g_sta = BUS_UPLOAD_HANDLE_STA;
 	}
 }
 void main_handle(void)
@@ -35,15 +36,26 @@ void main_handle(void)
 	{
 		case PRESS_HANDLE_STA:
 			press_sensor_handle();
+			g_sta = STRAIN_HANDLE_STA;
 			break;
 		
 		case STRAIN_HANDLE_STA:
 			press_strain_handle();
 			break;
-		
-		case UPLOAD_HANDLE_STA:
-			bat_hangdle();
+			
+		case BUS_UPLOAD_HANDLE_STA:
+			//处理上传
+			if(g_bus.report_count == BUS_FRAME_STA)
+			{
+				bat_hangdle();
+			}
 			upload_handle();
+			g_sta = BUS_GET_HANDLE_STA;
+			break;
+
+		case BUS_GET_HANDLE_STA:
+			//处理命令
+			bus_get_handle();
 			g_sta = PRESS_HANDLE_STA;
 			break;
 			
@@ -70,6 +82,9 @@ void main_init(void)
     uart3_init(9600);
 	TIM3_Int_Init(199,3199);   // 20ms一次中断
     TIM4_Int_Init(4999,3199);  // 500ms一次中断
+
+	//基站时间
+	clock_init_time();
     
     //NB模块的初始化
     CDP_Init();     //CDP服务器初始化    

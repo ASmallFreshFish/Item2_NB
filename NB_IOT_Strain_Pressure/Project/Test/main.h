@@ -34,11 +34,12 @@ typedef enum
 {
 	PRESS_HANDLE_STA=0,
 	STRAIN_HANDLE_STA,
-	UPLOAD_HANDLE_STA,
-	BAT_HANDLE_STA
+	BUS_UPLOAD_HANDLE_STA,
+	BUS_GET_HANDLE_STA,
 }main_data_type;
 
 extern main_data_type g_sta;
+extern const char version_number[];
 
 
 //every loop around 10ms,send in 1th loop,receive in 101th loop

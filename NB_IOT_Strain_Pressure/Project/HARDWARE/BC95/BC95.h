@@ -16,6 +16,8 @@ typedef struct
     u8 netstatus;//网络指示灯
 } BC95;
 
+extern char *strx,*extstrx;
+
 void Clear_Buffer(void);//清空缓存	
 void CDP_Init(void);//COAP服务器配置初始化
 void BC95_Init(void);

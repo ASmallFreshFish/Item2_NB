@@ -1,15 +1,11 @@
-#include "bc95.h"
-#include "main.h"
-#include "string.h"
-#include "delay.h"
-#include "usart.h"
-#include "led.h"
-#include "bus.h"
+#include "head_include.h"
 
 char *strx,*extstrx;
 //注意char*与char[]的区别
 //char *imei_str = 0;
 char imei_str[16] = {0};
+//	char imei_str[16] = {"868246048366603"};
+
 
 extern char  RxBuffer[100],RxCounter;
 BC95 BC95_Status;
@@ -299,6 +295,21 @@ void BC95_Init(void)
 	    	RxBuffer[i]=0;	
 	    Clear_Buffer();    
 
+	//同步时间
+	printf("AT+CCLK?\r\n");//同步基站时间
+	    Delay(300);
+	    strx=strstr((const char*)RxBuffer,(const char*)"+CCLK");
+		while(strx==NULL)
+		{
+		    Clear_Buffer();	
+		    printf("AT+CCLK?\r\n");//获取IMEI号，类似是否存在NB设备的意思，比较重要。
+		    Delay(300);
+		    strx=strstr((const char*)RxBuffer,(const char*)"+CCLK");
+		}
+		my_g_time.m_clock_syn_result = 1;
+		clock_cclk_handle(strx);
+		Clear_Buffer();
+
 }
 
 void BC95_SendCOAPdata(u8 *len,u8 *data)
@@ -359,9 +370,9 @@ void BC95_RECCOAPData(void)
 
 u8 BC95_SendCOAPdata_try(u8 *len,u8 *data)
 {
- 	u8 count;
+ 	u8 count=0;
 	u8 result = FALSE;
-	for(count = 0;count <3;count++)
+	for(count = 0;count <2;count++)
 	{
 		#ifdef DEBUG_MACRO
 			Uart1_SendStr("retry\t");//就让串口1打印发送成功提示

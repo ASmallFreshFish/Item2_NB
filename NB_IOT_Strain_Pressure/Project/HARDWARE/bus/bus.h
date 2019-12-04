@@ -14,7 +14,7 @@
 #define SEND_DATA_LEN 11
 #define SEND_BUF_LEN  (6*SEND_DATA_LEN)
 
-#define UPLOAD_SEND_DATA_LEN 100
+#define UPLOAD_SEND_DATA_LEN 200
 
 /************************************************************************
 *****************************÷°∏Ò Ω**************************************
@@ -27,6 +27,12 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT
 01			|02	    |03		|04				|05			|06		|07		
 MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|changed_data 
 1byte		|1byte	|15bytes|1byte			|1byte		|1byte	|2byte
+
+20191202
+01			|02	    |03		|04				|05			|06		|07		|08		|09		|10		|11
+MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|time	|version
+1byte		|1byte	|15bytes|1byte			|1byte		|1byte	|2byte	|2bytes	|2bytes |12bytes|6bytes
+
 
 *************************************************************************/
 
@@ -72,6 +78,15 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|changed_data
 //#define HEART_UPLOAD_INTERVAL_5MIN	120
 
 
+#define BUS_REPORT_NUMBER 3
+
+typedef enum
+{
+	BUS_FRAME_STA=0,
+	BUS_UPLOAD_STA=1,
+	BUS_FINAL_UPLOAD_STA = BUS_REPORT_NUMBER,
+}report_count_type;
+
 typedef enum
 {
 	NO_REPORT=0,
@@ -97,19 +112,27 @@ typedef struct
 	u16 heart_count;
 	u8 report_flag;
 	u8 have_reported_flag;
+	report_count_type report_count;
+	
 }bus_type;
 
 extern bus_type g_bus;
 
+
 void upload_init(void);
 void upload_handle(void);
+void upload_strain_handle(void);
+void upload_heart_handle(void);
+void upload_bat_low_handle(void);
+
 void upload_change_sequence(void);
-void upload_send_data_frame(u8* command_type,u8 event,u16 data);
+void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3);
+void old_upload_send_data_frame(u8* command_type,u8 event,u16 data);
 void upload_send_data_handle(void);
 
-void hex8_to_char(u8 data_hex,u8 data_ch[2]);
-void hex8_to_str(u8 *inchar,u8 *outtxt,u32 len);
-void hex16_to_str(u16 data_hex,u8 *outtxt);
+void hex8_to_hexchar(u8 data_hex,u8 data_ch[2]);
+void hex8_to_hexstr(u8 *inchar,u8 *outtxt,u32 len);
+void hex16_to_hexstr(u16 data_hex,u8 *outtxt);
 
 void printf_char(char ch);
 void printf_string(char ch[]);

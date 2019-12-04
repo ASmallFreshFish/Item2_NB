@@ -2,10 +2,16 @@
 #define __DELAY_H 			   
 #include <stm32l1xx.h>
 
-#define u8 unsigned char 
-#define u16 unsigned short 
-#define u32 unsigned int 
-#define vu16 volatile unsigned short
+#define u8 		unsigned char 
+#define u16 	unsigned short 
+#define u32 	unsigned int 
+#define vu16 	volatile unsigned short
+#define s8  	char 
+#define s16  	short 
+#define s32  	int 
+#define vs16 	volatile  short
+
+
 
 #define FALSE 	0
 #define TRUE	1

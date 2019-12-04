@@ -81,7 +81,10 @@ extern press_ad_type g_press;
 
 void press_ad_debug_print(u16 data);
 void press_ad_debug_print8(u8 data);
+
 void adc_init(void);
+void adc_enable(void);
+
 void press_sensor_init();
 u16 get_adc(u8 ch); 
 u16 get_press_adc_average(u8 ch,u8 times); 
@@ -129,6 +132,39 @@ void bat_sample(void);
 void bat_get_value(void);
 void bat_judge(void);
 void bat_hangdle(void);
+
+
+/*********************************************************
+* 系统时间测量
+**********************************************************/
+
+typedef  struct
+{
+    u16 year;     // 1970+
+    u8  month;    // 1-12
+    u8  day;      // 1-31
+    u8  hour;     // 0-23
+    u8  minutes;  // 0-59
+    u8  seconds;  // 0-59
+    u8  week;
+}my_time_type;
+
+typedef struct
+{
+	u32 m_clock_utc;
+	u8 m_clock_count ;
+	u8 m_clock_syn_flag ;
+	u8 m_clock_syn_result ;
+}my_time_val_type;
+
+extern my_time_val_type my_g_time;
+
+void clock_init_time(void);
+void clock_get_time(my_time_type* time);
+void clock_set_time(my_time_type *time);
+void clock_cclk_handle(char *p);
+u8 clock_syn_time(void);
+
 
 #endif
 

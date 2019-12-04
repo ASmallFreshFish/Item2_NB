@@ -1,7 +1,9 @@
 .\stm32l152-eval\pressure_strain.o: ..\..\HARDWARE\presssure_strain\pressure_strain.c
 .\stm32l152-eval\pressure_strain.o: ..\head_include.h
+.\stm32l152-eval\pressure_strain.o: D:\01ProFiles\MDK5\ARM\ARMCC\Bin\..\include\stdio.h
 .\stm32l152-eval\pressure_strain.o: D:\01ProFiles\MDK5\ARM\ARMCC\Bin\..\include\string.h
 .\stm32l152-eval\pressure_strain.o: D:\01ProFiles\MDK5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\stm32l152-eval\pressure_strain.o: D:\01ProFiles\MDK5\ARM\ARMCC\Bin\..\include\time.h
 .\stm32l152-eval\pressure_strain.o: ..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include\stm32l1xx.h
 .\stm32l152-eval\pressure_strain.o: ..\..\..\Libraries\CMSIS\Include\core_cm3.h
 .\stm32l152-eval\pressure_strain.o: D:\01ProFiles\MDK5\ARM\ARMCC\Bin\..\include\stdint.h

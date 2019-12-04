@@ -9,7 +9,9 @@ extern gesture_struct_type g_gesture;
 extern char imei_str[16];
 
 /**************************************************************
-打印日志相关函数
+
+* 打印日志相关函数
+
 **************************************************************/
 void printf_char(char ch)
 {
@@ -26,7 +28,7 @@ void printf_u8_hexStr(u8 data)
  	u8 t = data;
 	u8 pp[2];
 	
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	if(pp[0]!= '0')
 	{
 		printf_char(pp[0]);
@@ -40,7 +42,7 @@ void printf_u16_hexStr(u16 data)
 	u16 t=data;
 	u8 pp[4];
 	
-	hex16_to_str(t,pp);
+	hex16_to_hexstr(t,pp);
 	for(i=0;i<4;i++)
 	{
 		printf_char(pp[i]);
@@ -158,7 +160,7 @@ void printf_bat_value(u16 num_f)
 数字转字符相关函数
 **************************************************************/
 
-void hex8_to_char(u8      data_hex,u8  data_ch[])
+void hex8_to_hexchar(u8      data_hex,u8  data_ch[])
 {
 	if(data_hex/16>=10)
 		data_ch[0]=data_hex/16+0x37;//转成A-F的字符
@@ -171,7 +173,7 @@ void hex8_to_char(u8      data_hex,u8  data_ch[])
 		data_ch[1]=data_hex%16+0x30;
 }
 
-void hex16_to_str(u16 data_hex,u8 *outtxt)
+void hex16_to_hexstr(u16 data_hex,u8 *outtxt)
 {
 	u8 hbit,lbit,i;
 	u8 t =(u8)(data_hex>>8);
@@ -195,7 +197,7 @@ void hex16_to_str(u16 data_hex,u8 *outtxt)
 	}
 }
 
-void hex8_to_str(u8 *inchar,u8 *outtxt,u32 len)
+void hex8_to_hexstr(u8 *inchar,u8 *outtxt,u32 len)
 {
 	u8 hbit,lbit;
 	u32 i;
@@ -216,9 +218,45 @@ void hex8_to_str(u8 *inchar,u8 *outtxt,u32 len)
 	outtxt[2*i] = 0;
 }
 
+void dec8_to_str(u8 *inchar,u8 *outtxt,u32 len)
+{
+	u8 hbit,lbit;
+	u32 i;
+	for(i=0;i<len;i++)
+	{
+		hbit = (*(inchar+i)/10);
+		lbit = *(inchar+i)%10;
+		if (hbit>9) 
+			outtxt[2*i]='A'+hbit-10;
+		else 
+			outtxt[2*i]='0'+hbit;
+
+		if (lbit>9) 
+			outtxt[2*i+1]='A'+lbit-10;
+		else    
+			outtxt[2*i+1]='0'+lbit;
+	}
+	outtxt[2*i] = 0;
+}
+
+void bytesToHexString (const char * inBuf, char *outBuf, u32 len)
+{
+    static  char hexTable[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+    int x = 0;
+	
+    for (x = 0; x < len; x++)
+    {
+        outBuf[x] = hexTable[(inBuf[x] >> 4) & 0x0f]; // upper nibble
+        outBuf[x+1] = hexTable[inBuf[x] & 0x0f]; // lower nibble
+    }
+}
+
+
 
 /**************************************************************
+
 通信上报相关函数
+
 **************************************************************/
 void upload_init(void)
 {
@@ -233,7 +271,86 @@ void upload_change_sequence(void)
 		upload_buf_sequence = 1;
 }
 
-void upload_send_data_frame(u8* command_type,u8 event,u16 data)
+void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3)
+{
+	u8 loc = 0;
+	u8 t;
+	u8 pp[2];
+	s8 imei_hex_str[31];
+	u8 change_data_str[5];
+	u8 time_dec[7];
+	u8 time_str[13];
+	u8 time_hex_str[25];
+	u8 version_hex_str[7];
+	
+	memset(upload_send_data,0,sizeof(upload_send_data));
+	
+	//BUS1:MESSAGE_ID
+	strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
+	loc += 2;
+	
+	//BUS2:HEAD
+	strncat(upload_send_data,BUS2_HEAD,2);
+	loc += 2;
+	
+	//BUS3:IMEI  (15hex,30hexstr)
+	hex8_to_hexstr(imei_str,imei_hex_str,15);
+	strncat(upload_send_data,imei_hex_str,30);
+	loc += 30;
+	
+	//BUS4:COMMAND_TYPE
+	strncat(upload_send_data,command_type,2);
+	loc += 2;
+	
+	//BUS5:SEQUENCE
+	t=upload_buf_sequence;
+	hex8_to_hexchar(t,pp);
+	strncat(upload_send_data,pp,2);
+	loc += 2;
+	
+	//BUS6:EVENT
+	t=event;
+	hex8_to_hexchar(t,pp);
+	strncat(upload_send_data,pp,2);
+	loc += 2;
+
+	//BUS7:data1  (2hex,4hexstr)
+	hex16_to_hexstr(data1,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+	
+	//BUS8:data2  (2hex,4hexstr)
+	hex16_to_hexstr(data2,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+	
+	//BUS9:data3  (2hex,4hexstr)
+	hex16_to_hexstr(data3,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+
+	//BUS10:time  (6hex,12hexstr)
+	clock_copy_time_to_buf(time_dec);
+	dec8_to_str(time_dec,time_str,6);
+	hex8_to_hexstr(time_str, time_hex_str, 12);
+	strncat(upload_send_data,&time_hex_str[0],24);
+	loc += 24;
+
+	hex8_to_hexstr((u8*)version_number, version_hex_str, 6);
+	strncat(upload_send_data,&version_hex_str[0],6);
+	loc += 6;
+	
+	upload_send_data[loc] = '\0';
+	upload_change_sequence();
+
+#ifdef DEBUG_MACRO
+		 UART1_send_byte('\n');
+		 Uart1_SendStr(upload_send_data);
+		 UART1_send_byte('\n');
+#endif
+}
+
+void old_upload_send_data_frame(u8* command_type,u8 event,u16 data)
 {
 	u8 loc = 0;
 	u8 t;
@@ -251,7 +368,7 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data)
 	loc += 2;
 	
 	//BUS3:IMEI  (15hex,30hexstr)
-	hex8_to_str(imei_str,imei_hex_str,15);
+	hex8_to_hexstr(imei_str,imei_hex_str,15);
 	strncat(upload_send_data,imei_hex_str,30);
 	loc += 30;
 	
@@ -261,18 +378,18 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data)
 	
 	//BUS5:SEQUENCE
 	t=upload_buf_sequence;
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	strncat(upload_send_data,pp,2);
 	loc += 2;
 	
 	//BUS6:EVENT
 	t=event;
-	hex8_to_char(t,pp);
+	hex8_to_hexchar(t,pp);
 	strncat(upload_send_data,pp,2);
 	loc += 2;
 
 	//BUS7:changed_data  (2hex,4hexstr)
-	hex16_to_str(data,change_data_str);
+	hex16_to_hexstr(data,change_data_str);
 	strncat(upload_send_data,change_data_str,4);
 	loc += 4;
 	
@@ -290,10 +407,24 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data)
 
 void upload_send_data_handle(void)
 {		
+#ifdef DEBUG_MACRO
+	UART1_send_byte('\n');
+	Uart1_SendStr(upload_send_data);
+	UART1_send_byte('\n');
+#endif
+
+	BC95_SendCOAPdata("41",upload_send_data);
+	delay_ms(1000);
+	BC95_RECCOAPData();
+}
+
+void old_upload_send_data_handle(void)
+{		
 	BC95_SendCOAPdata("22",upload_send_data);
 	delay_ms(1000);
 	BC95_RECCOAPData();
 }
+
 
 // 处理所有上报事件
 // 事件增多，按照事件优先级分时上报。
@@ -311,14 +442,12 @@ void  upload_handle(void)
 
 	if(g_bus.report_flag & STRAIN_FLAG)				//重量上报
 	{
-		g_bus.report_flag &= ~STRAIN_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
-		upload_send_data_handle();
+		upload_strain_handle();
 	}
 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
 	{
 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS_SENSOR,BUS6_PRESS_SENSOR_OPEN_DATA,g_press.press_result);
+		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS_SENSOR,BUS6_PRESS_SENSOR_OPEN_DATA,g_press.press_result,0,0);
 		upload_send_data_handle();
 	}
 	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
@@ -326,7 +455,51 @@ void  upload_handle(void)
 		//关机上报处理
 		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
 		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_OFF_POWER_DATA,0);
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_OFF_POWER_DATA,0,0,0);
+		upload_send_data_handle();
+	}
+	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
+	{
+		//低电量上报处理
+		upload_bat_low_handle();
+	}
+	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
+	{
+		//心跳上报
+		upload_heart_handle();
+	}
+}
+
+void  eld_upload_handle(void)
+{
+	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
+	{
+		return;
+	}
+	
+#ifdef DEBUG_MACRO
+	printf_string("\nreport_flag:");
+	printf_u8_hexStr(g_bus.report_flag);
+#endif
+
+	if(g_bus.report_flag & STRAIN_FLAG)				//重量上报
+	{
+		g_bus.report_flag &= ~STRAIN_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
+		upload_send_data_handle();
+	}
+	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
+	{
+		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS_SENSOR,BUS6_PRESS_SENSOR_OPEN_DATA,g_press.press_result,0,0);
+		upload_send_data_handle();
+	}
+	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
+	{
+		//关机上报处理
+		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
+		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_OFF_POWER_DATA,0,0,0);
 		upload_send_data_handle();
 	}
 	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
@@ -334,66 +507,145 @@ void  upload_handle(void)
 		//低电量上报处理
 		g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
 		g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0);
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0,0,0);
 		upload_send_data_handle();
 	}
 	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
 	{
 		g_bus.report_flag &= ~HEART_FLAG;
 		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
+		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
 		upload_send_data_handle();
 	}
 }
 
-void old_ad_handle(void)
+void old_upload_handle(void)
 {
 
-	if(g_bus.report_flag & HEART_FLAG)
+//	if(g_bus.report_flag & HEART_FLAG)
+//	{
+//		g_bus.report_flag &= ~HEART_FLAG;
+//		//处理
+//		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
+//		upload_send_data_handle();
+//	}
+
+//	if(g_bus.report_flag & KEY_FLAG)
+//	{
+//		g_bus.report_flag &= ~KEY_FLAG;
+//		//处理
+//	}
+
+//	if(g_bus.report_flag & STRAIN_FLAG)
+//	{
+//		g_bus.report_flag &= ~STRAIN_FLAG;
+//		//处理
+//		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
+//		upload_send_data_handle();
+//	}
+
+//	if(g_bus.report_flag & GESTURE_FLAG)
+//	{	
+//		g_bus.report_flag &= ~GESTURE_FLAG;
+//		//处理
+//	}
+}
+
+void upload_heart_handle(void)
+{
+	
+	printf_string("\nreport_count:");
+	printf_u8_decStr(g_bus.report_count);
+	
+	if(g_bus.report_count == BUS_FRAME_STA)
+	{
+		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
+	}
+	
+	upload_send_data_handle();
+	g_bus.report_count++;
+	
+	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
 	{
 		g_bus.report_flag &= ~HEART_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
-		upload_send_data_handle();
+		g_bus.report_count=BUS_FRAME_STA;
 	}
+}
 
-	if(g_bus.report_flag & KEY_FLAG)
+void upload_strain_handle(void)
+{
+	printf_string("\nreport_count:");
+	printf_u8_decStr(g_bus.report_count);
+	
+	if(g_bus.report_count == BUS_FRAME_STA)
 	{
-		g_bus.report_flag &= ~KEY_FLAG;
-		//处理
+		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
 	}
+	
+	upload_send_data_handle();
+	g_bus.report_count++;
 
-	if(g_bus.report_flag & STRAIN_FLAG)
+	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
 	{
 		g_bus.report_flag &= ~STRAIN_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
-		upload_send_data_handle();
+		g_bus.report_count=BUS_FRAME_STA;
 	}
+	
+}
 
-	if(g_bus.report_flag & GESTURE_FLAG)
-	{	
-		g_bus.report_flag &= ~GESTURE_FLAG;
-		//处理
+void upload_bat_low_handle(void)
+{
+	
+	printf_string("\nreport_count:");
+	printf_u8_decStr(g_bus.report_count);
+	
+	if(g_bus.report_count == BUS_FRAME_STA)
+	{
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0,0,0);
 	}
-
+	
+	upload_send_data_handle();
+	g_bus.report_count++;
+	
+	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
+	{
+		g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
+		g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
+		g_bus.report_count=BUS_FRAME_STA;
+	}
 	
 }
 
 
+// 处理所有命令事件
+// 事件增多，按照事件优先级分时上报。
+void  bus_get_handle(void)
+{
+	//处理时间
+	my_time_type now_time;
 
+	//	test
+	
+	if(my_g_time.m_clock_syn_flag)
+	{
+		my_g_time.m_clock_syn_flag = 0;
 
+		clock_get_time(&now_time);
+		if((now_time.hour == 0)||(!my_g_time.m_clock_syn_result))
+		{
+			my_g_time.m_clock_syn_result = clock_syn_time();
+		}
+	}
+
+//	printf_string("\nsyn:");
+//	printf_u8_decStr(my_g_time.m_clock_syn_result);
+}
 
 
 /*************************************************
 test 
 **************************************************/
 test_type g_test ={0};
-
-
-
-
-
 
 
 

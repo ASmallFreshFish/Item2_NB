@@ -22,11 +22,172 @@ Dialog DLL:      TCM.DLL V1.14.4.0
  
 <h2>Project:</h2>
 F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\Project.uvprojx
-Project File Date:  11/26/2019
+Project File Date:  12/03/2019
 
 <h2>Output:</h2>
 Build target 'STM32L1XX_MD(STM32L1xxxBxx)'
-".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 0 Warning(s).
+compiling main.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\main.c(58): warning:  #223-D: function "bus_get_handle" declared implicitly
+                        bus_get_handle();
+..\main.c(98): warning:  #223-D: function "eeprom_init" declared implicitly
+        eeprom_init();
+..\main.c: 3 warnings, 0 errors
+compiling BC95.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\BC95\BC95.c: 1 warning, 0 errors
+compiling timer.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\TIMER\timer.c: 1 warning, 0 errors
+compiling key.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\key\key.c: 1 warning, 0 errors
+compiling bus.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\bus\bus.c(290): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(294): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(298): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+        hex8_to_hexstr(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(298): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+        hex8_to_hexstr(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(299): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(303): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(303): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(309): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(309): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(315): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(315): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(320): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(320): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(325): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(325): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(330): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(330): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(334): warning:  #223-D: function "clock_copy_time_to_buf" declared implicitly
+        clock_copy_time_to_buf(time_dec);
+..\..\HARDWARE\bus\bus.c(337): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,&time_hex_str[0],24);
+..\..\HARDWARE\bus\bus.c(337): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,&time_hex_str[0],24);
+..\..\HARDWARE\bus\bus.c(341): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,&version_hex_str[0],6);
+..\..\HARDWARE\bus\bus.c(341): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,&version_hex_str[0],6);
+..\..\HARDWARE\bus\bus.c(349): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(upload_send_data);
+..\..\HARDWARE\bus\bus.c(364): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
+..\..\HARDWARE\bus\bus.c(368): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,BUS2_HEAD,2);
+..\..\HARDWARE\bus\bus.c(372): warning:  #167-D: argument of type "char *" is incompatible with parameter of type "unsigned char *"
+        hex8_to_hexstr(imei_str,imei_hex_str,15);
+..\..\HARDWARE\bus\bus.c(373): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(373): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,imei_hex_str,30);
+..\..\HARDWARE\bus\bus.c(377): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(377): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,command_type,2);
+..\..\HARDWARE\bus\bus.c(383): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(383): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(389): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(389): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,pp,2);
+..\..\HARDWARE\bus\bus.c(394): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(394): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "const char *restrict"
+        strncat(upload_send_data,change_data_str,4);
+..\..\HARDWARE\bus\bus.c(402): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+                 Uart1_SendStr(upload_send_data);
+..\..\HARDWARE\bus\bus.c(413): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+        Uart1_SendStr(upload_send_data);
+..\..\HARDWARE\bus\bus.c(649): warning:  #188-D: enumerated type mixed with another type
+  test_type g_test ={0};
+..\..\HARDWARE\bus\bus.c: 40 warnings, 0 errors
+compiling pressure_sensor.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\pressure\pressure_sensor.c: 1 warning, 0 errors
+compiling gesture.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\gesture\gesture.c(20): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+        if (check_buf_valid_data(RxBuffer2,USART2_BUF_LEN,usart2_read_loc))
+..\..\HARDWARE\gesture\gesture.c(25): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+  Uart1_SendStr_Len(RxBuffer2,USART2_BUF_LEN);
+..\..\HARDWARE\gesture\gesture.c(27): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                if(check_buf_contain_str(RxBuffer2,GESTURE_STA[0],GESTURE_STA_LEN[0]))  
+..\..\HARDWARE\gesture\gesture.c(33): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[0]);
+..\..\HARDWARE\gesture\gesture.c(36): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[1],GESTURE_STA_LEN[1]))
+..\..\HARDWARE\gesture\gesture.c(42): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[1]);
+..\..\HARDWARE\gesture\gesture.c(45): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[2],GESTURE_STA_LEN[2]))
+..\..\HARDWARE\gesture\gesture.c(51): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[2]);
+..\..\HARDWARE\gesture\gesture.c(54): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[3],GESTURE_STA_LEN[3]))
+..\..\HARDWARE\gesture\gesture.c(60): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[3]);
+..\..\HARDWARE\gesture\gesture.c(63): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[4],GESTURE_STA_LEN[4]))
+..\..\HARDWARE\gesture\gesture.c(69): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[4]);
+..\..\HARDWARE\gesture\gesture.c(72): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                else if(check_buf_contain_str(RxBuffer2,GESTURE_STA[5],GESTURE_STA_LEN[5]))
+..\..\HARDWARE\gesture\gesture.c(78): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,GESTURE_STA_LEN[5]);
+..\..\HARDWARE\gesture\gesture.c(87): warning:  #167-D: argument of type "volatile char *" is incompatible with parameter of type "char *"
+                        clear_buf(RxBuffer2,1);
+..\..\HARDWARE\gesture\gesture.c: 16 warnings, 0 errors
+compiling pressure_strain.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\presssure_strain\pressure_strain.c(47): warning:  #223-D: function "delay_us" declared implicitly
+        delay_us(1);
+..\..\HARDWARE\presssure_strain\pressure_strain.c(272): warning:  #111-D: statement is unreachable
+        if(0)
+..\..\HARDWARE\presssure_strain\pressure_strain.c: 3 warnings, 0 errors
+compiling eeprom.c...
+..\..\HARDWARE\pressure\pressure_sensor.h(88): warning:  #1295-D: Deprecated declaration press_sensor_init - give arg types
+  void press_sensor_init();
+..\..\HARDWARE\eeprom\eeprom.c(297): warning:  #177-D: variable "eerpom_w" was declared but never referenced
+        u16 eerpom_w[5]={1,2,65535,65534,65533}; 
+..\..\HARDWARE\eeprom\eeprom.c(328): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+        printf_string(eeprom_r2);
+..\..\HARDWARE\eeprom\eeprom.c(337): warning:  #167-D: argument of type "unsigned char *" is incompatible with parameter of type "char *"
+        printf_string(eeprom_r1);
+..\..\HARDWARE\eeprom\eeprom.c: 4 warnings, 0 errors
+linking...
+Program Size: Code=15984 RO-data=368 RW-data=164 ZI-data=2340  
+FromELF: creating hex file...
+".\STM32L152-EVAL\STM32L152-EVAL.axf" - 0 Error(s), 70 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
   F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE

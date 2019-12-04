@@ -146,8 +146,16 @@ void TIM4_IRQHandler(void)   //TIM3ÖÐ¶Ï
 		{
 			g_bus.heart_count = 0;
 			g_bus.report_flag |= HEART_FLAG;
+
+			my_g_time.m_clock_syn_flag = 1;
 		}
 
+		my_g_time.m_clock_count++;
+		if(my_g_time.m_clock_count>=2)
+		{
+			my_g_time.m_clock_count=0;
+			my_g_time.m_clock_utc++;
+		}
 	}
 }
 

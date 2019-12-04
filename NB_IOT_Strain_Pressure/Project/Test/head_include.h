@@ -1,8 +1,10 @@
 #ifndef __HEAD_INCLUDE_H
 #define __HEAD_INCLUDE_H
 //C语言标准库
+#include "stdio.h"
 #include "string.h"
 #include "stdlib.h"
+#include "time.h"
 //MCU标准库
 #include "stm32l1xx.h"
 //外设头文件
