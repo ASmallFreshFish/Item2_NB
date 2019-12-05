@@ -115,6 +115,7 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			}
 		}
 
+		//称重采样
 		g_weight.sample_count++;
 		if(g_weight.sample_count >= PRESS_STRA_SAMPLE_TIME_COUNT )
 		{
@@ -147,7 +148,10 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			g_bus.heart_count = 0;
 			g_bus.report_flag |= HEART_FLAG;
 
+			//时间戳每5min判断是否同步
 			my_g_time.m_clock_syn_flag = 1;
+			//电池每5min上报一次电量
+			g_bus.report_flag |= BAT_POWER_FLAG;
 		}
 
 		my_g_time.m_clock_count++;

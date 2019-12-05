@@ -515,9 +515,7 @@ void bat_hangdle()
 {	
 	if(g_bat.sample_flag)
 	{	
-		
 		bat_sample();
-		
 		bat_get_value();
 		bat_judge();
 	}

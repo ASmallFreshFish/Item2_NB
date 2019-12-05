@@ -17,7 +17,9 @@
 #define UPLOAD_SEND_DATA_LEN 200
 
 /************************************************************************
-*****************************帧格式**************************************
+**********************************帧格式*********************************
+
+******************************1 数据上传格式(发送)*************************
 2019117前
 01			|02	    |03		|04				|05			|06		
 MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT		 
@@ -34,7 +36,15 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|tim
 1byte		|1byte	|15bytes|1byte			|1byte		|1byte	|2byte	|2bytes	|2bytes |12bytes|6bytes
 
 
+******************************2 命令下发格式(接受)*************************
+20191205
+01			|02	    |03				|04			|06		
+MESSAGE_ID	|head	|COMMAND_TYPE	|SEQUENCE	|data		 
+1bytes		|1bytes	|1bytes			|1bytes		|2bytes
+
 *************************************************************************/
+
+/*****************************数据上传常量*******************************/
 
 //BUS1:MESSAGE_ID
 #define BUS1_MESSAGE_ID_KEY 		"00"
@@ -43,7 +53,7 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|tim
 //BUS2:HEAD
 #define BUS2_HEAD 		"DD"
 
-//BUS3:IMEI
+//BUS3:IMEI,different from each other
 //BUS4:COMMAND_TYPE
 #define BUS4_COMMAND_TYPE_HEART 		"01"
 #define BUS4_COMMAND_TYPE_BAT 			"02"
@@ -52,12 +62,15 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|tim
 #define BUS4_COMMAND_TYPE_GESTURE		"13"
 #define BUS4_COMMAND_TYPE_PRESS_SENSOR 	"14"
 
-//BUS5:SEQUENCE
+//BUS5:SEQUENCE,changed with upload times
 //BUS6:HEART EVENT
+#define BUS6_BAT_POWER  "00"
+#define BUS6_BAT_POWER_DATA  0x0
 #define BUS6_BAT_LOW_POWER  "01"
 #define BUS6_BAT_LOW_POWER_DATA  0x01
 #define BUS6_BAT_OFF_POWER  "02"
 #define BUS6_BAT_OFF_POWER_DATA  0x02
+
 //BUS6:PRESS EVENT
 #define BUS6_PRESS_EVENT_AGGRAVATE 	"FF"
 #define BUS6_PRESS_EVENT_LIGHTEN 		"FE"
@@ -69,9 +82,11 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|tim
 //BUS6:PRESS_SENSOR EVENT
 #define BUS6_PRESS_SENSOR_OPEN  "01"
 #define BUS6_PRESS_SENSOR_OPEN_DATA  0x01
-
-
-//BUS7:CHANGED DATA
+//BUS7:DATA1,	real time value
+//BUS8:DATA2,	real time value
+//BUS9:DATA3,	real time value
+//BUS10:TIME,	real time value
+//BUS11:VERSION
 
 //heart tick(定时器0.5s一次)
 #define HEART_UPLOAD_INTERVAL_5MIN	600
@@ -95,7 +110,7 @@ typedef enum
 	STRAIN_FLAG = 0x04,
 	GESTURE_FLAG = 0x08,
 	PRESS_SENSOR_FLAG= 0x10,
-	RESERVED_REPORT_FLAG = 0x20,
+	BAT_POWER_FLAG = 0x20,
 	BAT_LOW_POWER_FLAG = 0x40,
 	BAT_OFF_POWER_FLAG = 0x80
 }report_flag_type;
@@ -122,8 +137,10 @@ extern bus_type g_bus;
 void upload_init(void);
 void upload_handle(void);
 void upload_strain_handle(void);
-void upload_heart_handle(void);
 void upload_bat_low_handle(void);
+void upload_bat_power_handle(void);
+void upload_heart_handle(void);
+
 
 void upload_change_sequence(void);
 void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3);

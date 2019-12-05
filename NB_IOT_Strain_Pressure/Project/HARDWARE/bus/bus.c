@@ -463,6 +463,11 @@ void  upload_handle(void)
 		//低电量上报处理
 		upload_bat_low_handle();
 	}
+	else if(g_bus.report_flag&BAT_POWER_FLAG)
+	{
+		//电量上报处理
+		upload_bat_power_handle();
+	}
 	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
 	{
 		//心跳上报
@@ -551,27 +556,9 @@ void old_upload_handle(void)
 //	}
 }
 
-void upload_heart_handle(void)
-{
-	
-	printf_string("\nreport_count:");
-	printf_u8_decStr(g_bus.report_count);
-	
-	if(g_bus.report_count == BUS_FRAME_STA)
-	{
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
-	}
-	
-	upload_send_data_handle();
-	g_bus.report_count++;
-	
-	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
-	{
-		g_bus.report_flag &= ~HEART_FLAG;
-		g_bus.report_count=BUS_FRAME_STA;
-	}
-}
 
+
+//重量上报三次
 void upload_strain_handle(void)
 {
 	printf_string("\nreport_count:");
@@ -593,7 +580,33 @@ void upload_strain_handle(void)
 	
 }
 
+//低电量上报一次
 void upload_bat_low_handle(void)
+{
+	upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0,0,0);
+	upload_send_data_handle();
+	g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
+	g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
+}
+
+//电压上报一次
+void upload_bat_power_handle(void)
+{
+	upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_POWER_DATA,g_bat.bat_value,0,0);
+	upload_send_data_handle();
+	g_bus.report_flag &= ~BAT_POWER_FLAG;
+}
+
+//心跳上报一次
+void upload_heart_handle(void)
+{
+	upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
+	upload_send_data_handle();
+	g_bus.report_flag &= ~HEART_FLAG;
+}
+
+
+void old_upload_bat_low_handle(void)
 {
 	
 	printf_string("\nreport_count:");
@@ -614,6 +627,48 @@ void upload_bat_low_handle(void)
 		g_bus.report_count=BUS_FRAME_STA;
 	}
 	
+}
+
+void old_upload_bat_power_handle(void)
+{
+	printf_string("\nreport_count:");
+	printf_u8_decStr(g_bus.report_count);
+	
+	if(g_bus.report_count == BUS_FRAME_STA)
+	{
+		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_POWER_DATA,g_bat.bat_value,0,0);
+	}
+	
+	upload_send_data_handle();
+	g_bus.report_count++;
+	
+	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
+	{
+		g_bus.report_flag &= ~BAT_POWER_FLAG;
+		g_bus.report_count=BUS_FRAME_STA;
+	}
+	
+}
+
+void old_upload_heart_handle(void)
+{
+	
+	printf_string("\nreport_count:");
+	printf_u8_decStr(g_bus.report_count);
+	
+	if(g_bus.report_count == BUS_FRAME_STA)
+	{
+		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
+	}
+	
+	upload_send_data_handle();
+	g_bus.report_count++;
+	
+	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
+	{
+		g_bus.report_flag &= ~HEART_FLAG;
+		g_bus.report_count=BUS_FRAME_STA;
+	}
 }
 
 

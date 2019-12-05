@@ -6,8 +6,9 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191127"
-const char version_number[]={"1.1"};	
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191205"
+#define VERSION_NUMBER 	"1.1"
+const char version_number[]=VERSION_NUMBER;	
 
 main_data_type g_sta =PRESS_HANDLE_STA;
 

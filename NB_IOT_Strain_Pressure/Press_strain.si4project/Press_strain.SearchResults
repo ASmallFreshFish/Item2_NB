@@ -1,7 +1,4 @@
----- PRESS_SENSOR_FLAG Matches (6 in 3 files) ----
-upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
-upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
-eld_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
-eld_upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
-bus.h (Project\HARDWARE\bus) line 97 : 	PRESS_SENSOR_FLAG= 0x10,
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : //		g_bus.report_flag |= PRESS_SENSOR_FLAG;
+---- my_g_time.m_clock_syn_flag Matches (3 in 2 files) ----
+bus_get_handle in bus.c (Project\HARDWARE\bus) : 	if(my_g_time.m_clock_syn_flag)
+bus_get_handle in bus.c (Project\HARDWARE\bus) : 		my_g_time.m_clock_syn_flag = 0;
+TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			my_g_time.m_clock_syn_flag = 1;
