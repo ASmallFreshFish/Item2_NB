@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191205"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191209"
 #define VERSION_NUMBER 	"1.1"
 const char version_number[]=VERSION_NUMBER;	
 
@@ -26,6 +26,7 @@ int main(void)
 
 void main_sta_judge(void)
 {
+	printf_string("\njudge");
 	if(g_bus.report_flag)
 	{
 		g_sta = BUS_UPLOAD_HANDLE_STA;
@@ -45,6 +46,7 @@ void main_handle(void)
 			break;
 			
 		case BUS_UPLOAD_HANDLE_STA:
+			printf_string("\nsend");
 			//处理上传
 			if(g_bus.report_count == BUS_FRAME_STA)
 			{
@@ -55,9 +57,9 @@ void main_handle(void)
 			break;
 
 		case BUS_GET_HANDLE_STA:
+			printf_string("\nget");
 			//处理命令
 			bus_get_handle();
-			g_sta = PRESS_HANDLE_STA;
 			break;
 			
 		default:

@@ -493,12 +493,12 @@ void bat_judge(void)
 			g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
 			g_bus.have_reported_flag &= ~BAT_LOW_POWER_FLAG;
 			break;
-		case BAT_STA_OFF_POWER:
-			if(!(g_bus.have_reported_flag&BAT_OFF_POWER_FLAG))
-			{
-				g_bus.report_flag |= BAT_OFF_POWER_FLAG;
-			}
-			break;
+//		case BAT_STA_OFF_POWER:
+//			if(!(g_bus.have_reported_flag&BAT_OFF_POWER_FLAG))
+//			{
+//				g_bus.report_flag |= BAT_OFF_POWER_FLAG;
+//			}
+//			break;
 		case BAT_STA_LOW_POWER:
 			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;
 			if(!(g_bus.have_reported_flag&BAT_LOW_POWER_FLAG))

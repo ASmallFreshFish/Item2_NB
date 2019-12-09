@@ -1,6 +1,8 @@
 #include "head_include.h"
 
 bus_type g_bus ={0};
+bus_receive_type g_receive={0};
+
 u8 upload_send_data[UPLOAD_SEND_DATA_LEN]={0};
 u8 upload_buf_sequence = 1;
 
@@ -261,6 +263,7 @@ void bytesToHexString (const char * inBuf, char *outBuf, u32 len)
 void upload_init(void)
 {
 	memset(&g_bus,0,sizeof(g_bus));
+	g_bus.report_times = 3;
 }
 
 
@@ -336,6 +339,7 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 da
 	strncat(upload_send_data,&time_hex_str[0],24);
 	loc += 24;
 
+	//BUS11:version  (3hex,6hexstr)
 	hex8_to_hexstr((u8*)version_number, version_hex_str, 6);
 	strncat(upload_send_data,&version_hex_str[0],6);
 	loc += 6;
@@ -344,66 +348,11 @@ void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 da
 	upload_change_sequence();
 
 #ifdef DEBUG_MACRO
-		 UART1_send_byte('\n');
-		 Uart1_SendStr(upload_send_data);
-		 UART1_send_byte('\n');
+//		 UART1_send_byte('\n');
+//		 Uart1_SendStr(upload_send_data);
+//		 UART1_send_byte('\n');
 #endif
 }
-
-void old_upload_send_data_frame(u8* command_type,u8 event,u16 data)
-{
-	u8 loc = 0;
-	u8 t;
-	u8 pp[2];
-	u8 imei_hex_str[31];
-	u8 change_data_str[5];
-	memset(upload_send_data,0,sizeof(upload_send_data));
-	
-	//BUS1:MESSAGE_ID
-	strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
-	loc += 2;
-	
-	//BUS2:HEAD
-	strncat(upload_send_data,BUS2_HEAD,2);
-	loc += 2;
-	
-	//BUS3:IMEI  (15hex,30hexstr)
-	hex8_to_hexstr(imei_str,imei_hex_str,15);
-	strncat(upload_send_data,imei_hex_str,30);
-	loc += 30;
-	
-	//BUS4:COMMAND_TYPE
-	strncat(upload_send_data,command_type,2);
-	loc += 2;
-	
-	//BUS5:SEQUENCE
-	t=upload_buf_sequence;
-	hex8_to_hexchar(t,pp);
-	strncat(upload_send_data,pp,2);
-	loc += 2;
-	
-	//BUS6:EVENT
-	t=event;
-	hex8_to_hexchar(t,pp);
-	strncat(upload_send_data,pp,2);
-	loc += 2;
-
-	//BUS7:changed_data  (2hex,4hexstr)
-	hex16_to_hexstr(data,change_data_str);
-	strncat(upload_send_data,change_data_str,4);
-	loc += 4;
-	
-	upload_send_data[loc] = 0;
-	upload_change_sequence();
-
-#ifdef DEBUG_MACRO
-		 UART1_send_byte('\n');
-		 Uart1_SendStr(upload_send_data);
-		 UART1_send_byte('\n');
-#endif
-}
-
-
 
 void upload_send_data_handle(void)
 {		
@@ -425,10 +374,46 @@ void old_upload_send_data_handle(void)
 	BC95_RECCOAPData();
 }
 
-
 // 处理所有上报事件
 // 事件增多，按照事件优先级分时上报。
 void  upload_handle(void)
+{
+	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
+	{
+		return;
+	}
+	
+#ifdef DEBUG_MACRO
+	printf_string("\nreport_flag:");
+	printf_u8_hexStr(g_bus.report_flag);
+#endif
+
+	if(g_bus.report_flag & STRAIN_FLAG)				
+	{
+		//重量上报
+		upload_strain_handle();
+	}
+	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
+	{
+		//低电量上报处理
+		upload_bat_low_handle();
+	}
+	else if(g_bus.report_flag&BAT_POWER_FLAG)
+	{
+		//电量上报处理
+		upload_bat_power_handle();
+	}
+	else if(g_bus.report_flag & HEART_FLAG)		
+	{
+		//心跳上报
+		upload_heart_handle();
+	}
+}
+
+
+// 处理所有上报事件
+// 事件增多，按照事件优先级分时上报。
+void  old_upload_handle(void)
 {
 	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
 	{
@@ -475,87 +460,6 @@ void  upload_handle(void)
 	}
 }
 
-void  eld_upload_handle(void)
-{
-	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
-	{
-		return;
-	}
-	
-#ifdef DEBUG_MACRO
-	printf_string("\nreport_flag:");
-	printf_u8_hexStr(g_bus.report_flag);
-#endif
-
-	if(g_bus.report_flag & STRAIN_FLAG)				//重量上报
-	{
-		g_bus.report_flag &= ~STRAIN_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
-		upload_send_data_handle();
-	}
-	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
-	{
-		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_PRESS_SENSOR,BUS6_PRESS_SENSOR_OPEN_DATA,g_press.press_result,0,0);
-		upload_send_data_handle();
-	}
-	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
-	{
-		//关机上报处理
-		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
-		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_OFF_POWER_DATA,0,0,0);
-		upload_send_data_handle();
-	}
-	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
-	{
-		//低电量上报处理
-		g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
-		g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0,0,0);
-		upload_send_data_handle();
-	}
-	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
-	{
-		g_bus.report_flag &= ~HEART_FLAG;
-		//处理
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
-		upload_send_data_handle();
-	}
-}
-
-void old_upload_handle(void)
-{
-
-//	if(g_bus.report_flag & HEART_FLAG)
-//	{
-//		g_bus.report_flag &= ~HEART_FLAG;
-//		//处理
-//		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0);
-//		upload_send_data_handle();
-//	}
-
-//	if(g_bus.report_flag & KEY_FLAG)
-//	{
-//		g_bus.report_flag &= ~KEY_FLAG;
-//		//处理
-//	}
-
-//	if(g_bus.report_flag & STRAIN_FLAG)
-//	{
-//		g_bus.report_flag &= ~STRAIN_FLAG;
-//		//处理
-//		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data);
-//		upload_send_data_handle();
-//	}
-
-//	if(g_bus.report_flag & GESTURE_FLAG)
-//	{	
-//		g_bus.report_flag &= ~GESTURE_FLAG;
-//		//处理
-//	}
-}
-
 
 
 //重量上报三次
@@ -572,12 +476,11 @@ void upload_strain_handle(void)
 	upload_send_data_handle();
 	g_bus.report_count++;
 
-	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
+	if(g_bus.report_count == g_bus.report_times)
 	{
 		g_bus.report_flag &= ~STRAIN_FLAG;
 		g_bus.report_count=BUS_FRAME_STA;
 	}
-	
 }
 
 //低电量上报一次
@@ -605,102 +508,144 @@ void upload_heart_handle(void)
 	g_bus.report_flag &= ~HEART_FLAG;
 }
 
-
-void old_upload_bat_low_handle(void)
-{
-	
-	printf_string("\nreport_count:");
-	printf_u8_decStr(g_bus.report_count);
-	
-	if(g_bus.report_count == BUS_FRAME_STA)
-	{
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_LOW_POWER_DATA,0,0,0);
-	}
-	
-	upload_send_data_handle();
-	g_bus.report_count++;
-	
-	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
-	{
-		g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
-		g_bus.have_reported_flag|=BAT_LOW_POWER_FLAG;
-		g_bus.report_count=BUS_FRAME_STA;
-	}
-	
-}
-
-void old_upload_bat_power_handle(void)
-{
-	printf_string("\nreport_count:");
-	printf_u8_decStr(g_bus.report_count);
-	
-	if(g_bus.report_count == BUS_FRAME_STA)
-	{
-		upload_send_data_frame(BUS4_COMMAND_TYPE_BAT,BUS6_BAT_POWER_DATA,g_bat.bat_value,0,0);
-	}
-	
-	upload_send_data_handle();
-	g_bus.report_count++;
-	
-	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
-	{
-		g_bus.report_flag &= ~BAT_POWER_FLAG;
-		g_bus.report_count=BUS_FRAME_STA;
-	}
-	
-}
-
-void old_upload_heart_handle(void)
-{
-	
-	printf_string("\nreport_count:");
-	printf_u8_decStr(g_bus.report_count);
-	
-	if(g_bus.report_count == BUS_FRAME_STA)
-	{
-		upload_send_data_frame(BUS4_COMMAND_TYPE_HEART,BUS6_HEART_TICK_EVENT_DATA,0,0,0);
-	}
-	
-	upload_send_data_handle();
-	g_bus.report_count++;
-	
-	if(g_bus.report_count == BUS_FINAL_UPLOAD_STA)
-	{
-		g_bus.report_flag &= ~HEART_FLAG;
-		g_bus.report_count=BUS_FRAME_STA;
-	}
-}
-
-
 // 处理所有命令事件
-// 事件增多，按照事件优先级分时上报。
 void  bus_get_handle(void)
+{
+	//处理同步时间
+	if(my_g_time.m_clock_syn_flag)
+	{
+		my_g_time.m_clock_syn_flag = 0;
+		get_syn_clock_handle();
+	}
+
+	//处理接收到的指令
+	get_receive_data_handle();
+	
+}
+
+void get_syn_clock_handle(void)
 {
 	//处理时间
 	my_time_type now_time;
 
-	//	test
-	
-	if(my_g_time.m_clock_syn_flag)
+	clock_get_time(&now_time);
+	if(now_time.hour == 0)
 	{
-		my_g_time.m_clock_syn_flag = 0;
-
-		clock_get_time(&now_time);
-		if((now_time.hour == 0)||(!my_g_time.m_clock_syn_result))
+		if(!my_g_time.m_clock_syn_result)
 		{
 			my_g_time.m_clock_syn_result = clock_syn_time();
+#ifdef DEBUG_MACRO
+			printf_string("\nsyn:");
+			printf_u8_decStr(my_g_time.m_clock_syn_result);
+#endif
 		}
 	}
-
-//	printf_string("\nsyn:");
-//	printf_u8_decStr(my_g_time.m_clock_syn_result);
+	else
+	{
+		my_g_time.m_clock_syn_result =0;
+	}
 }
 
+void get_receive_data_handle(void)
+{
+	//处理接收信息，注意状态机的切换
+	if(g_bus.receive_flag)
+	{
+		printf_string("\nreceive: ");
+		
+		printf("AT+NMGR\r\n");
+		delay_ms(1000);
+
+		strx=strstr((const char*)RxBuffer,(const char*)",");
+		if(strx)
+		{
+			//解析数据
+			get_parse_data();
+			//继续拉取数据
+			g_sta = BUS_GET_HANDLE_STA;
+		}
+		else
+		{
+			//不再拉取数据
+			g_bus.receive_flag =0;
+			g_sta = PRESS_HANDLE_STA;
+		}
+		
+		Clear_Buffer();	
+	}
+	else
+	{
+		g_sta = PRESS_HANDLE_STA;
+	}
+}
+void get_parse_data(void)
+{
+	u32 len;
+	u32 r_message_id,r_head,r_command_type,r_sequence,r_data1,r_data2,r_data3;
+
+	sscanf(strx-2,"%02d,%02x%02x%02x%02x%04x%04x%04x",&len,&r_message_id,
+		&r_head,&r_command_type,&r_sequence,
+		&r_data1,&r_data2,&r_data3);
+#ifdef DEBUG_MACRO
+printf_string("\nparse:");
+	printf_u8_hexStr(len);printf_string(",\t");
+	printf_u8_hexStr(r_message_id);printf_string("\t");
+	printf_u8_hexStr(r_head);printf_string("\t");
+	printf_u8_hexStr(r_command_type);printf_string("\t");
+	printf_u8_hexStr(r_sequence);printf_string("\t");
+	printf_u16_hexStr(r_data1);printf_string("\t");
+	printf_u16_hexStr(r_data2);printf_string("\t");
+	printf_u16_hexStr(r_data3);printf_string("\t");
+#endif
+
+	if((r_message_id == BUS1_R_MESSAGE_ID )&&(r_head == BUS2_R_HEAD))
+	{
+		if(r_sequence == g_receive.r_sequence )
+		{
+			return;
+		}
+
+		g_receive.r_sequence = r_sequence;
+		if(r_command_type == BUS4_R_C_TYPE_WEIGHT_THRESHOLD)
+		{
+			//更改变量，写进eeprom
+			
+
+			if((g_weight.change_threshold != r_data1)&&(r_data1 != 0))
+			{
+				g_weight.change_threshold = r_data1;
+				eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
+					(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
+			}
+			
+#ifdef DEBUG_MACRO
+			printf_string("\nc_weight_threshold:");
+			printf_u16_decStr(g_weight.change_threshold);
+#endif
+		}
+		else if(r_command_type == BUS4_R_C_TYPE_WEIGHT_UPLOAD_TIMES)
+		{
+			//更改变量，写进eeprom
+			if((g_bus.report_times != r_data1)&&(r_data1 != 0))
+			{
+				g_bus.report_times =r_data1;
+				eeprom_write((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,(u16 *)(&g_bus.report_times),
+					(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length);
+			}
+
+#ifdef DEBUG_MACRO
+			printf_string("\nc_upload_times:");
+			printf_u16_decStr(g_bus.report_times);
+#endif
+		}
+		
+	}
+	
+}
 
 /*************************************************
 test 
 **************************************************/
 test_type g_test ={0};
-
 
 

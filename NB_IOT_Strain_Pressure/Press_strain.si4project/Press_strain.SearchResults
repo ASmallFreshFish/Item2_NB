@@ -1,4 +1,11 @@
----- my_g_time.m_clock_syn_flag Matches (3 in 2 files) ----
-bus_get_handle in bus.c (Project\HARDWARE\bus) : 	if(my_g_time.m_clock_syn_flag)
-bus_get_handle in bus.c (Project\HARDWARE\bus) : 		my_g_time.m_clock_syn_flag = 0;
-TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			my_g_time.m_clock_syn_flag = 1;
+---- BAT_OFF_POWER_FLAG Matches (11 in 3 files) ----
+upload_handle in bus.c (Project\HARDWARE\bus) : 	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
+upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
+upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
+upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
+bus.h (Project\HARDWARE\bus) line 114 : 	BAT_OFF_POWER_FLAG = 0x80
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : //			if(!(g_bus.have_reported_flag&BAT_OFF_POWER_FLAG))
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : //				g_bus.report_flag |= BAT_OFF_POWER_FLAG;
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;

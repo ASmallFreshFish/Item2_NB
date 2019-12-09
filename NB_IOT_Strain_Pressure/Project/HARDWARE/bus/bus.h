@@ -38,9 +38,9 @@ MESSAGE_ID	|head	|IMEI	|COMMAND_TYPE	|SEQUENCE	|EVENT	|data1  |data2	|data3	|tim
 
 ******************************2 命令下发格式(接受)*************************
 20191205
-01			|02	    |03				|04			|06		
-MESSAGE_ID	|head	|COMMAND_TYPE	|SEQUENCE	|data		 
-1bytes		|1bytes	|1bytes			|1bytes		|2bytes
+01			|02	    |03				|04			|06		|07		|08
+MESSAGE_ID	|head	|COMMAND_TYPE	|SEQUENCE	|data1	|data2 	|data3
+1bytes		|1bytes	|1bytes			|1bytes		|2bytes	|2bytes	|2bytes
 
 *************************************************************************/
 
@@ -93,13 +93,12 @@ MESSAGE_ID	|head	|COMMAND_TYPE	|SEQUENCE	|data
 //#define HEART_UPLOAD_INTERVAL_5MIN	120
 
 
-#define BUS_REPORT_NUMBER 3
+//#define BUS_REPORT_NUMBER 3
 
 typedef enum
 {
 	BUS_FRAME_STA=0,
 	BUS_UPLOAD_STA=1,
-	BUS_FINAL_UPLOAD_STA = BUS_REPORT_NUMBER,
 }report_count_type;
 
 typedef enum
@@ -118,34 +117,61 @@ typedef enum
 //zhou
 typedef struct
 {
-//	u8 message_id;
-//	u8 head_data;
-//	u8 command;
-//	u8 sequence;
-//	u8 value;
-//	u8 end_data;
-	u16 heart_count;
-	u8 report_flag;
-	u8 have_reported_flag;
-	report_count_type report_count;
-	
+	u16 heart_count;		//心跳计数
+	u8 report_flag;			//上报标志
+	u8 have_reported_flag;	//已经上报标志
+	u8 report_times;		//上报次数
+	u8 report_count;		//上报次数计数
+	u8 receive_flag;		//接受标志
 }bus_type;
 
 extern bus_type g_bus;
 
+/*****************************数据接收常量*******************************/
+
+//BUS1:R_MESSAGE_ID
+#define BUS1_R_MESSAGE_ID 0x05
+
+//BUS2:R_HEAD
+#define BUS2_R_HEAD 		0xDD
+
+//BUS3:R_COMMAND_TYPE
+#define BUS4_R_C_TYPE_WEIGHT_THRESHOLD 		0x01
+#define BUS4_R_C_TYPE_WEIGHT_UPLOAD_TIMES 	0x02
+
+//BUS4:R_SEQUENCE,changed with upload times
+//BUS5:DATA1,	real time value
+//BUS6:DATA2,	real time value
+//BUS7:DATA3,	real time value
+
+typedef struct
+{
+	u8 r_message_id;
+	u8 r_head;
+	u8 r_command_type;
+	u8 r_sequence;
+	u16 r_data1;
+	u16 r_data2;
+	u16 r_data3;
+}bus_receive_type;
+extern bus_receive_type g_receive;
+
 
 void upload_init(void);
+void upload_change_sequence(void);
+void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3);
+void upload_send_data_handle(void);
 void upload_handle(void);
 void upload_strain_handle(void);
 void upload_bat_low_handle(void);
 void upload_bat_power_handle(void);
 void upload_heart_handle(void);
 
+void  bus_get_handle(void);
+void get_syn_clock_handle(void);
+void get_receive_data_handle(void);
+void get_parse_data(void);
 
-void upload_change_sequence(void);
-void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3);
-void old_upload_send_data_frame(u8* command_type,u8 event,u16 data);
-void upload_send_data_handle(void);
 
 void hex8_to_hexchar(u8 data_hex,u8 data_ch[2]);
 void hex8_to_hexstr(u8 *inchar,u8 *outtxt,u32 len);

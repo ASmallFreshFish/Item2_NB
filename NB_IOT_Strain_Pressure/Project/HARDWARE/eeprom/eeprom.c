@@ -261,8 +261,89 @@ u8 eeprom_read(u16 addr,u16 *buffer,u16 length)
 /******************************************
 EEPROM应用函数
 ******************************************/
-//上电读一下flash，和默认值相同认为OK，否则写flash。
+//上电读一下eeprom，值为0，把默认值写进去；值非零且和默认值不一样，以eeprom值修改默认值。
+void eeprom_clear_variable()
+{	
+	eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
+	eeprom_clear((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,0,BYTES_EACH_VARIABLE);
+}
+
+//上电读一下eeprom，值为0，把默认值写进去；值非零且和默认值不一样，以eeprom值修改默认值。
 void eeprom_init()
+{	
+	u16 read_buf[5];
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
+	{
+		printf_string("\neeprom_init:");
+		printf_u16_hexStr(read_buf[0]);
+		if(read_buf[0] == 0)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
+				(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
+		}
+		else if(read_buf[0] != g_weight.change_threshold)
+		{
+			g_weight.change_threshold =read_buf[0];
+		}
+	}
+
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length))
+	{
+		printf_string("\t");
+		printf_u16_hexStr(read_buf[0]);
+		if(read_buf[0] == 0)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,(u16 *)(&g_bus.report_times),
+				(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length);
+		}
+		else if(read_buf[0] != g_bus.report_times)
+		{
+			g_bus.report_times =read_buf[0];
+		}
+	}
+}
+
+
+
+
+
+void eld_eeprom_init()
+{	
+	u16 read_buf[5];
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
+	{
+		printf_string("\neeprom_init:");
+		printf_u16_hexStr(read_buf[0]);
+		if(read_buf[0] != g_weight.change_threshold)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
+				(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
+		}
+	}
+
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length))
+	{
+		printf_string("\t");
+		printf_u16_hexStr(read_buf[0]);
+		if(read_buf[0] != g_bus.report_times)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,(u16 *)(&g_bus.report_times),
+				(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length);
+		}
+	}
+}
+
+
+
+void old_eeprom_init()
 {	
 	u16 read_buf[5];
 	u8 result = TRUE;
@@ -280,7 +361,7 @@ void eeprom_init()
 	}
 	if(!result)
 	{
-		eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,25);
+		eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
 		eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
 			(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
 	}
@@ -330,10 +411,10 @@ void old_test()
 
 	delay_ms(500);
 	printf_string("\na:");
-	EEPROM_WriteBytes((u16)g_eeprom[EEPROM_ID_RESERVED1].offset_addr,(u8 *)eerpom_w,10);
+	EEPROM_WriteBytes((u16)g_eeprom[EEPROM_ID_RESERVED2].offset_addr,(u8 *)eerpom_w,10);
 	printf_string("\tb:");
 	delay_ms(500);
-	EEPROM_ReadBytes((u16)g_eeprom[EEPROM_ID_RESERVED1].offset_addr,(u8 *)eeprom_r1,10);
+	EEPROM_ReadBytes((u16)g_eeprom[EEPROM_ID_RESERVED2].offset_addr,(u8 *)eeprom_r1,10);
 	printf_string(eeprom_r1);
 }
 

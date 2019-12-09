@@ -13,7 +13,7 @@ sram:	32K(0x8000),	0x2000_0000 ~ 0x2000_8000
 每100个字节存储一个变量信息，并且3备份
 order	offset_addr    	variable
 0		0x0				称重的阈值
-1		0x64			预留
+1		0x64			业务上报次数
 2		0xC8			预留
 3		0x12C			预留
 4		0x190			预留
@@ -34,10 +34,12 @@ order	offset_addr    	variable
 #define EN_INT      	__enable_irq();		//系统开全局中断
 #define DIS_INT     	__disable_irq();	//系统关全局中断
 
+#define BYTES_EACH_VARIABLE 25		//每个变量占用25*4bytes
+
 typedef enum
 {
-	EEP_ID_W_CHANGE_THRESHOLD = 0,
-	EEPROM_ID_RESERVED1,
+	EEP_ID_W_CHANGE_THRESHOLD = 0,		//重量变化阈值标号
+	EEP_ID_W_UPLOAD_TIMES = 1,				
 	EEPROM_ID_RESERVED2,
 	EEPROM_ID_RESERVED3,
 	EEPROM_ID_RESERVED4
