@@ -425,18 +425,38 @@ void bat_sample(void)
 
 void bat_get_value(void)
 {
-	float bat_v=g_bat.bat_ad_value;
+	float bat_v=0.0;
 
 	bat_v =((3.3*g_bat.bat_ad_value)/255.0)*2;		//8位分辨率，等待返回 电阻分压的
 //	bat_v =((3.3*g_bat.bat_ad_value)/4096.0)*2;		//12位分辨率，等待返回 电阻分压的
 
 	g_bat.bat_value =bat_v*100;
 
+	if(g_bat.bat_value == 0)
+	{
+		g_bat.bat_zero_count ++;
+		if(g_bat.bat_zero_count >= BAT_ZERO_NUMBER_LIMIT)
+		{
+			g_bat.last_bat_value = g_bat.bat_value;;
+		}
+		else
+		{
+			g_bat.bat_value = g_bat.last_bat_value;
+		}
+	}
+	else
+	{
+		g_bat.bat_zero_count =0;
+		g_bat.last_bat_value =g_bat.bat_value;
+	}
+
 #ifdef DEBUG_MACRO
-	printf_char('\t');
+	printf_string("\t");
 	printf_bat_value(g_bat.bat_value);
-	printf_char('\t');
+	printf_string("\t");
 	printf_u16_decStr(g_bat.bat_value);
+	printf_string("\tcount:");
+	printf_u8_decStr(g_bat.bat_zero_count);
 #endif
 }
 
@@ -453,7 +473,7 @@ void bat_judge(void)
 		
 		if(g_bat.bat_value<=BAT_OFF_POWER_LIMIT)
 		{
-			g_bat.off_power_count++;
+//			g_bat.off_power_count++;
 //			if(g_bat.off_power_count>=3)
 //			{
 //				g_bat.sta =BAT_STA_OFF_POWER;

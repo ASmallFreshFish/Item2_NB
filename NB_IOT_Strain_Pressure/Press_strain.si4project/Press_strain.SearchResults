@@ -1,11 +1,10 @@
----- BAT_OFF_POWER_FLAG Matches (11 in 3 files) ----
-upload_handle in bus.c (Project\HARDWARE\bus) : 	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
-upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
-upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
-upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.have_reported_flag|=BAT_OFF_POWER_FLAG;
-bus.h (Project\HARDWARE\bus) line 114 : 	BAT_OFF_POWER_FLAG = 0x80
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : //			if(!(g_bus.have_reported_flag&BAT_OFF_POWER_FLAG))
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : //				g_bus.report_flag |= BAT_OFF_POWER_FLAG;
-bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.have_reported_flag &= ~BAT_OFF_POWER_FLAG;
+---- g_weight.shiwu_weight_ave_last[1] Matches (9 in 1 files) ----
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + g_weight.change_threshold)
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			if(g_weight.shiwu_weight_ave_last[1] ==0)
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.changed_data=g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1];
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + g_weight.change_threshold)
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;

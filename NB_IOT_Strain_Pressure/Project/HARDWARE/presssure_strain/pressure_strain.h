@@ -25,7 +25,8 @@
 //#define GapValue 715 //计算原始
 //#define GapValue 703
 //#define GapValue 689
-#define GapValue 784
+//#define GapValue 784
+#define GapValue 798.6
 
 #define MAOPI_AD_REAL 8463254
 #define MAOPI_AD_EVERY_100G (100*GapValue)
@@ -66,10 +67,10 @@ typedef struct
 	u32 maopi_ad;
 	u32 maopi_weight;
 	u32 shiwu_ad;
-	u32 shiwu_weight[WEIGHT_SAMPLE_NUMBER];
-	u32 shiwu_weight_ave;
-	u32 shiwu_weight_ave_last[2];
-	
+	u32 shiwu_weight[WEIGHT_SAMPLE_NUMBER];		//存储的是实际重量的10倍
+	u32 shiwu_weight_ave;						//存储的是实际重量的10倍
+	u32 shiwu_weight_ave_last[2];				//存储的是实际重量的10倍
+    u32 factor100;	
 }pressure_strain_type;
 
 extern pressure_strain_type g_weight;

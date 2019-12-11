@@ -13,7 +13,6 @@ BC95 BC95_Status;
 void Clear_Buffer(void)//Çå¿Õ»º´æ
 {
 #ifdef DEBUG_MACRO
-//	printf_string("\nclear1\n!");
 	Uart1_SendStr(RxBuffer);
 #endif
 
@@ -22,9 +21,9 @@ void Clear_Buffer(void)//Çå¿Õ»º´æ
 		RxBuffer[i]=0;
 	RxCounter=0;
 
-#ifdef DEBUG_MACRO
-	printf_string("\nclear2!\n");
-#endif
+//#ifdef DEBUG_MACRO
+//	printf_string("\nclear2!\n");
+//#endif
 }
 
 void old_Clear_Buffer(void)//Çå¿Õ»º´æ

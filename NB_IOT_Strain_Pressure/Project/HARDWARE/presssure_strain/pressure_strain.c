@@ -7,6 +7,7 @@ void press_strain_init(void)
 	Init_HX711pin();
 	memset(&g_weight,0,sizeof(pressure_strain_type));
 	g_weight.change_threshold = 25;   //代表2.5g
+	g_weight.factor100 = 1000;
 }
 
 void press_strain_init_remove(void)
@@ -65,10 +66,12 @@ u32 HX711_Read(void)        //增益128
 
 //获取毛皮重量
 void Get_Maopi(void)
-{
+{	
 	g_weight.maopi_ad = HX711_Read();	
-	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue;//计算毛皮的实际重量(此处为重量10倍，显示到0.1g)		
+//	g_weight.maopi_weight = g_weight.maopi_ad*10/GapValue;//计算毛皮的实际重量(此处为重量10倍，显示到0.1g)		
 
+	g_weight.maopi_weight = ((g_weight.maopi_ad*10.0/GapValue/g_weight.factor100)*1000);
+	
 	UART1_send_byte('\n');
 	printf_u32_decStr(g_weight.maopi_ad);
 	UART1_send_byte('\t');UART1_send_byte('\t');
@@ -99,11 +102,12 @@ void Get_Weight(void)
 		printf_u32_decStr(g_weight.shiwu_ad);
 	}
 #endif
-			
 		if(g_weight.shiwu_ad > g_weight.maopi_ad)			
 		{
 			g_weight.shiwu_ad = g_weight.shiwu_ad - g_weight.maopi_ad;		//获取实物的AD采样数值。
-			g_weight.shiwu_weight[i] = g_weight.shiwu_ad*10/GapValue; 			//计算实物的实际重量
+//			g_weight.shiwu_weight[i] = g_weight.shiwu_ad*10/GapValue; 			//计算实物的实际重量
+
+			g_weight.shiwu_weight[i] = ((g_weight.shiwu_ad*10.0/GapValue/g_weight.factor100)*1000);
 		}
 		else
 			g_weight.shiwu_weight[i] = 0; 		
@@ -111,6 +115,7 @@ void Get_Weight(void)
 		delay_ms(100);
 	}
 }
+
 
 /***************************************************************************/
 //阈值判断
@@ -127,7 +132,7 @@ void press_strain_judge(void)
 //		g_weight.shiwu_weight_ave=0;
 	
 	#ifdef DEBUG_MACRO
-		printf_string("\nweight_sample:");
+		printf_string("\nweight_ave:");
 		printf_press_strain_weight(g_weight.shiwu_weight_ave);
 	#endif
 
@@ -152,7 +157,7 @@ void press_strain_judge(void)
 			g_weight.sta = GO_S_LITTLE;
 			if(++g_weight.little_count >= PRESS_STRA_LIEELE_COUNT) 
 				g_weight.little_count = PRESS_STRA_LIEELE_COUNT;
-			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+//			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 		}
 	}
 	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
@@ -166,7 +171,7 @@ void press_strain_judge(void)
 				g_weight.sta = GO_S_AGGRAVATE;
 			
 			g_weight.changed_data=g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1];
-			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+//			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 //			g_weight.sta = NO_S_STA;	//加重不再上报
 		}
 	}
@@ -177,11 +182,12 @@ void press_strain_judge(void)
 		{
 			g_weight.sta = GO_S_LIGHTEN;
 			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;
-			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+//			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 		}
 	}	
 	
 	g_weight.shiwu_weight_ave_last[0] =g_weight.shiwu_weight_ave;
+	g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
 
 	if(g_weight.sta)
 	{
@@ -195,12 +201,16 @@ void press_strain_judge(void)
 	}
 
 #ifdef DEBUG_MACRO
-	printf_string("\tg_weight.sta  change_data:\t ");
+	printf_string("\tsta change last:\t ");
 	printf_u8_hexStr(g_weight.sta);
 	printf_char('\t');
-	printf_u16_hexStr(g_weight.changed_data);
+	printf_u16_decStr(g_weight.changed_data);
 	printf_char('\t');
 	printf_press_strain_weight((u32)g_weight.changed_data);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.shiwu_weight_ave_last[0]);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.shiwu_weight_ave_last[1]);
 #endif
 
 }

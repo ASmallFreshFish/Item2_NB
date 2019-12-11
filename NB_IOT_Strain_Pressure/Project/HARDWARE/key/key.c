@@ -16,7 +16,7 @@ void KEY_init(void)
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
 	
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12|GPIO_Pin_13;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
 	GPIO_Init(GPIOB, &GPIO_InitStructure);
@@ -86,4 +86,122 @@ void KEY_scan_stop(void)
 	TIM_Cmd(TIM3, DISABLE);
 }
 
+
+/*******************************************************************
+
+使用线路板集成的按键PB12，通过按键检测，用于校准重量检测
+
+********************************************************************/
+
+void key_cali_init()
+{
+ 	GPIO_InitTypeDef GPIO_InitStructure;
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);
+}
+
+void key_calibration()
+{
+	u32 t_weight_ave;
+	u32 t_weight_ave_last[2]={0};
+	u32 diff;
+	u32 factor;
+
+
+	if(KEY_PB12 == 0)
+	{
+		delay_ms(1000);
+
+		if(KEY_PB12 == 1)
+		{
+			return;
+		}
+		
+		LEDTEST_OPEN;	//检测到按键，开灯
+		
+		t_weight_ave =t_weight_ave_last[0]=t_weight_ave_last[1]= key_Get_Weight();
+		LEDTEST_CLOSE;	//检测完原始值，闭灯
+		
+		for(int i=0;i<10;i++)
+		{
+			IWDG_Feed();
+			t_weight_ave = key_Get_Weight();
+			while((t_weight_ave > t_weight_ave_last[0]+4)||(t_weight_ave_last[0] > t_weight_ave+4))
+			{
+				t_weight_ave_last[0] = t_weight_ave;
+				t_weight_ave = key_Get_Weight();
+			}
+			if(t_weight_ave > t_weight_ave_last[1]+50)
+			{
+				break;
+			}
+		}
+		LEDTEST_OPEN;	//检测完新值，开灯
+
+		if((t_weight_ave > t_weight_ave_last[1]))
+		{
+			diff = t_weight_ave - t_weight_ave_last[1];
+		}
+		else
+		{
+			diff = t_weight_ave_last[1] - t_weight_ave;
+		}
+
+		//factor100是实际factor的1000倍(100g的10倍即1000g)。
+		if((g_weight.factor100 != diff)&&(diff != 0))
+		{
+			g_weight.factor100 =(u32)(diff);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,(u16 *)(&g_weight.factor100),
+				(u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].length);
+		}
+
+		delay_ms(1000);
+		LEDTEST_CLOSE;	//检测完，闭灯
+
+#ifdef DEBUG_MACRO
+		printf_string("\nfactor100:");
+		printf_u32_decStr(g_weight.factor100);
+#endif
+	}
+}
+	
+
+//称重
+//因为不同的传感器特性曲线不一样，因此，每一个传感器需要矫正这里的GapValue这个除数。
+u32 key_Get_Weight(void)
+{
+	u8 i;
+	u32 t_ad,t_weight[10],t_weight_ave;
+	for(i=0;i<WEIGHT_SAMPLE_NUMBER;i++)
+	{
+		t_ad = HX711_Read();
+		
+#ifdef DEBUG_MACRO
+		if(0)
+		{
+			printf_string("\nweight sample:\t");
+			printf_u32_decStr(t_ad);
+		}
+#endif
+			
+		if(t_ad > g_weight.maopi_ad)			
+		{
+			t_ad = t_ad - g_weight.maopi_ad;		//获取实物的AD采样数值。
+//			t_weight[i] = t_ad*10/GapValue;		//计算实物的实际重量的10倍
+			t_weight[i] = ((t_ad*10.0/GapValue/g_weight.factor100)*1000);		//计算实物的实际重量的10倍
+		}
+		else
+			t_weight[i] = 0;		
+
+		delay_ms(100);
+	}
+
+	t_weight_ave = press_strain_sort_average(t_weight ,10);
+	return t_weight_ave;
+}
 

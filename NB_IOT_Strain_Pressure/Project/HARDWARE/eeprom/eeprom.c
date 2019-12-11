@@ -272,11 +272,12 @@ void eeprom_clear_variable()
 void eeprom_init()
 {	
 	u16 read_buf[5];
+
+	//初始化重量变化量阈值eeprom
 	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
 		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
 	{
-		printf_string("\neeprom_init:");
-		printf_u16_hexStr(read_buf[0]);
+		
 		if(read_buf[0] == 0)
 		{
 			eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
@@ -287,13 +288,20 @@ void eeprom_init()
 		{
 			g_weight.change_threshold =read_buf[0];
 		}
+#ifdef DEBUG_MACRO_INIT
+		printf_string("\neeprom_init,weight:");
+		printf_u16_hexStr(read_buf[0]);
+		printf_string("\t");
+		printf_u16_hexStr(g_weight.change_threshold);
+#endif
+
 	}
 
+	//初始化业务上报次数eeprom
 	if(eeprom_read((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,read_buf,
 		(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length))
 	{
-		printf_string("\t");
-		printf_u16_hexStr(read_buf[0]);
+		
 		if(read_buf[0] == 0)
 		{
 			eeprom_clear((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,0,BYTES_EACH_VARIABLE);
@@ -304,12 +312,37 @@ void eeprom_init()
 		{
 			g_bus.report_times =read_buf[0];
 		}
+#ifdef DEBUG_MACRO_INIT
+			printf_string("\t upload:");
+			printf_u16_hexStr(read_buf[0]);
+			printf_string("\t");
+			printf_u16_hexStr(g_bus.report_times);
+#endif
+
+	}
+
+	//初始化重量调节因子eeprom
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].length))
+	{
+		if(read_buf[0] == 0)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,(u16 *)(&g_weight.factor100),
+				(u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].length);
+		}
+		else if(read_buf[0] != g_weight.factor100)
+		{
+			g_weight.factor100 =read_buf[0];
+		}
+#ifdef DEBUG_MACRO_INIT
+		printf_string("\t factor:");
+		printf_u16_hexStr(read_buf[0]);
+		printf_string("\t");
+		printf_u16_hexStr(g_weight.factor100);
+#endif
 	}
 }
-
-
-
-
 
 void eld_eeprom_init()
 {	
@@ -411,10 +444,10 @@ void old_test()
 
 	delay_ms(500);
 	printf_string("\na:");
-	EEPROM_WriteBytes((u16)g_eeprom[EEPROM_ID_RESERVED2].offset_addr,(u8 *)eerpom_w,10);
+	EEPROM_WriteBytes((u16)g_eeprom[EEPROM_ID_RESERVED4].offset_addr,(u8 *)eerpom_w,10);
 	printf_string("\tb:");
 	delay_ms(500);
-	EEPROM_ReadBytes((u16)g_eeprom[EEPROM_ID_RESERVED2].offset_addr,(u8 *)eeprom_r1,10);
+	EEPROM_ReadBytes((u16)g_eeprom[EEPROM_ID_RESERVED4].offset_addr,(u8 *)eeprom_r1,10);
 	printf_string(eeprom_r1);
 }
 

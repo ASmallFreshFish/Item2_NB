@@ -378,10 +378,10 @@ void old_upload_send_data_handle(void)
 // 事件增多，按照事件优先级分时上报。
 void  upload_handle(void)
 {
-	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
-	{
-		return;
-	}
+//	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
+//	{
+//		return;
+//	}
 	
 #ifdef DEBUG_MACRO
 	printf_string("\nreport_flag:");
@@ -465,9 +465,11 @@ void  old_upload_handle(void)
 //重量上报三次
 void upload_strain_handle(void)
 {
+#ifdef DEBUG_MACRO
 	printf_string("\nreport_count:");
 	printf_u8_decStr(g_bus.report_count);
-	
+#endif
+
 	if(g_bus.report_count == BUS_FRAME_STA)
 	{
 		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);

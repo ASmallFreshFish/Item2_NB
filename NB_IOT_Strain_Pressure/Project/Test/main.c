@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191209"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191211"
 #define VERSION_NUMBER 	"1.1"
 const char version_number[]=VERSION_NUMBER;	
 
@@ -26,7 +26,7 @@ int main(void)
 
 void main_sta_judge(void)
 {
-	printf_string("\njudge");
+//	printf_string("\njudge");
 	if(g_bus.report_flag)
 	{
 		g_sta = BUS_UPLOAD_HANDLE_STA;
@@ -37,6 +37,7 @@ void main_handle(void)
 	switch(g_sta)
 	{
 		case PRESS_HANDLE_STA:
+			key_calibration();
 			press_sensor_handle();
 			g_sta = STRAIN_HANDLE_STA;
 			break;
@@ -46,7 +47,7 @@ void main_handle(void)
 			break;
 			
 		case BUS_UPLOAD_HANDLE_STA:
-			printf_string("\nsend");
+//			printf_string("\nsend");
 			//处理上传
 			if(g_bus.report_count == BUS_FRAME_STA)
 			{
@@ -57,7 +58,7 @@ void main_handle(void)
 			break;
 
 		case BUS_GET_HANDLE_STA:
-			printf_string("\nget");
+//			printf_string("\nget");
 			//处理命令
 			bus_get_handle();
 			break;
@@ -76,6 +77,7 @@ void main_init(void)
 	//硬件模块初始化
     LED_Init();
 	KEY_init();
+	key_cali_init();
 	//	adc_init();
 //		press_strain_init();
 

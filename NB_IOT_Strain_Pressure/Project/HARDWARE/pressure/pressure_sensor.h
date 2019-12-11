@@ -101,9 +101,10 @@ void press_sensor_handle(void);
 #define BAT_SAMPLE_INTERVAL_HALFMIN 60
 
 
-#define BAT_LOW_POWER_LIMIT 370	//电量低于3.70V，低电量
-#define BAT_OFF_POWER_LIMIT 350	//电量低于3.50V，关机
+#define BAT_LOW_POWER_LIMIT 370		//电量低于3.70V，低电量
+#define BAT_OFF_POWER_LIMIT 350		//电量低于3.50V，关机
 #define BAT_HIGH_POWER_LIMIT 440	//电量高于4.40V，异常
+#define BAT_ZERO_NUMBER_LIMIT 4		//连续4次检测到0V，才上报0V
 
 
 typedef enum
@@ -117,12 +118,14 @@ typedef struct
 {
 	u16 bat_ad_value;
 	u16 bat_value;		//方便处理，存储实际电压的100倍
+	u16 last_bat_value;
 	u8 normal_power_count;
 	u8 low_power_count;
 	u8 off_power_count;
 	u8 sample_count;
 	u8 sample_flag; 
 	bat_sta_type sta;
+	u8 bat_zero_count;
 }bat_type;
 
 extern bat_type g_bat;
