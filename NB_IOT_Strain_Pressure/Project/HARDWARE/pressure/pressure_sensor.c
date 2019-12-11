@@ -417,7 +417,7 @@ void bat_sample(void)
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 4); 	//12Î»·Ö±æÂÊ
 
 	adc_disable();
-#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO_INIT
 		printf_string("\nbat_sample:");
 		printf_u16_hexStr(g_bat.bat_ad_value);
 #endif
@@ -450,7 +450,7 @@ void bat_get_value(void)
 		g_bat.last_bat_value =g_bat.bat_value;
 	}
 
-#ifdef DEBUG_MACRO
+#ifdef DEBUG_MACRO_INIT
 	printf_string("\t");
 	printf_bat_value(g_bat.bat_value);
 	printf_string("\t");
@@ -486,7 +486,6 @@ void bat_judge(void)
 		{
 			g_bat.off_power_count=0;
 			g_bat.low_power_count++;
-			g_bat.sample_flag =1;
 			if(g_bat.low_power_count>=3)
 			{
 				g_bat.sta = BAT_STA_LOW_POWER;
@@ -498,7 +497,6 @@ void bat_judge(void)
 		g_bat.off_power_count=0;
 		g_bat.low_power_count=0;
 		g_bat.normal_power_count++;
-		g_bat.sample_flag =1;
 		if(g_bat.normal_power_count>=3)
 		{
 			g_bat.sta =BAT_STA_NORMAL_POWER;
@@ -535,6 +533,8 @@ void bat_hangdle()
 {	
 	if(g_bat.sample_flag)
 	{	
+		g_bat.sample_flag =0;
+		
 		bat_sample();
 		bat_get_value();
 		bat_judge();

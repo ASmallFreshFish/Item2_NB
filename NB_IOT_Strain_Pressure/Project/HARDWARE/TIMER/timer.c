@@ -124,15 +124,15 @@ void TIM4_IRQHandler(void)   //TIM3中断
 		}
 		
 		//电池在关机情况下30s采样一次
-		if(g_bat.sta == BAT_STA_OFF_POWER)
-		{
-			g_bat.sample_count++;
-			if(g_bat.sample_count >= BAT_SAMPLE_INTERVAL_HALFMIN)
-			{
-				g_bat.sample_count = 0;
-				g_bat.sample_flag = 1;
-			}
-		}
+//		if(g_bat.sta == BAT_STA_OFF_POWER)
+//		{
+//			g_bat.sample_count++;
+//			if(g_bat.sample_count >= BAT_SAMPLE_INTERVAL_HALFMIN)
+//			{
+//				g_bat.sample_count = 0;
+//				g_bat.sample_flag = 1;
+//			}
+//		}
 		
 		//0.5s进行一次薄膜压力和重量检测
 		g_press.sample_count++;
@@ -151,6 +151,7 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			//时间戳每5min判断是否同步
 			my_g_time.m_clock_syn_flag = 1;
 			//电池每5min上报一次电量
+			g_bat.sample_flag = 1;
 			g_bus.report_flag |= BAT_POWER_FLAG;
 		}
 

@@ -49,10 +49,10 @@ void main_handle(void)
 		case BUS_UPLOAD_HANDLE_STA:
 //			printf_string("\nsend");
 			//处理上传
-			if(g_bus.report_count == BUS_FRAME_STA)
-			{
+//			if(g_bus.report_count == BUS_FRAME_STA)
+//			{
 				bat_hangdle();
-			}
+//			}
 			upload_handle();
 			g_sta = BUS_GET_HANDLE_STA;
 			break;
