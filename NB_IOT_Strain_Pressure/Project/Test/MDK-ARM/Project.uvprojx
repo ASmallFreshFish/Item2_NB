@@ -518,6 +518,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l1xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dma.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -1244,6 +1249,11 @@
               <FileName>stm32l1xx_aes_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l1xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dma.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1972,6 +1982,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32l1xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dma.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -2698,6 +2713,11 @@
               <FileName>stm32l1xx_aes_util.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_aes_util.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32l1xx_dma.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\src\stm32l1xx_dma.c</FilePath>
             </File>
           </Files>
         </Group>

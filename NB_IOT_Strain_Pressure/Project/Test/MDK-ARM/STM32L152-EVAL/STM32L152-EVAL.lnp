@@ -20,6 +20,7 @@
 ".\stm32l152-eval\stm32l1xx_usart.o"
 ".\stm32l152-eval\stm32l1xx_wwdg.o"
 ".\stm32l152-eval\stm32l1xx_aes_util.o"
+".\stm32l152-eval\stm32l1xx_dma.o"
 ".\stm32l152-eval\system_stm32l1xx.o"
 ".\stm32l152-eval\startup_stm32l1xx_md.o"
 ".\stm32l152-eval\usart.o"

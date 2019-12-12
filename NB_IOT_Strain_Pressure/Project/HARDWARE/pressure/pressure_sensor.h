@@ -168,6 +168,17 @@ void clock_set_time(my_time_type *time);
 void clock_cclk_handle(char *p);
 u8 clock_syn_time(void);
 
+/*********************************************************
+
+* adc+dma≈‰÷√
+
+**********************************************************/
+extern volatile u16 adc_dma_ad_value[4];
+
+void dma_init_config(void);
+void adc_init_config(void);
+void adc_dma_get_start(void);
+void adc_dma_get_result(void);
 
 #endif
 

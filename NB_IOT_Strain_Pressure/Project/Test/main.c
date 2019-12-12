@@ -6,7 +6,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191211"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191212"
 #define VERSION_NUMBER 	"1.1"
 const char version_number[]=VERSION_NUMBER;	
 
@@ -26,7 +26,6 @@ int main(void)
 
 void main_sta_judge(void)
 {
-//	printf_string("\njudge");
 	if(g_bus.report_flag)
 	{
 		g_sta = BUS_UPLOAD_HANDLE_STA;
@@ -47,18 +46,13 @@ void main_handle(void)
 			break;
 			
 		case BUS_UPLOAD_HANDLE_STA:
-//			printf_string("\nsend");
 			//处理上传
-//			if(g_bus.report_count == BUS_FRAME_STA)
-//			{
-				bat_hangdle();
-//			}
+			bat_hangdle();
 			upload_handle();
 			g_sta = BUS_GET_HANDLE_STA;
 			break;
 
 		case BUS_GET_HANDLE_STA:
-//			printf_string("\nget");
 			//处理命令
 			bus_get_handle();
 			break;
@@ -70,6 +64,62 @@ void main_handle(void)
 }
 
 void main_init(void)
+{
+	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // interrupt priority level set
+    delay_init();	
+	
+	//硬件模块初始化
+    LED_Init();
+	KEY_init();
+	key_cali_init();
+	//	adc_init();
+//		press_strain_init();
+
+	//串口、定时器
+    uart_init(9600);  
+	uart2_gesture_init(9600); 
+    uart3_init(9600);
+	TIM3_Int_Init(199,3199);   // 20ms一次中断
+    TIM4_Int_Init(4999,3199);  // 500ms一次中断
+
+	//基站时间
+	clock_init_time();
+    
+    //NB模块的初始化
+    CDP_Init();     //CDP服务器初始化    
+    BC95_Init();
+	upload_init();
+
+	//adc独立方式
+	adc_init();
+	//adc+dma方式
+//	DMA_config();
+//	ADC_Config();
+
+	bat_init();
+	press_sensor_init();
+	press_strain_init();
+	eeprom_init();
+
+	//打印程序版本号
+	Uart1_SendStr("\r\n");
+	Uart1_SendStr(VERSION_Y_M_D);
+	//去皮操作
+	press_strain_init_remove();
+	
+	//使能串口2:Gesture检测
+//	uart2_enable();
+
+	//启动按键扫描
+//	KEY_scan_start();
+
+	///*****************看门狗初始化***********************/
+	IWDG_Init(5,0x0C4E);   //复位时间10.0s(6.7s-13.4s)
+
+}
+
+
+void old_main_init(void)
 {
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2); // interrupt priority level set
     delay_init();	

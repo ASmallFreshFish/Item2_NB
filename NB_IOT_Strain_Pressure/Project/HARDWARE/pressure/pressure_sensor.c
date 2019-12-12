@@ -2,9 +2,9 @@
 
 press_ad_type g_press;
 
-u16 RegularConvData_Tab[2];//存储2个电压值
-u16 VREFINT_DATA;
-float Vbat_value;
+//u16 RegularConvData_Tab[2];//存储2个电压值
+//u16 VREFINT_DATA;
+//float Vbat_value;
 
 void press_ad_debug_print(u16 data)
 {
@@ -404,7 +404,11 @@ void bat_init(void)
 void bat_sample(void)
 {
 //	adc_enable();
-		
+	u16 ad_fake=0;
+
+	ad_fake = g_bat.bat_ad_value = get_adc(ADC_Channel_1);
+
+
 	//PA0
 	g_bat.bat_ad_value = 0;
 //	g_bat.bat_ad_value = get_press_adc_average(ADC_Channel_0,3);
@@ -417,8 +421,11 @@ void bat_sample(void)
 //	g_bat.bat_ad_value =(g_bat.bat_ad_value >> 4); 	//12位分辨率
 
 	adc_disable();
-#ifdef DEBUG_MACRO_INIT
+//#ifdef DEBUG_MACRO_INIT
+#ifdef DEBUG_MACRO
 		printf_string("\nbat_sample:");
+		printf_u16_hexStr(ad_fake);
+		printf_string("\t:");
 		printf_u16_hexStr(g_bat.bat_ad_value);
 #endif
 }
@@ -444,13 +451,19 @@ void bat_get_value(void)
 			g_bat.bat_value = g_bat.last_bat_value;
 		}
 	}
+	else if(g_bat.bat_value > BAT_HIGH_POWER_LIMIT)
+	{
+		g_bat.bat_value = g_bat.last_bat_value;
+	}
 	else
 	{
 		g_bat.bat_zero_count =0;
 		g_bat.last_bat_value =g_bat.bat_value;
 	}
 
-#ifdef DEBUG_MACRO_INIT
+//#ifdef DEBUG_MACRO_INIT
+#ifdef DEBUG_MACRO
+
 	printf_string("\t");
 	printf_bat_value(g_bat.bat_value);
 	printf_string("\t");
@@ -737,5 +750,211 @@ void clock_copy_time_to_buf(u8 *buf)
 	buf[6] = 0;
 }
 
+/******************************************************
+
+* ADC+DMA
+
+******************************************************/
+//4个AD值分别存储PA1(假值)、PA0(bat)、PB14(press1)、PB15(press2)
+volatile u16 adc_dma_ad_value[4];
+
+void dma_init_config(void)
+{
+	DMA_InitTypeDef	DMA_InitStructure;
+
+	// DMA1 clock enable 
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 , ENABLE);
+	// DMA1 Channel1 Config 
+	DMA_DeInit(DMA1_Channel1);
+
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&(ADC1->DR);
+	DMA_InitStructure.DMA_MemoryBaseAddr = (u32)adc_dma_ad_value;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	DMA_InitStructure.DMA_BufferSize = 4;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+	//DMA1 Channel1 enable 
+	DMA_Cmd(DMA1_Channel1, ENABLE);
+}
+
+void adc_init_config(void)
+{
+	ADC_InitTypeDef	ADC_InitStructure;
+	GPIO_InitTypeDef	 GPIO_InitStructure;
+
+	//ADC1 Periph clock enable
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+	//复位ADC1 
+	ADC_DeInit(ADC1);	 
+
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
+	//bat检测口,PA1是假值
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 |GPIO_Pin_1;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;		  //模拟输入引脚
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);  
+
+	//PB14 15作为薄膜压力模拟通道输入引脚						  
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;		  //模拟输入引脚
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOB, &GPIO_InitStructure);  
+	 
+	// Enable the HSI oscillator 
+	RCC_HSICmd(ENABLE);
+	// Check that HSI oscillator is ready 
+	while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
+	// ADC1 configuration 
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+//  ADC_InitStructure.ADC_Resolution = ADC_Resolution_12b;  //12位分辨率
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;	  //8位分辨率
+	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_NbrOfConversion = 4;
+	ADC_Init(ADC1, &ADC_InitStructure);
+
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 2, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_20, 3, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_21, 4, ADC_SampleTime_48Cycles);
+	 
+	 // Enable ADC1 DMA
+	 ADC_DMACmd(ADC1, ENABLE);
+	 // Enable ADC1
+	 ADC_Cmd(ADC1, ENABLE);
+ 
+	 // Wait until the ADC1 is ready 
+	 while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET) {};
+ }
+
+ void eld_ADC_Config(void)
+{
+	ADC_InitTypeDef	   ADC_InitStructure;
+	DMA_InitTypeDef	   DMA_InitStructure;
+	GPIO_InitTypeDef    GPIO_InitStructure;
+	
+	/* ADC1 Periph clock enable */
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+
+	ADC_DeInit(ADC1);	//复位ADC1 
+	/* DMA1 clock enable */
+	RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1 , ENABLE);
+	/* DMA1 Channel1 Config */
+	DMA_DeInit(DMA1_Channel1);
+
+//	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)ADC1_DR_Address;(u32)&USART1->DR
+	DMA_InitStructure.DMA_PeripheralBaseAddr = (u32)&(ADC1->DR);
+	DMA_InitStructure.DMA_MemoryBaseAddr = (u32)adc_dma_ad_value;
+	DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+	DMA_InitStructure.DMA_BufferSize = 4;
+	DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+	DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
+	DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_HalfWord;
+	DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_HalfWord;
+	DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
+	DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+	DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+	DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+//	/* DMA1 Channel1 enable */
+	DMA_Cmd(DMA1_Channel1, ENABLE);
+
+	
+		 RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB, ENABLE);
+		 //bat检测口
+		 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;
+		 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;		 //模拟输入引脚
+		 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		 GPIO_Init(GPIOA, &GPIO_InitStructure);  
+	 
+		 //PB14 15作为薄膜压力模拟通道输入引脚						 
+		 GPIO_InitStructure.GPIO_Pin =	GPIO_Pin_14 | GPIO_Pin_15;
+		 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;		 //模拟输入引脚
+		 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+		 GPIO_Init(GPIOB, &GPIO_InitStructure);  
+ 
+	 
+	
+	/* Enable the HSI oscillator */
+	RCC_HSICmd(ENABLE);
+	/* Check that HSI oscillator is ready */
+	while(RCC_GetFlagStatus(RCC_FLAG_HSIRDY) == RESET);
+	/* ADC1 configuration */
+	ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+	ADC_InitStructure.ADC_ContinuousConvMode = DISABLE;
+	ADC_InitStructure.ADC_Resolution = ADC_Resolution_8b;	 //8位分辨率
+	ADC_InitStructure.ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+	ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+	ADC_InitStructure.ADC_NbrOfConversion = 4;
+	ADC_Init(ADC1, &ADC_InitStructure);
+	
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 2, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_20, 3, ADC_SampleTime_48Cycles);
+	ADC_RegularChannelConfig(ADC1, ADC_Channel_21, 4, ADC_SampleTime_48Cycles);
+	
+//	
+	
+	
+	/* Enable the request after last transfer for DMA Circular mode */
+//	ADC_DMARequestAfterLastTransferCmd(ADC1, ENABLE);
+	/* Enable ADC1 DMA */
+	ADC_DMACmd(ADC1, ENABLE);
+	/* Enable ADC1 */
+	ADC_Cmd(ADC1, ENABLE);
+
+	/* Wait until the ADC1 is ready */
+	while(ADC_GetFlagStatus(ADC1, ADC_FLAG_ADONS) == RESET)
+	{
+	}
+
+	/* Start ADC1 Software Conversion */ 
+//	ADC_SoftwareStartConv(ADC1);
+}
+
+
+ void adc_dma_get_start(void)
+ {
+ 	DMA_Cmd(DMA1_Channel1, DISABLE );  
+ 	DMA_SetCurrDataCounter(DMA1_Channel1,4);
+ 	DMA_Cmd(DMA1_Channel1, ENABLE);  
+	
+ 	ADC_SoftwareStartConv(ADC1);
+ 	//while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC ));//等待转换结束
+
+ }
+
+
+void adc_dma_get_result(void)
+{
+//	while(!DMA_GetFlagStatus(DMA1_FLAG_TC1)) ;
+	if((DMA_GetFlagStatus(DMA1_FLAG_TC1)) )
+	{
+	  /* Clear DMA TC flag */
+	  DMA_ClearFlag(DMA1_FLAG_TC1);
+	} 
+	
+	printf_string("\nadc_result:");
+	for(int i=0;i<4;i++)
+	{
+		printf_u16_hexStr(adc_dma_ad_value[i]);
+		printf_string("\t");
+	}
+	
+}
+
+void test_adc_dma(void)
+{
+	adc_dma_get_start();
+	adc_dma_get_result();
+	delay_ms(2000);
+}
 
 

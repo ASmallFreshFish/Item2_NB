@@ -1,10 +1,2 @@
----- g_weight.shiwu_weight_ave_last[1] Matches (9 in 1 files) ----
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + g_weight.change_threshold)
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			if(g_weight.shiwu_weight_ave_last[1] ==0)
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.changed_data=g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1];
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + g_weight.change_threshold)
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+---- adc_init_config Matches (1 in 1 files) ----
+pressure_sensor.c (Project\HARDWARE\pressure) line 785 : void adc_init_config(void)
