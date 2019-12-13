@@ -325,7 +325,7 @@ void eeprom_init()
 	if(eeprom_read((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,read_buf,
 		(u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].length))
 	{
-		if(read_buf[0] == 0)
+		if(read_buf[0] <= 5)
 		{
 			eeprom_clear((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,0,BYTES_EACH_VARIABLE);
 			eeprom_write((u16)g_eeprom[EEP_ID_W_FACTOR100_VALUE].offset_addr,(u16 *)(&g_weight.factor100),

@@ -138,6 +138,8 @@ void key_calibration()
 			}
 			if(t_weight_ave > t_weight_ave_last[1]+50)
 			{
+				IWDG_Feed();
+				t_weight_ave = key_Get_Weight();
 				break;
 			}
 		}
