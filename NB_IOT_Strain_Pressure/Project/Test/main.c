@@ -3,7 +3,7 @@
 	注意电信的卡只能接入电信的IOT平台，对应移动的可以任意接入电信或者是华为的平台。
 	如果需要开发oceanconncet的话，需要采用移动的B8系列开发。
 */
-
+//
 #include "head_include.h"
 
 #define VERSION_Y_M_D		"VERSION_Y_M_D:191107"
