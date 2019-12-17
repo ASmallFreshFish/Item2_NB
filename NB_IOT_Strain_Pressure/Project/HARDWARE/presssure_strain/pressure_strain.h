@@ -44,6 +44,8 @@
 
 #define PRESS_STRA_SAMPLE_TIME_COUNT 1
 #define PRESS_STRA_LIEELE_COUNT 5
+#define PRESS_STRA_STABLE_COUNT 3
+
 
 typedef enum
 {
@@ -62,6 +64,7 @@ typedef struct
 	u8 sample_flag;
 	u8 sample_count;
 	u8 little_count;
+	u8 stable_count;
 	u16 changed_data;
 	u16 change_threshold;
 	u32 maopi_ad;

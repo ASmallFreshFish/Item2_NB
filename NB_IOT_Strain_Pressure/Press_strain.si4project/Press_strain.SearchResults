@@ -1,2 +1,4 @@
----- adc_init_config Matches (1 in 1 files) ----
-pressure_sensor.c (Project\HARDWARE\pressure) line 785 : void adc_init_config(void)
+---- GO_S_LITTLE Matches (3 in 2 files) ----
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.sta = GO_S_LITTLE;
+old_press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.sta = GO_S_LITTLE;
+pressure_strain.h (Project\HARDWARE\presssure_strain) line 53 : 	GO_S_LITTLE =0xFD

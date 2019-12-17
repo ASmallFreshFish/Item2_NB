@@ -119,12 +119,117 @@ void Get_Weight(void)
 
 /***************************************************************************/
 //阈值判断
-//稳定的数据(误差小于0.3g)，低于10g，认为没有药了，最多连续上报10次，不再上报
+//稳定的数据(误差小于0.4g)，低于10g，认为没有药了，最多连续上报10次，不再上报
 //不低于10g，检测增加和减少药物(一袋阈值2g)
 //last[0]是实时值，用于判断是否稳定；last[1]是稳态值，用于判断是否是变化超过阈值。
 /***************************************************************************/
-
 void press_strain_judge(void)
+{ 
+	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,WEIGHT_SAMPLE_NUMBER);
+
+		//test
+//		g_weight.shiwu_weight_ave=0;
+	
+	#ifdef DEBUG_MACRO
+		printf_string("\nweight_ave:");
+		printf_press_strain_weight(g_weight.shiwu_weight_ave);
+	#endif
+
+	g_weight.sta = NO_S_STA;
+	g_weight.changed_data =0;
+
+	//如果数据不稳定(差值小于0.4g),则不做判断
+	//发生跳变之后，连续3次数据差值小于0.4g，则认为数据稳定了
+	if((g_weight.shiwu_weight_ave > g_weight.shiwu_weight_ave_last[0]+PRESS_STRAIN_STABLE_LIMIT)
+		||(g_weight.shiwu_weight_ave_last[0] > g_weight.shiwu_weight_ave+PRESS_STRAIN_STABLE_LIMIT))
+	{
+		g_weight.shiwu_weight_ave_last[0] =	 g_weight.shiwu_weight_ave;
+		g_weight.stable_count =0;
+		return;
+	}
+	else
+	{
+		g_weight.shiwu_weight_ave_last[0] =	 g_weight.shiwu_weight_ave;
+		
+		g_weight.stable_count++;
+		if(g_weight.stable_count >=PRESS_STRA_STABLE_COUNT )
+		{
+			
+			g_weight.stable_count = PRESS_STRA_STABLE_COUNT;
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	//数据稳定之后
+	//逻辑判断:小于10g,会上报缺少药物;现在重量大于之前的重量,加重;反之,减轻;
+	
+	if(g_weight.shiwu_weight_ave < PRESS_STRAIN_LITTLE_LIMIT)
+	{
+		if(g_weight.little_count < PRESS_STRA_LIEELE_COUNT)
+		{
+//			g_weight.sta = GO_S_LITTLE;
+			if(++g_weight.little_count >= PRESS_STRA_LIEELE_COUNT) 
+				g_weight.little_count = PRESS_STRA_LIEELE_COUNT;
+		}
+	}
+	else if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1])
+	{
+		g_weight.little_count = 0;
+		if(g_weight.shiwu_weight_ave >= g_weight.shiwu_weight_ave_last[1] + g_weight.change_threshold)
+		{
+			if(g_weight.shiwu_weight_ave_last[1] ==0)
+				g_weight.sta = NO_S_STA;
+			else
+				g_weight.sta = GO_S_AGGRAVATE;
+			
+			g_weight.changed_data=g_weight.shiwu_weight_ave-g_weight.shiwu_weight_ave_last[1];
+//			g_weight.sta = NO_S_STA;	//加重不再上报
+		}
+	}
+	else
+	{
+		g_weight.little_count = 0;
+		if(g_weight.shiwu_weight_ave_last[1]>= g_weight.shiwu_weight_ave + g_weight.change_threshold)
+		{
+			g_weight.sta = GO_S_LIGHTEN;
+			g_weight.changed_data=g_weight.shiwu_weight_ave_last[1]-g_weight.shiwu_weight_ave;
+		}
+	}	
+	
+	g_weight.shiwu_weight_ave_last[0] =g_weight.shiwu_weight_ave;
+	g_weight.shiwu_weight_ave_last[1] = g_weight.shiwu_weight_ave;
+
+	if(g_weight.sta)
+	{
+		g_bus.report_flag |= STRAIN_FLAG;
+//		g_bus.report_flag |= PRESS_SENSOR_FLAG;
+		g_sta =BUS_UPLOAD_HANDLE_STA;
+	}
+	else
+	{
+		g_sta =PRESS_HANDLE_STA;
+	}
+
+#ifdef DEBUG_MACRO
+	printf_string("\tsta change last:\t ");
+	printf_u8_hexStr(g_weight.sta);
+	printf_char('\t');
+	printf_u16_decStr(g_weight.changed_data);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.changed_data);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.shiwu_weight_ave_last[0]);
+	printf_char('\t');
+	printf_press_strain_weight((u32)g_weight.shiwu_weight_ave_last[1]);
+#endif
+
+}
+
+
+void old_press_strain_judge(void)
 { 
 	g_weight.shiwu_weight_ave = press_strain_sort_average(g_weight.shiwu_weight ,WEIGHT_SAMPLE_NUMBER);
 
@@ -146,6 +251,7 @@ void press_strain_judge(void)
 		g_weight.shiwu_weight_ave_last[0] =	 g_weight.shiwu_weight_ave;
 		return;
 	}
+		
 
 	//数据稳定之后
 	//逻辑判断:小于10g,会上报缺少药物;现在重量大于之前的重量,加重;反之,减轻;
