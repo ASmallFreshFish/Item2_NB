@@ -4,6 +4,8 @@
 	如果需要开发oceanconncet的话，需要采用移动的B8系列开发。
 */
 
+
+
 #include "head_include.h"
 
 #define VERSION_Y_M_D	"VERSION_Y_M_D:191217"
