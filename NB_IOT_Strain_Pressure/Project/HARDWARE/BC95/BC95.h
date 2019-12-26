@@ -20,6 +20,7 @@ extern char *strx,*extstrx;
 
 void Clear_Buffer(void);//清空缓存	
 void CDP_Init(void);//COAP服务器配置初始化
+void BC95_reset_init(void);
 void BC95_Init(void);
 void BC95_RECCOAPData(void);
 void BC95_SendCOAPdata(u8 *len,u8 *data);

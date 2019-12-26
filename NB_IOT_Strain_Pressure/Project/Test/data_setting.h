@@ -1,6 +1,10 @@
 #ifndef __DATA_SETTING_H_
 #define __DATA_SETTING_H_
 
+//正式或测试平台开关
+//#define PLATFORM_FORMAL 
+#define PLATFORM_TEST
+
 //LOG宏开关
 #define DENUG_MACRO_ALL_OPEN 
 
@@ -11,6 +15,8 @@
 
 
 
+
 #endif
+
 
 

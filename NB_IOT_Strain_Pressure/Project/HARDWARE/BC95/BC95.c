@@ -57,6 +57,18 @@ void copy_buf(char *buf_dest,char *buf_source,u8 len)
 	#endif
 }
 
+void BC95_reset_init(void)
+{
+    GPIO_InitTypeDef   GPIO_InitStructure;
+    RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOB, ENABLE);	 	
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
+    GPIO_Init(GPIOB, &GPIO_InitStructure);
+
+	GPIO_ResetBits(GPIOB,GPIO_Pin_8);
+//	LEDMCU_RED_CLOSE;
+}
+
 void CDP_Init(void)//COAP服务器配置初始化
 {
 	printf("AT\r\n"); 
@@ -105,7 +117,12 @@ void CDP_Init(void)//COAP服务器配置初始化
 		}
 		Clear_Buffer();	
 		
-    printf("AT+NCDP=180.101.147.115,5683\r\n");//配置CDP服务器地址电信平台的，这个COAP协议的IP地址是固定的
+#ifdef PLATFORM_FORMAL
+	printf("AT+NCDP=117.60.157.137,5683\r\n");//配置CDP服务器地址电信平台的，这个COAP协议的IP地址是固定的
+#else
+	printf("AT+NCDP=180.101.147.115,5683\r\n");//配置CDP服务器地址电信平台的，这个COAP协议的IP地址是固定的
+#endif
+
 		Delay(300);	
 		strx=strstr((const char*)RxBuffer,(const char*)"OK");//返回OK
 		while(strx==NULL)

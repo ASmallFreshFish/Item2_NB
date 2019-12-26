@@ -8,7 +8,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191217"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:191226"
 #define VERSION_NUMBER 	"1.1"
 const char version_number[]=VERSION_NUMBER;	
 
@@ -88,6 +88,7 @@ void main_init(void)
 	clock_init_time();
     
     //NB模块的初始化
+    BC95_reset_init();
     CDP_Init();     //CDP服务器初始化    
     BC95_Init();
 	upload_init();

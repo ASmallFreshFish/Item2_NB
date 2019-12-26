@@ -1,5 +1,5 @@
 Dependencies for Project 'Project', Target 'STM32L1XX_MD(STM32L1xxxBxx)': (DO NOT MODIFY !)
-F (..\main.c)(0x5DF84253)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
+F (..\main.c)(0x5E04922B)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\main.o --omf_browse .\stm32l152-eval\main.crf --depend .\stm32l152-eval\main.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -37,17 +37,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
@@ -86,8 +86,8 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
-F (..\..\HARDWARE\BC95\BC95.c)(0x5DF82D33)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bc95.o --omf_browse .\stm32l152-eval\bc95.crf --depend .\stm32l152-eval\bc95.d)
+I (..\main.h)(0x5E044AA1)
+F (..\..\HARDWARE\BC95\BC95.c)(0x5E048F56)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bc95.o --omf_browse .\stm32l152-eval\bc95.crf --depend .\stm32l152-eval\bc95.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -125,17 +125,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
@@ -841,7 +841,7 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
-F (..\..\HARDWARE\TIMER\timer.c)(0x5DF82D33)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\timer.o --omf_browse .\stm32l152-eval\timer.crf --depend .\stm32l152-eval\timer.d)
+F (..\..\HARDWARE\TIMER\timer.c)(0x5E044AA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\timer.o --omf_browse .\stm32l152-eval\timer.crf --depend .\stm32l152-eval\timer.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -879,17 +879,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
@@ -1035,22 +1035,22 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
 I (..\..\HARDWARE\eeprom\eeprom.h)(0x5DF82D33)
-F (..\..\HARDWARE\bus\bus.c)(0x5DF82D33)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
+F (..\..\HARDWARE\bus\bus.c)(0x5E044AA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\bus.o --omf_browse .\stm32l152-eval\bus.crf --depend .\stm32l152-eval\bus.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -1088,22 +1088,22 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
 I (..\..\HARDWARE\eeprom\eeprom.h)(0x5DF82D33)
-F (..\..\HARDWARE\pressure\pressure_sensor.c)(0x5DF82D33)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_sensor.o --omf_browse .\stm32l152-eval\pressure_sensor.crf --depend .\stm32l152-eval\pressure_sensor.d)
+F (..\..\HARDWARE\pressure\pressure_sensor.c)(0x5E044AA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_sensor.o --omf_browse .\stm32l152-eval\pressure_sensor.crf --depend .\stm32l152-eval\pressure_sensor.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -1141,17 +1141,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
@@ -1194,22 +1194,22 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
 I (..\..\HARDWARE\eeprom\eeprom.h)(0x5DF82D33)
-F (..\..\HARDWARE\presssure_strain\pressure_strain.c)(0x5DF84276)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_strain.o --omf_browse .\stm32l152-eval\pressure_strain.crf --depend .\stm32l152-eval\pressure_strain.d)
+F (..\..\HARDWARE\presssure_strain\pressure_strain.c)(0x5E044AA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I..\ -I..\..\..\Libraries\CMSIS\Device\ST\STM32L1xx\Include -I..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc -I..\..\..\Utilities\STM32_EVAL -I..\..\..\Utilities\STM32_EVAL\Common -I..\..\..\Utilities\STM32_EVAL\STM32L152_EVAL -I..\..\HARDWARE\usart -I..\..\HARDWARE\TIMER -I..\..\HARDWARE\BC95 -I..\..\HARDWARE\LED -I..\..\HARDWARE\key -I..\..\HARDWARE\delay -I..\..\HARDWARE\DHT11 -I..\..\..\Libraries\CMSIS\Include -I..\..\HARDWARE\bus -I..\..\Test -I..\..\HARDWARE\pressure -I..\..\HARDWARE\gesture -I..\..\HARDWARE\presssure_strain -I..\..\HARDWARE\IWDG -I..\..\HARDWARE\eeprom --c99-I F:\WorkJob\Item2_NB\NB_IOT_Strain_Pressure\Project\Test\MDK-ARM\RTE-I D:\01ProFiles\MDK5\ARM\PACK\Keil\STM32L1xx_DFP\1.0.2\Device\Include-I D:\01ProFiles\MDK5\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32L1XX_MD -DUSE_STDPERIPH_DRIVER -DSTM32L1XX_MD -DUSE_STM32L152_EVAL-o .\stm32l152-eval\pressure_strain.o --omf_browse .\stm32l152-eval\pressure_strain.crf --depend .\stm32l152-eval\pressure_strain.d)
 I (..\head_include.h)(0x5DF82D33)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\stdio.h)(0x5475F300)
 I (D:\01ProFiles\MDK5\ARM\ARMCC\include\string.h)(0x5475F300)
@@ -1247,17 +1247,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
@@ -1335,17 +1335,17 @@ I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_tim.h)(0x5D7F34B0
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_usart.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\stm32l1xx_wwdg.h)(0x5D7F34B0)
 I (..\..\..\Libraries\STM32L1xx_StdPeriph_Driver\inc\misc.h)(0x5D7F34B0)
-I (..\main.h)(0x5DF82D33)
+I (..\main.h)(0x5E044AA1)
 I (..\..\HARDWARE\usart\usart.h)(0x5DF82D33)
 I (..\..\HARDWARE\delay\delay.h)(0x5DF82D33)
-I (..\..\HARDWARE\TIMER\timer.h)(0x5D7F34B0)
+I (..\..\HARDWARE\TIMER\timer.h)(0x5E044AA1)
 I (..\..\HARDWARE\IWDG\iwdg.h)(0x5D7F34B0)
 I (..\..\HARDWARE\delay\sys.h)(0x5D7F34B0)
-I (..\..\HARDWARE\BC95\bc95.h)(0x5DF82D33)
+I (..\..\HARDWARE\BC95\bc95.h)(0x5E04919A)
 I (..\..\HARDWARE\LED\led.h)(0x5DF82D33)
 I (..\..\HARDWARE\key\key.h)(0x5DF82D33)
-I (..\..\HARDWARE\bus\bus.h)(0x5DF82D33)
-I (..\data_setting.h)(0x5DF82D33)
+I (..\..\HARDWARE\bus\bus.h)(0x5E044AA1)
+I (..\data_setting.h)(0x5E047104)
 I (..\..\HARDWARE\pressure\pressure_sensor.h)(0x5DF82D33)
 I (..\..\HARDWARE\gesture\gesture.h)(0x5D7F34B0)
 I (..\..\HARDWARE\presssure_strain\pressure_strain.h)(0x5DF841D7)
