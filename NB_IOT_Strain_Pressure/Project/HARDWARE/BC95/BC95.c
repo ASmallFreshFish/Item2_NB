@@ -51,10 +51,10 @@ void copy_buf(char *buf_dest,char *buf_source,u8 len)
 	}
 	buf_dest[len] = NULL;
 		//LOG´òÓ¡
-	#ifdef DEBUG_MACRO_INIT
-		Uart1_SendStr("\r\n");
-		Uart1_SendStr(buf_dest);
-	#endif
+//	#ifdef DEBUG_MACRO_INIT
+//		Uart1_SendStr("\r\n");
+//		Uart1_SendStr(buf_dest);
+//	#endif
 }
 
 void BC95_reset_init(void)
@@ -205,6 +205,10 @@ void BC95_Init(void)
 
 		//±£´æIMEIºÅÂë
 		copy_buf(imei_str,strx+6,16);
+#ifdef DEBUG_MACRO_INIT
+		printf_string("\n");
+		printf_string(imei_str);
+#endif
 		
 		Clear_Buffer();
 		while(strx==NULL)
@@ -214,6 +218,11 @@ void BC95_Init(void)
 		    Delay(300);
 		    strx=strstr((const char*)RxBuffer,(const char*)"+CGSN");
 			copy_buf(imei_str,strx+6,16);
+
+#ifdef DEBUG_MACRO_INIT
+			printf_string("\n");
+			printf_string(imei_str);
+#endif
 		}
 		
     printf("AT+CGATT=1\r\n");//¼¤»îÍøÂç£¬ÍøÂç¸½×Å PDP

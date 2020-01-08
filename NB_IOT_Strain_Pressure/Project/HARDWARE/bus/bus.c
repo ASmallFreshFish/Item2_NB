@@ -3,6 +3,19 @@
 bus_type g_bus ={0};
 bus_receive_type g_receive={0};
 
+#define UPLOAD_BUF_NUM 10
+//#define UPLOAD_BUF_NUM 5
+#define UPLOAD_BUF_LEN 200
+//#define UPLOAD_BUF_LEN 100
+
+
+u8 upload_buf_head =0;
+u8 upload_buf_tail =0;
+u8 upload_buf_count =0;
+u8 upload_buf_number =0;
+u8 upload_buf_round =0;
+u8 upload_buf[UPLOAD_BUF_NUM][UPLOAD_BUF_LEN]={0};
+
 u8 upload_send_data[UPLOAD_SEND_DATA_LEN]={0};
 u8 upload_buf_sequence = 1;
 
@@ -257,13 +270,14 @@ void bytesToHexString (const char * inBuf, char *outBuf, u32 len)
 
 /**************************************************************
 
-通信上报相关函数
+通信数据上报相关函数
 
 **************************************************************/
 void upload_init(void)
 {
 	memset(&g_bus,0,sizeof(g_bus));
-	g_bus.report_times = 3;
+	g_bus.report_times = UPLOAD_STRAIN_REPORT_TIMES;
+	g_bus.report_interval = UPLOAD_STRAIN_REPORT_INTERVAL;
 }
 
 
@@ -274,7 +288,299 @@ void upload_change_sequence(void)
 		upload_buf_sequence = 1;
 }
 
+//u8 upload_buf[UPLOAD_BUF_NUM][UPLOAD_BUF_LEN]={0};
+//检查buf缓存是否已写满
+u8 upload_buf_is_full_check(void)
+{
+	for(u8 i=0;i<UPLOAD_BUF_NUM;i++)
+	{
+		if(upload_buf[i][0] == 0)
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+u8 old_upload_buf_is_full_check(void)
+{
+	if((upload_buf_head == upload_buf_tail)&&(upload_buf[upload_buf_head][0] != 0))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+//检查buf缓存是否没有数据
+u8 upload_buf_is_empty_check(void)
+{
+	for(u8 i=0;i<UPLOAD_BUF_NUM;i++)
+	{
+		if(upload_buf[i][0] != 0)
+		{
+			return FALSE;
+		}
+	}
+	return TRUE;
+}
+
+u8 upload_buf_bumber_check(void)
+{
+	u8 count = 0;
+	for(u8 i=0;i<UPLOAD_BUF_NUM;i++)
+	{
+		if(upload_buf[i][0] != 0)
+		{
+			count++;
+		}
+	}
+	return count;
+}
+
+
+void upload_buf_write_in(void)
+{
+	if(upload_buf_is_full_check())
+	{
+		printf_string("\n write_in_full!");
+		return;
+	}
+	
+	upload_buf[upload_buf_head][0] = g_bus.report_times;
+	copy_buf(&upload_buf[upload_buf_head][1],upload_send_data,UPLOAD_BUF_LEN);
+
+#ifdef DEBUG_MACRO
+		printf_string("\n !!!!!!!!write_in:head:");
+		printf_u8_decStr(upload_buf_head);
+#endif
+
+	upload_buf_head ++;
+	upload_buf_number ++;
+	if(upload_buf_head >= UPLOAD_BUF_NUM) 
+	{
+		upload_buf_head = 0;
+	}
+
+}
+u8 upload_buf_read_out(void)
+{
+	u8 result = TRUE;
+	u8 point =0;
+	
+	if(upload_buf_is_empty_check())
+	{
+		printf_string("\n read_out_empty!");
+		return FALSE;
+	}
+	
+	point = upload_buf_tail + upload_buf_count;
+	if(point >= UPLOAD_BUF_NUM)
+	{
+		point -= UPLOAD_BUF_NUM;
+	}
+
+#ifdef DEBUG_MACRO
+		printf_string("\n readout:tail_head_number_count:");
+		printf_u8_decStr(upload_buf_tail);
+		printf_string("\t");
+		printf_u8_decStr(upload_buf_head);
+		printf_string("\t");
+		printf_u8_decStr(upload_buf_number);
+		printf_string("\t");
+		printf_u8_decStr(upload_buf_count);
+
+		for(int j=0;j<UPLOAD_BUF_NUM;j++)
+		{
+			if(upload_buf[j][0] != 0)
+			{
+				printf_string("\n");
+				printf_u8_decStr(j);
+				printf_string("\t");
+				printf_u8_decStr(upload_buf[j][0]);
+				printf_string("\t");
+				printf_string(upload_buf[j]);
+			}
+		}	
+#endif
+	
+	copy_buf(upload_send_data,&upload_buf[point][1],UPLOAD_BUF_LEN);
+	upload_buf[point][0]--;
+
+	return TRUE;
+}
+
+//处理每一次发送数据后的状态判断和发送buf
+u8 upload_buf_handle(void)
+{
+#ifdef DEBUG_MACRO
+	printf_string("\n ?????????buf_handle:count:");
+	printf_u8_decStr(upload_buf_count);
+#endif
+
+	int i,head,tail;
+	if(upload_buf_count >= upload_buf_number)
+	{
+			
+		head=upload_buf_head;
+		tail=upload_buf_tail;
+
+		if(tail < head)
+		{
+			for(i=tail;i<head;i++)
+			{
+				if(upload_buf[i][0] != 0)
+				{
+					break;
+				}
+			}
+		}
+		else
+		{
+			for(i=tail;i<UPLOAD_BUF_NUM;i++)
+			{
+				if(upload_buf[i][0] != 0)
+				{
+					break;
+				}
+			}
+			if( i == UPLOAD_BUF_NUM)
+			{
+				for(i=0;i<head;i++)
+				{
+					if(upload_buf[i][0] != 0)
+					{
+						break;
+					}
+				}
+			}
+		}
+		
+		
+//		i = (i>head)?(head):(i);
+		upload_buf_tail = i;
+		upload_buf_count = 0;
+		upload_buf_round = 0;
+
+//		upload_buf_number = (upload_buf_head >= upload_buf_tail)?(upload_buf_head - upload_buf_tail)
+//			:(upload_buf_head+UPLOAD_BUF_NUM-upload_buf_tail);
+
+		upload_buf_number = upload_buf_bumber_check();
+		if(upload_buf_is_empty_check())
+		{
+			g_bus.report_it_enable_flag = FALSE;
+			upload_buf_number =0;
+		}
+
+//		g_sta = BUS_GET_HANDLE_STA;
+#ifdef DEBUG_MACRO
+					
+			printf_string("\t tail_head_number_count_round:");
+			printf_u8_decStr(upload_buf_tail);
+			printf_string("\t");
+			printf_u8_decStr(upload_buf_head);
+			printf_string("\t");
+			printf_u8_decStr(upload_buf_number);
+			printf_string("\t");
+			printf_u8_decStr(upload_buf_count);
+			printf_string("\t");
+			printf_u8_decStr(upload_buf_round);
+#endif
+	}
+	else
+	{
+	
+#ifdef DEBUG_MACRO
+			printf_string("\t  a round!");
+#endif
+		
+		g_sta =  BUS_UPLOAD_HANDLE_STA;
+		upload_buf_round =1;
+	}
+}
+
 void upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3)
+{
+	u8 loc = 0;
+	u8 t;
+	u8 pp[2];
+	s8 imei_hex_str[31];
+	u8 change_data_str[5];
+	u8 time_dec[7];
+	u8 time_str[13];
+	u8 time_hex_str[25];
+	u8 version_hex_str[7];
+	
+	memset(upload_send_data,0,sizeof(upload_send_data));
+	
+	//BUS1:MESSAGE_ID
+	strncat(upload_send_data,BUS1_MESSAGE_ID_GESTURE,2);
+	loc += 2;
+	
+	//BUS2:HEAD
+	strncat(upload_send_data,BUS2_HEAD,2);
+	loc += 2;
+	
+	//BUS3:IMEI  (15hex,30hexstr)
+	hex8_to_hexstr(imei_str,imei_hex_str,15);
+	strncat(upload_send_data,imei_hex_str,30);
+	loc += 30;
+	
+	//BUS4:COMMAND_TYPE
+	strncat(upload_send_data,command_type,2);
+	loc += 2;
+	
+	//BUS5:SEQUENCE
+	t=upload_buf_sequence;
+	hex8_to_hexchar(t,pp);
+	strncat(upload_send_data,pp,2);
+	loc += 2;
+	
+	//BUS6:EVENT
+	t=event;
+	hex8_to_hexchar(t,pp);
+	strncat(upload_send_data,pp,2);
+	loc += 2;
+
+	//BUS7:data1  (2hex,4hexstr)
+	hex16_to_hexstr(data1,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+	
+	//BUS8:data2  (2hex,4hexstr)
+	hex16_to_hexstr(data2,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+	
+	//BUS9:data3  (2hex,4hexstr)
+	hex16_to_hexstr(data3,change_data_str);
+	strncat(upload_send_data,change_data_str,4);
+	loc += 4;
+
+	//BUS10:time  (6hex,12hexstr)
+	clock_copy_time_to_buf(time_dec);
+	dec8_to_str(time_dec,time_str,6);
+	hex8_to_hexstr(time_str, time_hex_str, 12);
+	strncat(upload_send_data,&time_hex_str[0],24);
+	loc += 24;
+
+	//BUS11:version  (3hex,6hexstr)
+	hex8_to_hexstr((u8*)version_number, version_hex_str, 6);
+	strncat(upload_send_data,&version_hex_str[0],6);
+	loc += 6;
+	
+	upload_send_data[loc] = '\0';
+	
+	upload_change_sequence();
+
+#ifdef DEBUG_MACRO
+//		 UART1_send_byte('\n');
+//		 Uart1_SendStr(upload_send_data);
+//		 UART1_send_byte('\n');
+#endif
+}
+
+
+void old_upload_send_data_frame(u8* command_type,u8 event,u16 data1,u16 data2,u16 data3)
 {
 	u8 loc = 0;
 	u8 t;
@@ -378,35 +684,39 @@ void old_upload_send_data_handle(void)
 // 事件增多，按照事件优先级分时上报。
 void  upload_handle(void)
 {
-//	if((g_bus.have_reported_flag & BAT_OFF_POWER_FLAG) == BAT_OFF_POWER_FLAG )
-//	{
-//		return;
-//	}
 	
 #ifdef DEBUG_MACRO
 	printf_string("\nreport_flag:");
 	printf_u8_hexStr(g_bus.report_flag);
+	printf_string("\t interrupt_flag:");
+	printf_u8_hexStr(g_time.interrupt_flag);
 #endif
 
-	if(g_bus.report_flag & STRAIN_FLAG)				
+	if((g_bus.report_flag & STRAIN_FLAG)
+		||(g_time.interrupt_flag & TIME_IR_FLAG_REPORT_INTERVAL)
+		||(upload_buf_round))				
 	{
 		//重量上报
+//		g_time.interrupt_flag &= ~TIME_IR_FLAG_REPORT_INTERVAL;
 		upload_strain_handle();
 	}
 	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
 	{
 		//低电量上报处理
 		upload_bat_low_handle();
+//		g_sta = BUS_GET_HANDLE_STA;
 	}
 	else if(g_bus.report_flag&BAT_POWER_FLAG)
 	{
 		//电量上报处理
 		upload_bat_power_handle();
+//		g_sta = BUS_GET_HANDLE_STA;
 	}
 	else if(g_bus.report_flag & HEART_FLAG)		
 	{
 		//心跳上报
 		upload_heart_handle();
+//		g_sta = BUS_GET_HANDLE_STA;
 	}
 }
 
@@ -461,9 +771,34 @@ void  old_upload_handle(void)
 }
 
 
+void upload_strain_handle(void)
+{
+	if(g_bus.report_flag & STRAIN_FLAG)
+	{
+		g_bus.report_flag &= ~STRAIN_FLAG;
+		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
+		upload_buf_write_in();
+	}
+
+	if(((g_bus.report_it_enable_flag)&&(g_time.interrupt_flag & TIME_IR_FLAG_REPORT_INTERVAL))
+		||(!g_bus.report_it_enable_flag)||(upload_buf_round))
+	{
+		g_time.interrupt_flag &= ~TIME_IR_FLAG_REPORT_INTERVAL;
+		if(upload_buf_read_out())
+		{
+			g_bus.report_it_enable_flag = TRUE;
+			upload_buf_count++;
+			
+			upload_send_data_handle();
+
+			upload_buf_handle();
+		}
+	}	
+}
+
 
 //重量上报三次
-void upload_strain_handle(void)
+void old_upload_strain_handle(void)
 {
 #ifdef DEBUG_MACRO
 	printf_string("\nreport_count:");
@@ -510,6 +845,14 @@ void upload_heart_handle(void)
 	g_bus.report_flag &= ~HEART_FLAG;
 }
 
+
+
+/**************************************************************
+
+通信命令接收相关函数
+
+**************************************************************/
+
 // 处理所有命令事件
 void  bus_get_handle(void)
 {
@@ -531,6 +874,8 @@ void get_syn_clock_handle(void)
 	my_time_type now_time;
 
 	clock_get_time(&now_time);
+
+	//0点同步基站时间
 //	if(now_time.hour == 0)
 	if(now_time.hour == 16)
 	{
@@ -639,6 +984,21 @@ printf_string("\nparse:");
 #ifdef DEBUG_MACRO
 			printf_string("\nc_upload_times:");
 			printf_u16_decStr(g_bus.report_times);
+#endif
+		}
+		else if(r_command_type == BUS4_R_C_TYPE_WEIGHT_UPLOAD_INTERVAL)
+		{
+			//更改变量，写进eeprom
+			if((g_bus.report_interval != r_data1)&&(r_data1 != 0))
+			{
+				g_bus.report_interval =r_data1;
+				eeprom_write((u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].offset_addr,(u16 *)(&g_bus.report_interval),
+					(u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].length);
+			}
+
+#ifdef DEBUG_MACRO
+			printf_string("\nc_upload_interval:");
+			printf_u16_decStr(g_bus.report_interval);
 #endif
 		}
 		

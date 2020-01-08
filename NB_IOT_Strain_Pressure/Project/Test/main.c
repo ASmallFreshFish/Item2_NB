@@ -4,12 +4,10 @@
 	如果需要开发oceanconncet的话，需要采用移动的B8系列开发。
 */
 
-
-
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:200108"
-#define VERSION_NUMBER 	"1.1"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:20200108"
+#define VERSION_NUMBER 	"1.2"
 const char version_number[]=VERSION_NUMBER;	
 
 main_data_type g_sta =PRESS_HANDLE_STA;
@@ -28,7 +26,7 @@ int main(void)
 
 void main_sta_judge(void)
 {
-	if(g_bus.report_flag)
+	if((g_bus.report_flag)||(g_time.interrupt_flag & TIME_IR_FLAG_REPORT_INTERVAL)||(upload_buf_round))
 	{
 		g_sta = BUS_UPLOAD_HANDLE_STA;
 	}

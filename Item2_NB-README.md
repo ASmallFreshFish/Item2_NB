@@ -13,6 +13,7 @@
 ###### 11. [time_190930_1738](#11) 
 ###### 12. [time_191107_2047](#12) 
 ###### 13. [time_191219_0945_release](#13) 
+###### 14. [time_200108_1807](#14) 
 ---
 ---
 
@@ -121,7 +122,7 @@
 
 ---
 ---
-## <span id="12">*time_191219_0945_release*</span>
+## <span id="13">*time_191219_0945_release*</span>
 ###### [返回目录](#99) 
 ##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
 ##### 6.NB_IOT_Strain_Pressure：    
@@ -132,4 +133,15 @@
     5、增加版本号码1.1。
     6、优化重量判断机制，进行了多次确认。
 
+##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：   NO!
+
+---
+---
+## <span id="14">*time_200108_1807*</span>
+###### [返回目录](#99) 
+##### 2.NB_IOT_Gesture_PADS9960_UART_PWM：   NO!
+##### 6.NB_IOT_Strain_Pressure：    
+    1、上报过程修改，增加了上报时间间隔，且保存到eeprom；
+    2、修改时间戳bug，时间戳改成utc时间。
+    3、版本号升至1.2
 ##### 7.NB_IOT_LaserRanging_VL53L0X_IIC：   NO!

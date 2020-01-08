@@ -1,6 +1,6 @@
 #include "head_include.h"
 
-time_type g_time;
+time_type g_time ={0};
 volatile u8 netstatus;//网络状态灯
 
 extern BC95 BC95_Status;
@@ -155,12 +155,30 @@ void TIM4_IRQHandler(void)   //TIM3中断
 			g_bus.report_flag |= BAT_POWER_FLAG;
 		}
 
+		//本地时间
 		my_g_time.m_clock_count++;
 		if(my_g_time.m_clock_count>=2)
 		{
 			my_g_time.m_clock_count=0;
 			my_g_time.m_clock_utc++;
 		}
+
+		//业务数据间隔上报时间
+		if(g_bus.report_it_enable_flag)
+		{
+			g_bus.report_interval_count ++;
+			if(g_bus.report_interval_count >= g_bus.report_interval *2)
+			{
+				g_bus.report_interval_count = 0;
+				g_time.interrupt_flag |= TIME_IR_FLAG_REPORT_INTERVAL;
+			}
+		}
+		else
+		{
+			g_bus.report_interval_count = 0;
+			g_time.interrupt_flag &= ~TIME_IR_FLAG_REPORT_INTERVAL;
+		}
+		
 	}
 }
 

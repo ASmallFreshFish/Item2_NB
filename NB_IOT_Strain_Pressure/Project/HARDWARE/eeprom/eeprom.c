@@ -273,7 +273,7 @@ void eeprom_init()
 {	
 	u16 read_buf[5];
 
-	//初始化重量变化量阈值eeprom
+	//初始化重量变化量阈值eeprom，数据为0，则把初始化的默认值写入，非0，则改变默认值
 	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
 		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
 	{
@@ -297,7 +297,7 @@ void eeprom_init()
 
 	}
 
-	//初始化业务上报次数eeprom
+	//初始化业务上报次数eeprom，数据为0，则把初始化的默认值写入，非0，则改变默认值
 	if(eeprom_read((u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].offset_addr,read_buf,
 		(u16)g_eeprom[EEP_ID_W_UPLOAD_TIMES].length))
 	{
@@ -342,6 +342,28 @@ void eeprom_init()
 		printf_u16_hexStr(g_weight.factor100);
 #endif
 	}
+
+	//初始化重量上报时间间隔eeprom，数据为0，则把初始化的默认值写入，非0，则改变默认值
+	if(eeprom_read((u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].offset_addr,read_buf,
+		(u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].length))
+	{
+		if(read_buf[0] == 0)
+		{
+			eeprom_clear((u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].offset_addr,0,BYTES_EACH_VARIABLE);
+			eeprom_write((u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].offset_addr,(u16 *)(&g_bus.report_interval),
+				(u16)g_eeprom[EEP_ID_W_UPLOAD_INTERVAL].length);
+		}
+		else if(read_buf[0] != g_weight.factor100)
+		{
+			g_bus.report_interval =read_buf[0];
+		}
+#ifdef DEBUG_MACRO_INIT
+		printf_string("\t report_interval:");
+		printf_u16_hexStr(read_buf[0]);
+		printf_string("\t");
+		printf_u16_hexStr(g_bus.report_interval);
+#endif
+	}
 }
 
 void eld_eeprom_init()
@@ -373,35 +395,6 @@ void eld_eeprom_init()
 		}
 	}
 }
-
-
-
-void old_eeprom_init()
-{	
-	u16 read_buf[5];
-	u8 result = TRUE;
-	if(eeprom_read((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,read_buf,
-		(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length))
-	{
-		if(read_buf[0] != g_weight.change_threshold)
-		{
-			result=FALSE;
-		}
-	}
-	else
-	{
-		result=FALSE;
-	}
-	if(!result)
-	{
-		eeprom_clear((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,0,BYTES_EACH_VARIABLE);
-		eeprom_write((u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].offset_addr,&g_weight.change_threshold,
-			(u16)g_eeprom[EEP_ID_W_CHANGE_THRESHOLD].length);
-	}
-}
-
-
-
 
 
 void test(void)

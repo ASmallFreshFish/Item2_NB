@@ -1,4 +1,30 @@
----- GO_S_LITTLE Matches (3 in 2 files) ----
-press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.sta = GO_S_LITTLE;
-old_press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 			g_weight.sta = GO_S_LITTLE;
-pressure_strain.h (Project\HARDWARE\presssure_strain) line 53 : 	GO_S_LITTLE =0xFD
+---- report_flag Matches (29 in 6 files) ----
+upload_handle in bus.c (Project\HARDWARE\bus) : 	printf_u8_hexStr(g_bus.report_flag);
+upload_handle in bus.c (Project\HARDWARE\bus) : 	if((g_bus.report_flag & STRAIN_FLAG)||(g_time.interrupt_flag & TIME_IR_FLAG_REPORT_INTERVAL))				
+upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
+upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_POWER_FLAG)
+upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & HEART_FLAG)		
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	printf_u8_hexStr(g_bus.report_flag);
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	if(g_bus.report_flag & STRAIN_FLAG)				//重量上报
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & PRESS_SENSOR_FLAG)
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~PRESS_SENSOR_FLAG;
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_OFF_POWER_FLAG)	//电池处理
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_LOW_POWER_FLAG)
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag&BAT_POWER_FLAG)
+old_upload_handle in bus.c (Project\HARDWARE\bus) : 	else if(g_bus.report_flag & HEART_FLAG)		//心跳上报
+upload_strain_handle in bus.c (Project\HARDWARE\bus) : 	if(g_bus.report_flag & STRAIN_FLAG)
+upload_strain_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~STRAIN_FLAG;
+old_upload_strain_handle in bus.c (Project\HARDWARE\bus) : 		g_bus.report_flag &= ~STRAIN_FLAG;
+upload_bat_low_handle in bus.c (Project\HARDWARE\bus) : 	g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
+upload_bat_power_handle in bus.c (Project\HARDWARE\bus) : 	g_bus.report_flag &= ~BAT_POWER_FLAG;
+upload_heart_handle in bus.c (Project\HARDWARE\bus) : 	g_bus.report_flag &= ~HEART_FLAG;
+{anonbus_type} in bus.h (Project\HARDWARE\bus) : 	u8 report_flag;			//上报标志
+main_sta_judge in main.c (Project\Test) : 	if((g_bus.report_flag)||(g_time.interrupt_flag & TIME_IR_FLAG_REPORT_INTERVAL)||(upload_buf_round))
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.report_flag &= ~BAT_OFF_POWER_FLAG;
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 			g_bus.report_flag &= ~BAT_LOW_POWER_FLAG;
+bat_judge in pressure_sensor.c (Project\HARDWARE\pressure) : 				g_bus.report_flag |= BAT_LOW_POWER_FLAG;
+press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		g_bus.report_flag |= STRAIN_FLAG;
+old_press_strain_judge in pressure_strain.c (Project\HARDWARE\presssure_strain) : 		g_bus.report_flag |= STRAIN_FLAG;
+TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			g_bus.report_flag |= HEART_FLAG;
+TIM4_IRQHandler in timer.c (Project\HARDWARE\TIMER) : 			g_bus.report_flag |= BAT_POWER_FLAG;

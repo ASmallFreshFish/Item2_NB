@@ -16,6 +16,12 @@
 
 #define UPLOAD_SEND_DATA_LEN 200
 
+//数据上报一些规则常量
+#define UPLOAD_STRAIN_REPORT_TIMES 3
+#define UPLOAD_STRAIN_REPORT_INTERVAL 10
+//#define UPLOAD_STRAIN_REPORT_INTERVAL 20
+
+
 /************************************************************************
 **********************************帧格式*********************************
 
@@ -118,6 +124,9 @@ typedef enum
 typedef struct
 {
 	u16 heart_count;		//心跳计数
+	u16 report_interval_count;
+	u16 report_interval;
+	u8 report_it_enable_flag;
 	u8 report_flag;			//上报标志
 	u8 have_reported_flag;	//已经上报标志
 	u8 report_times;		//上报次数
@@ -138,6 +147,8 @@ extern bus_type g_bus;
 //BUS3:R_COMMAND_TYPE
 #define BUS4_R_C_TYPE_WEIGHT_THRESHOLD 		0x01
 #define BUS4_R_C_TYPE_WEIGHT_UPLOAD_TIMES 	0x02
+#define BUS4_R_C_TYPE_WEIGHT_UPLOAD_INTERVAL 	0x04
+
 
 //BUS4:R_SEQUENCE,changed with upload times
 //BUS5:DATA1,	real time value
@@ -155,6 +166,13 @@ typedef struct
 	u16 r_data3;
 }bus_receive_type;
 extern bus_receive_type g_receive;
+
+
+
+extern u8 upload_buf_round;
+
+
+
 
 
 void upload_init(void);
