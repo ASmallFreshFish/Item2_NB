@@ -660,12 +660,28 @@ void clock_set_time(my_time_type *time)
    
    time->seconds = ltime->tm_sec;
    time->minutes = ltime->tm_min;
-   time->hour    = ltime->tm_hour + 8;
+//   time->hour    = ltime->tm_hour + 8;
+   time->hour	 = ltime->tm_hour;
    time->day     = ltime->tm_mday;
    time->month   = ltime->tm_mon + 1;
    time->year    = ltime->tm_year + 1900;
    time->hour %= 24;
    clock_time_get_week(time);
+
+#ifdef DEBUG_MACRO
+		printf_string("\nclock_get_time:");
+		printf_u8_decStr(time->year);
+		printf_string("\t");
+		printf_u8_decStr(time->month);
+		printf_string("\t");
+		printf_u8_decStr(time->day);
+		printf_string("\t");
+		printf_u8_decStr(time->hour);
+		printf_string("\t");
+		printf_u8_decStr(time->minutes);
+		printf_string("\t");
+		printf_u8_decStr(time->seconds);
+#endif
 }
 
  void clock_cclk_handle(char *p) 
@@ -687,7 +703,7 @@ void clock_set_time(my_time_type *time)
 	clock_set_time(&now_time);
 
 #ifdef DEBUG_MACRO_INIT
-if(0)
+//if(0)
 {
 	printf_string("\ntime:");
 	printf_u16_decStr(now_time.year);	printf_string("/");

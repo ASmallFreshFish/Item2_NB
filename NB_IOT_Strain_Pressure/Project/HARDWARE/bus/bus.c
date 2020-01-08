@@ -531,7 +531,8 @@ void get_syn_clock_handle(void)
 	my_time_type now_time;
 
 	clock_get_time(&now_time);
-	if(now_time.hour == 0)
+//	if(now_time.hour == 0)
+	if(now_time.hour == 16)
 	{
 		if(!my_g_time.m_clock_syn_result)
 		{

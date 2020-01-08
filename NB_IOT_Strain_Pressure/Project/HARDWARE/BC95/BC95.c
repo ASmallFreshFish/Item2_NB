@@ -330,7 +330,7 @@ void BC95_Init(void)
 		    Delay(300);
 		    strx=strstr((const char*)RxBuffer,(const char*)"+CCLK");
 		}
-		my_g_time.m_clock_syn_result = 1;
+		my_g_time.m_clock_syn_result = 0;
 		clock_cclk_handle(strx);
 		Clear_Buffer();
 

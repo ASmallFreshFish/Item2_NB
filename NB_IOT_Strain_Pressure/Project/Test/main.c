@@ -8,7 +8,7 @@
 
 #include "head_include.h"
 
-#define VERSION_Y_M_D	"VERSION_Y_M_D:191226"
+#define VERSION_Y_M_D	"VERSION_Y_M_D:200108"
 #define VERSION_NUMBER 	"1.1"
 const char version_number[]=VERSION_NUMBER;	
 
