@@ -12,17 +12,42 @@ const char version_number[]=VERSION_NUMBER;
 
 main_data_type g_sta =PRESS_HANDLE_STA;
 
+u32 send_udp_count = 0;
+
+//int main(void)
+//{		
+//	main_init();
+
+//	
+//	while(1)
+//	{
+//		IWDG_Feed();	 //喂狗
+//		main_sta_judge();
+//		main_handle();
+//	}
+//}
+
 int main(void)
 {		
 	main_init();
+
 	
 	while(1)
 	{
-		IWDG_Feed();	 //喂狗
-		main_sta_judge();
-		main_handle();
+//		IWDG_Feed();	 //喂狗
+//		main_sta_judge();
+//		main_handle();
+		
+		for(int i=0;i<5;i++)
+		{
+			IWDG_Feed();	 //喂狗
+			delay_ms(1000);
+		}
+		BC95_Senddata("8","727394ACB8221234");
+
 	}
 }
+
 
 void main_sta_judge(void)
 {
@@ -87,9 +112,13 @@ void main_init(void)
     
     //NB模块的初始化
     BC95_reset_init();
-    CDP_Init();     //CDP服务器初始化    
-    BC95_Init();
-	upload_init();
+//    CDP_Init();     //CDP服务器初始化    
+//    BC95_Init();
+//	upload_init();
+	BC95_Init();
+		BC95_PDPACT();
+		BC95_ConUDP();//注网成功，等待数据
+
 
 	//adc独立方式
 	adc_init();
@@ -143,9 +172,9 @@ void old_main_init(void)
 	clock_init_time();
     
     //NB模块的初始化
-    CDP_Init();     //CDP服务器初始化    
-    BC95_Init();
-	upload_init();
+//    CDP_Init();     //CDP服务器初始化    
+//    BC95_Init();
+//	upload_init();
 
 	adc_init();
 	bat_init();

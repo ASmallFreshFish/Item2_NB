@@ -3,7 +3,8 @@
 
 //正式或测试平台开关
 //#define PLATFORM_FORMAL 
-#define PLATFORM_TEST
+//#define PLATFORM_TEST
+#define UDP_TEST
 
 //LOG宏开关
 //#define DENUG_MACRO_ACLL_OPEN 

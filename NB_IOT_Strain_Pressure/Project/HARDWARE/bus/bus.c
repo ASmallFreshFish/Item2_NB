@@ -664,6 +664,8 @@ void upload_send_data_handle(void)
 {		
 #ifdef DEBUG_MACRO
 	UART1_send_byte('\n');
+	Uart1_SendStr("begin:  ");
+
 	Uart1_SendStr(upload_send_data);
 	UART1_send_byte('\n');
 #endif
@@ -798,7 +800,35 @@ void upload_strain_handle(void)
 
 
 //重量上报三次
+<<<<<<< Updated upstream
 void old_upload_strain_handle(void)
+=======
+//void upload_strain_handle(void)
+//{
+//#ifdef DEBUG_MACRO
+//	printf_string("\nreport_count:");
+//	printf_u8_decStr(g_bus.report_count);
+//#endif
+
+//	if(g_bus.report_count == BUS_FRAME_STA)
+//	{
+//		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
+//	}
+//	
+//	upload_send_data_handle();
+//	g_bus.report_count++;
+
+//	if(g_bus.report_count == g_bus.report_times)
+//	{
+//		g_bus.report_flag &= ~STRAIN_FLAG;
+//		g_bus.report_count=BUS_FRAME_STA;
+//	}
+//}
+
+//test
+//重量上报三次
+void upload_strain_handle(void)
+>>>>>>> Stashed changes
 {
 #ifdef DEBUG_MACRO
 	printf_string("\nreport_count:");
@@ -808,6 +838,14 @@ void old_upload_strain_handle(void)
 	if(g_bus.report_count == BUS_FRAME_STA)
 	{
 		upload_send_data_frame(BUS4_COMMAND_TYPE_STRAIN,g_weight.sta,g_weight.changed_data,g_press.press_ad_value[5],g_press.press_ad_value[6]);
+		//test
+		memset(upload_send_data,0,sizeof(upload_send_data));
+		upload_send_data[0] ='D';
+		upload_send_data[1] ='D';
+		upload_send_data[2] ='F';
+		upload_send_data[3] ='F';
+		upload_send_data[4] ='\0';
+		
 	}
 	
 	upload_send_data_handle();
@@ -819,6 +857,7 @@ void old_upload_strain_handle(void)
 		g_bus.report_count=BUS_FRAME_STA;
 	}
 }
+
 
 //低电量上报一次
 void upload_bat_low_handle(void)
